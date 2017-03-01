@@ -1,7 +1,7 @@
 /*  This widget is based on QBusyIndicator by James Aleksans.
 
-   YAGF - cuneiform and tesseract OCR graphical front-end
-   Copyright (C) 2009-2015 Andrei Borovsky <borovsky.andrei@gmail.com>
+   UFOCR - User-Friendly OCR
+   Copyright (C) 2009-2015 Alexander Zaitsev <zamazan4ik@tut.by>
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by

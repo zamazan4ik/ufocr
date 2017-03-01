@@ -1,6 +1,6 @@
 /*
-    YAGF - cuneiform OCR graphical front-end
-    Copyright (C) 2009 Andrei Borovsky <anb@symmetrica.net>
+    UFOCR - User-Friendly OCR
+    Copyright (C) 2009 Alexander Zaitsev <zamazan4ik@tut.by>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -131,7 +131,7 @@ void BlockAnalysis::countLinesInImg(int factor, int d)
 
 #ifdef DEBUG
     QImage im = m_image->copy(*m_coords);
-    im.save("/home/andrei/ttt.jpg", "JPEG");
+    im.save("/home/Alexander/ttt.jpg", "JPEG");
 #endif
 
 }
@@ -206,7 +206,7 @@ void BlockAnalysis::countLinesInImg(QImage* _image)
 
 #ifdef DEBUG
     QImage im = m_image->copy(*m_coords);
-    im.save("/home/andrei/ttt.jpg", "JPEG");
+    im.save("/home/Alexander/ttt.jpg", "JPEG");
 #endif
     delete lines;
     delete linesInfo;

@@ -1,5 +1,5 @@
 /*
-    This file is part of Libiprit by Andrei Borovsky <anb@symmetrica.net>.
+    This file is part of Libiprit by Alexander Zaitsev <zamazan4ik@tut.by>.
 
     Libiprit is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published by

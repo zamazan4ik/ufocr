@@ -1,6 +1,6 @@
 /*
-    YAGF - cuneiform and tesseract OCR graphical front-ends
-    Copyright (C) 2009-2014 Andrei Borovsky <anb@symmetrica.net>
+    UFOCR - User-Friendly OCRs
+    Copyright (C) 2009-2014 Alexander Zaitsev <zamazan4ik@tut.by>
     The original code is
 	Copyright (C) 2008-2009  Timothy B. Terriberry (tterribe@xiph.org)
   

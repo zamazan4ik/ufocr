@@ -1,6 +1,6 @@
 /*
-    YAGF - cuneiform OCR graphical front-end
-    Copyright (C) 2009-2011 Andrei Borovsky <anb@symmetrica.net>
+    UFOCR - User-Friendly OCR
+    Copyright (C) 2009-2011 Alexander Zaitsev <zamazan4ik@tut.by>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -57,7 +57,7 @@ SkewAnalysis::SkewAnalysis(QPointList* pointList, int width, int height)
              tmpsum =0;
          }
      }
-     FILE * f = fopen("/home/andrei/hough.txt", "w");
+     FILE * f = fopen("/home/Alexander/hough.txt", "w");
      for (int i = 0; i < 360; i++) {
          for (int j = 0; j < 1000; j++)
          fprintf(f, "%i:, %i, ", i, bin[i][j]);

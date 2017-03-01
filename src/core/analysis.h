@@ -1,6 +1,6 @@
 /*
-    YAGF - cuneiform and tesseract OCR graphical front-end
-    Copyright (C) 2011 Andrei Borovsky <anb@symmetrica.net>
+    UFOCR - User-Friendly OCR
+    Copyright (C) 2011 Alexander Zaitsev <zamazan4ik@tut.by>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

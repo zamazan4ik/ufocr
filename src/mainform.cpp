@@ -1,6 +1,6 @@
 /*
-    YAGF - cuneiform and tesseract OCR graphical front-end
-    Copyright (C) 2009-2013 Andrei Borovsky <anb@symmetrica.net>
+    UFOCR - User-Friendly OCR
+    Copyright (C) 2009-2013 Alexander Zaitsev <zamazan4ik@tut.by>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -792,7 +792,7 @@ void MainForm::showAboutDlg()
     QPixmap icon;
     icon.load(":/yagf.png");
     QMessageBox aboutBox(QMessageBox::NoIcon, trUtf8("About YAGF"),
-                         trUtf8("<p align=\"center\"><b>YAGF - Yet Another Graphical Front-end for cuneiform and tesseract OCR engines</b></p><p align=\"center\">Version %1</p> <p align=\"center\">Ⓒ 2009-2014 Andrei Borovsky</p> This is a free software distributed under GPL v3. Visit <a href=\"http://symmetrica.net/cuneiform-linux/yagf-en.html\">http://symmetrica.net/cuneiform-linux/yagf-en.html</a> for more details.").arg(
+                         trUtf8("<p align=\"center\"><b>YAGF - Yet Another Graphical Front-end for cuneiform and tesseract OCR engines</b></p><p align=\"center\">Version %1</p> <p align=\"center\">Ⓒ 2009-2014 Alexander Zaitsev</p> This is a free software distributed under GPL v3. Visit <a href=\"http://symmetrica.net/cuneiform-linux/yagf-en.html\">http://symmetrica.net/cuneiform-linux/yagf-en.html</a> for more details.").arg(
                                  version), QMessageBox::Ok);
     aboutBox.setIconPixmap(icon);
     QList<QLabel*> labels = aboutBox.findChildren<QLabel*>();
