@@ -28,19 +28,22 @@
 #include <QList>
 #include <QMimeData>
 
-DropLabel::DropLabel(QWidget *parent, Qt::WindowFlags f) : QLabel(parent, f)
+DropLabel::DropLabel(QWidget* parent, Qt::WindowFlags f) : QLabel(parent, f)
 {
     setAcceptDrops(true);
 }
 
-void DropLabel::dragEnterEvent(QDragEnterEvent *event)
+void DropLabel::dragEnterEvent(QDragEnterEvent* event)
 {
     //event->setDropAction(Qt::IgnoreAction);
-    const QMimeData *md = event->mimeData();
+    const QMimeData* md = event->mimeData();
     QStringList sl = md->formats();
-    if (!md->formats().contains("text/uri-list")) {
+    if (!md->formats().contains("text/uri-list"))
+    {
         setCursor(Qt::ForbiddenCursor);
-    } else {
+    }
+    else
+    {
         event->setDropAction(Qt::MoveAction);
         event->accept();
         //QCursor cur(lw->selectedItems().at(0)->icon().pixmap(96, 128));
@@ -49,21 +52,25 @@ void DropLabel::dragEnterEvent(QDragEnterEvent *event)
 
 }
 
-void DropLabel::dragLeaveEvent(QDragLeaveEvent *event)
+void DropLabel::dragLeaveEvent(QDragLeaveEvent* event)
 {
     setCursor(Qt::ArrowCursor);
     event->accept();
 }
 
-void DropLabel::dropEvent(QDropEvent *event)
+void DropLabel::dropEvent(QDropEvent* event)
 {
     if (event->dropAction() == Qt::MoveAction)
+    {
         event->ignore();
+    }
     else
+    {
         event->accept();
+    }
 }
 
-void DropLabel::setListWidget(QListWidget *w)
+void DropLabel::setListWidget(QListWidget* w)
 {
     lw = 0;
 }

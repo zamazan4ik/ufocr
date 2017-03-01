@@ -16,10 +16,10 @@
 #include <QPixmap>
 #include <QListWidget>
 
-FileObjectItem::FileObjectItem(FileObjectItemType itemType, const QString &fullName, QListWidget *parent) :
-    QListWidgetItem(parent),
-    fName(fullName),
-    _type(itemType)
+FileObjectItem::FileObjectItem(FileObjectItemType itemType, const QString& fullName, QListWidget* parent) :
+        QListWidgetItem(parent),
+        fName(fullName),
+        _type(itemType)
 {
     extractShortName();
     setText(lName);
@@ -44,24 +44,28 @@ QString FileObjectItem::getPath()
 void FileObjectItem::extractShortName()
 {
     QStringList sl = fName.split("/", QString::SkipEmptyParts);
-    if (sl.count() > 0) {
-        lName = sl.at(sl.count()-1);
+    if (sl.count() > 0)
+    {
+        lName = sl.at(sl.count() - 1);
     }
     else
+    {
         lName = "/";
+    }
     QString path;
-    switch(_type) {
-    case EmptyDirectory:
-        path = ":/images/folder.png";
-        break;
-    case Directory:
-        path = ":/images/folder_nempty.png";
-        break;
-    case Project:
-        path = ":/images/project.png";
-        break;
-    default:
-        path = "";
+    switch (_type)
+    {
+        case EmptyDirectory:
+            path = ":/images/folder.png";
+            break;
+        case Directory:
+            path = ":/images/folder_nempty.png";
+            break;
+        case Project:
+            path = ":/images/project.png";
+            break;
+        default:
+            path = "";
     }
     setIcon(QIcon(path));
 }

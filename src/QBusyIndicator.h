@@ -27,38 +27,65 @@
 
 class QBusyIndicator : public QWidget
 {
-    Q_OBJECT
-    Q_PROPERTY(bool showBackground READ getShowBackground WRITE setShowBackground)
-    Q_PROPERTY(double speed READ getSpeed WRITE setSpeed)
-    Q_PROPERTY(bool displayedWhenStopped READ isDisplayedWhenStopped WRITE setDisplayedWhenStopped)
-    Q_PROPERTY(QColor color READ color WRITE setColor)
-    Q_PROPERTY(QColor backgroundColor READ getBackgroundColor WRITE setBackgroundColor)
+Q_OBJECT
+    Q_PROPERTY(bool showBackground
+                       READ
+                       getShowBackground
+                       WRITE
+                       setShowBackground)
+    Q_PROPERTY(double speed
+                       READ
+                       getSpeed
+                       WRITE
+                       setSpeed)
+    Q_PROPERTY(bool displayedWhenStopped
+                       READ
+                       isDisplayedWhenStopped
+                       WRITE
+                       setDisplayedWhenStopped)
+    Q_PROPERTY(QColor color
+                       READ
+                       color
+                       WRITE
+                       setColor)
+    Q_PROPERTY(QColor backgroundColor
+                       READ
+                       getBackgroundColor
+                       WRITE
+                       setBackgroundColor)
 public:
-    QBusyIndicator(QWidget *parent = 0);
+    QBusyIndicator(QWidget* parent = 0);
 
-    bool getShowBackground() const {
+    bool getShowBackground() const
+    {
         return m_showBackground;
     }
 
-    double getSpeed() const {
+    double getSpeed() const
+    {
         return m_speed;
     }
 
-    bool isAnimated () const;
+    bool isAnimated() const;
 
     bool isDisplayedWhenStopped() const;
 
-    const QColor &color() const {
+    const QColor& color() const
+    {
         return m_color;
     }
 
-    const QColor &getBackgroundColor() const {
+    const QColor& getBackgroundColor() const
+    {
         return m_backgroundColor;
     }
 
     virtual QSize sizeHint() const;
+
     int heightForWidth(int w) const;
+
 public slots:
+
     void startAnimation();
 
     void stopAnimation();
@@ -67,14 +94,17 @@ public slots:
 
     void setDisplayedWhenStopped(bool state);
 
-    void setColor(const QColor &color);
+    void setColor(const QColor& color);
 
     void setShowBackground(bool state);
 
-    void setBackgroundColor(const QColor &color);
+    void setBackgroundColor(const QColor& color);
+
 protected:
-    virtual void timerEvent(QTimerEvent *event);
-    virtual void paintEvent(QPaintEvent *event);
+    virtual void timerEvent(QTimerEvent* event);
+
+    virtual void paintEvent(QPaintEvent* event);
+
 private:
     bool m_showBackground;
     int m_angle;

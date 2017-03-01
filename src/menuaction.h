@@ -23,17 +23,23 @@
 #include <QAction>
 
 
-class MenuAction : public QAction {
-    Q_OBJECT
+class MenuAction : public QAction
+{
+Q_OBJECT
 public:
-    MenuAction(const QString &text, QObject * parent = 0) :QAction(text, parent)
+    MenuAction(const QString& text, QObject* parent = 0) : QAction(text, parent)
     {
-        connect (this, SIGNAL(triggered()), this, SLOT(emitTriggered()));
+        connect(this, SIGNAL(triggered()), this, SLOT(emitTriggered()));
     }
+
 signals:
-    void triggered(const QString &text);
+
+    void triggered(const QString& text);
+
 private slots:
-    void emitTriggered() {
+
+    void emitTriggered()
+    {
         emit triggered(text());
     }
 };

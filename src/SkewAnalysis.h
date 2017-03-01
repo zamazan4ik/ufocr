@@ -28,20 +28,28 @@ class QPixmap;
 class SkewAnalysis
 {
 public:
-    SkewAnalysis(QPointList *pointList, int width, int height);
+    SkewAnalysis(QPointList* pointList, int width, int height);
+
     ~SkewAnalysis();
+
     signed int getSkew();
+
     double getPhi();
-    QPixmap drawTriangle(QPixmap &pm);
+
+    QPixmap drawTriangle(QPixmap& pm);
+
 private:
     //int bin[360][2000];
     double getRightPhi();
+
     double getLeftPhi();
-    QPointList *pointList;
+
+    QPointList* pointList;
     int m_height;
     int m_width;
     double phi;
-    QPoint *p1;
-    QPoint *p2;
+    QPoint* p1;
+    QPoint* p2;
 };
+
 #endif

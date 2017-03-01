@@ -28,11 +28,11 @@ const int itemDisplayName = 1;
 const int itemFullName = 2;
 
 
-SaveProjectDialog::SaveProjectDialog(const QString &dir, QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::SaveProjectDialog),
-    pf(new ProjectFiles(dir)),
-    fsw(new QFileSystemWatcher(QStringList(dir)))
+SaveProjectDialog::SaveProjectDialog(const QString& dir, QWidget* parent) :
+        QDialog(parent),
+        ui(new Ui::SaveProjectDialog),
+        pf(new ProjectFiles(dir)),
+        fsw(new QFileSystemWatcher(QStringList(dir)))
 {
     ui->setupUi(this);
     connect(ui->listWidget, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(onDoubleClicked(QModelIndex)));
@@ -50,11 +50,16 @@ SaveProjectDialog::~SaveProjectDialog()
 
 QString SaveProjectDialog::projectPath()
 {
-    if (ppath != "") {
+    if (ppath != "")
+    {
         if (!ppath.startsWith("/"))
+        {
             ppath = pf->currentDir() + ppath;
+        }
         if (!ppath.endsWith("/"))
+        {
             ppath = ppath + "/";
+        }
     }
     return ppath;
 }
@@ -64,88 +69,113 @@ QString SaveProjectDialog::upDir()
     return pf->upDir(ppath);
 }
 
-void SaveProjectDialog::onDoubleClicked(const QModelIndex &index)
+void SaveProjectDialog::onDoubleClicked(const QModelIndex& index)
 {
     gbList.append(pf->currentDir());
-    FileObjectItem * item = (FileObjectItem *) ui->listWidget->item(index.row());
-    if (item) {
-        if (item->getItemType() == FileObjectItem::Project) {
+    FileObjectItem* item = (FileObjectItem*) ui->listWidget->item(index.row());
+    if (item)
+    {
+        if (item->getItemType() == FileObjectItem::Project)
+        {
             emit projectClicked(item->getPath(), item->getShortName());
             return;
         }
-        if ((item->getItemType() == FileObjectItem::EmptyDirectory)|(item->getItemType() == FileObjectItem::Directory))
+        if ((item->getItemType() == FileObjectItem::EmptyDirectory) |
+            (item->getItemType() == FileObjectItem::Directory))
+        {
             delete fsw;
-            pf->cd(item->getPath());
-            fillList();
-            ui->lineEdit->setText("");
-            ui->lineEdit->setStyleSheet("color: rgb(0, 0, 0)");
-            ui->lineEdit->setToolTip(trUtf8("Add project name"));
-            ppath = "";
-            fsw = new QFileSystemWatcher(QStringList(pf->currentDir()));
-            connect(fsw, SIGNAL(directoryChanged(QString)), this, SLOT(directoryChanged(QString)), Qt::QueuedConnection);
+        }
+        pf->cd(item->getPath());
+        fillList();
+        ui->lineEdit->setText("");
+        ui->lineEdit->setStyleSheet("color: rgb(0, 0, 0)");
+        ui->lineEdit->setToolTip(trUtf8("Add project name"));
+        ppath = "";
+        fsw = new QFileSystemWatcher(QStringList(pf->currentDir()));
+        connect(fsw, SIGNAL(directoryChanged(QString)), this, SLOT(directoryChanged(QString)), Qt::QueuedConnection);
     }
 }
 
-void SaveProjectDialog::onClicked(const QModelIndex &index)
+void SaveProjectDialog::onClicked(const QModelIndex& index)
 {
     ui->lineEdit->setText("");
     ui->lineEdit->setStyleSheet("");
-    ppath ="";
-    FileObjectItem * item = (FileObjectItem *) ui->listWidget->item(index.row());
+    ppath = "";
+    FileObjectItem* item = (FileObjectItem*) ui->listWidget->item(index.row());
     if (!item)
+    {
         return;
-    if (item->getItemType() == FileObjectItem::Project) {
+    }
+    if (item->getItemType() == FileObjectItem::Project)
+    {
         emit projectClicked(item->getPath(), item->getShortName());
         return;
     }
-    if (pf->canProjectBeSavedToDir(item->getPath())) {
+    if (pf->canProjectBeSavedToDir(item->getPath()))
+    {
         ui->lineEdit->setStyleSheet("color: rgb(0, 0, 200)");
         ui->lineEdit->setText(item->getPath());
         ui->lineEdit->setStyleSheet("");
         ui->lineEdit->setToolTip(trUtf8("Save project to this folder?"));
         ppath = item->getPath();
-    } else {
+    }
+    else
+    {
         ui->lineEdit->setStyleSheet("");
         if (!item->getPath().endsWith("/"))
+        {
             ui->lineEdit->setText(item->getPath() + "/");
+        }
         else
+        {
             ui->lineEdit->setText(item->getPath());
-       //ui->lineEdit->setStyleSheet("color: rgb(255, 255, 255)");
-       ui->lineEdit->setToolTip(trUtf8("Add project name"));
+        }
+        //ui->lineEdit->setStyleSheet("color: rgb(255, 255, 255)");
+        ui->lineEdit->setToolTip(trUtf8("Add project name"));
     }
 }
 
-void SaveProjectDialog::showEvent(QShowEvent *event)
+void SaveProjectDialog::showEvent(QShowEvent* event)
 {
     event->accept();
     fillList();
     QDialog::showEvent(event);
 }
 
-void SaveProjectDialog::onLineEditTextChanged(QLineEdit *le, const QString &arg1)
+void SaveProjectDialog::onLineEditTextChanged(QLineEdit* le, const QString& arg1)
 {
-    if (pf->pathExists(arg1)) {
-        if(pf->canProjectBeSavedToDir(arg1)) {
+    if (pf->pathExists(arg1))
+    {
+        if (pf->canProjectBeSavedToDir(arg1))
+        {
             le->setStyleSheet("");
             ppath = arg1;
-        } else {
+        }
+        else
+        {
             le->setStyleSheet("color: rgb(200, 0, 0)");
             ppath = "";
         }
-    } else {
-        if (pf->canCdToUpper(arg1)) {
+    }
+    else
+    {
+        if (pf->canCdToUpper(arg1))
+        {
             le->setStyleSheet("");
             ppath = arg1;
-        } else {
+        }
+        else
+        {
             le->setStyleSheet("color: rgb(200, 0, 0)");
             ppath = "";
         }
     }
 }
 
-void SaveProjectDialog::cd(const QString &path)
+void SaveProjectDialog::cd(const QString& path)
 {
-    if (pf->canCdTo(path)) {
+    if (pf->canCdTo(path))
+    {
         delete fsw;
         gbList.append(pf->currentDir());
         pf->cd(path);
@@ -155,7 +185,7 @@ void SaveProjectDialog::cd(const QString &path)
     }
 }
 
-bool SaveProjectDialog::isProjectDir(const QString &path)
+bool SaveProjectDialog::isProjectDir(const QString& path)
 {
     return pf->isProjectDir(path);
 }
@@ -165,37 +195,45 @@ QString SaveProjectDialog::currentPath()
     return pf->currentDir();
 }
 
-QLineEdit *SaveProjectDialog::lineEdit()
+QLineEdit* SaveProjectDialog::lineEdit()
 {
     return ui->lineEdit;
 }
 
 void SaveProjectDialog::accept()
 {
-        if (ui->lineEdit->text() != "")
-            if (pf->canCdTo(ui->lineEdit->text())) {
-                if (pf->isProjectDir(ui->lineEdit->text()))
-                    return;
-                delete fsw;
-                gbList.append(pf->currentDir());
-                pf->cd(ui->lineEdit->text());
-                ui->lineEdit->setText("");
-                fillList();
-                fsw = new QFileSystemWatcher(QStringList(pf->currentDir()));
-                connect(fsw, SIGNAL(directoryChanged(QString)), this, SLOT(directoryChanged(QString)), Qt::QueuedConnection);
+    if (ui->lineEdit->text() != "")
+    {
+        if (pf->canCdTo(ui->lineEdit->text()))
+        {
+            if (pf->isProjectDir(ui->lineEdit->text()))
+            {
                 return;
             }
-            if (ppath == "")
-                return;
+            delete fsw;
+            gbList.append(pf->currentDir());
+            pf->cd(ui->lineEdit->text());
+            ui->lineEdit->setText("");
+            fillList();
+            fsw = new QFileSystemWatcher(QStringList(pf->currentDir()));
+            connect(fsw, SIGNAL(directoryChanged(QString)), this, SLOT(directoryChanged(QString)),
+                    Qt::QueuedConnection);
+            return;
+        }
+    }
+    if (ppath == "")
+    {
+        return;
+    }
     QDialog::accept();
 }
-
 
 
 void SaveProjectDialog::fillList()
 {
     QStringList directories = pf->directories();
-    if (directories.count() > 1) {
+    if (directories.count() > 1)
+    {
         directories.removeAt(0);
         directories.removeAt(0);
     }
@@ -203,17 +241,21 @@ void SaveProjectDialog::fillList()
     directories.sort();
     projects.sort();
     ui->listWidget->clear();
-    foreach (QString s, directories) {
-        FileObjectItem * item = new FileObjectItem(pf->isDirEmpty(s) ? FileObjectItem::EmptyDirectory : FileObjectItem::Directory, s, ui->listWidget);
-        ui->listWidget->addItem(item);
-    }
-    foreach (QString s, projects) {
-        FileObjectItem * item = new FileObjectItem(FileObjectItem::Project, s);
-        ui->listWidget->addItem(item);
-    }
+            foreach (QString s, directories)
+        {
+            FileObjectItem* item = new FileObjectItem(
+                    pf->isDirEmpty(s) ? FileObjectItem::EmptyDirectory : FileObjectItem::Directory, s, ui->listWidget);
+            ui->listWidget->addItem(item);
+        }
+            foreach (QString s, projects)
+        {
+            FileObjectItem* item = new FileObjectItem(FileObjectItem::Project, s);
+            ui->listWidget->addItem(item);
+        }
 }
 
-void SaveProjectDialog::goUp() {
+void SaveProjectDialog::goUp()
+{
     delete fsw;
     gbList.append(pf->currentDir());
     pf->cd(pf->upDir(pf->currentDir()));
@@ -230,7 +272,8 @@ void SaveProjectDialog::reject()
 
 void SaveProjectDialog::goBackwards()
 {
-    if (!gbList.isEmpty()) {
+    if (!gbList.isEmpty())
+    {
         delete fsw;
         pf->cd(gbList.last());
         gbList.removeLast();
@@ -240,7 +283,7 @@ void SaveProjectDialog::goBackwards()
     }
 }
 
-void SaveProjectDialog::lineEditTextChanged(const QString &arg1)
+void SaveProjectDialog::lineEditTextChanged(const QString& arg1)
 {
     onLineEditTextChanged(ui->lineEdit, arg1);
 }

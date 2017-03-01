@@ -27,3 +27,8 @@
 *.exe
 *.out
 *.app
+/cmake-build-debug/
+Будет удалено .idea/
+Будет удалено cmake-build-debug/
+
+\.idea/

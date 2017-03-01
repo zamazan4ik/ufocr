@@ -1,6 +1,6 @@
 #include "scanimage.h"
 
-ScanImage::ScanImage(QObject *parent) :
-    QObject(parent)
+ScanImage::ScanImage(QObject* parent) :
+        QObject(parent)
 {
 }

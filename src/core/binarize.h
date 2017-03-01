@@ -24,14 +24,16 @@ This program is free software: you can redistribute it and/or modify
 #if !defined(_qrcode_binarize_H)
 # define _qrcode_binarize_H (1)
 
-void qr_image_cross_masking_median_filter(unsigned char *_img,
- int _width,int _height);
+void qr_image_cross_masking_median_filter(unsigned char* _img,
+                                          int _width, int _height);
 
-void qr_wiener_filter(unsigned char *_img,int _width,int _height);
+void qr_wiener_filter(unsigned char* _img, int _width, int _height);
 
 /*Binarizes a grayscale image.*/
-void qr_binarize(unsigned char *_img,int _width,int _height);
-unsigned char *qr_binarize1(const unsigned char *_img,int _width,int _height);
+void qr_binarize(unsigned char* _img, int _width, int _height);
+
+unsigned char* qr_binarize1(const unsigned char* _img, int _width, int _height);
+
 #endif
 
 #endif // BINARIZE_H

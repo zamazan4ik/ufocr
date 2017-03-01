@@ -30,17 +30,27 @@ typedef struct _Rect
 
 
 class QString;
+
 class QWidget;
 
-QString extractFileName(const QString &path);
-QString extractFilePath(const QString &path);
-QString extractDigits(const QString &fn);
-bool findProgram(const QString &name);
-void styledWarningMessage(QWidget *parent, const QString &text);
-void styledInfoMessage(QWidget *parent, const QString &text);
-void styledCriticalMessage(QWidget *parent, const QString &text);
+QString extractFileName(const QString& path);
+
+QString extractFilePath(const QString& path);
+
+QString extractDigits(const QString& fn);
+
+bool findProgram(const QString& name);
+
+void styledWarningMessage(QWidget* parent, const QString& text);
+
+void styledInfoMessage(QWidget* parent, const QString& text);
+
+void styledCriticalMessage(QWidget* parent, const QString& text);
+
 void qSleep(int msecs);
+
 void clearTmpFiles();
+
 inline bool _contains(qreal x1, qreal x2, qreal xc)
 {
     return ((xc >= x1) && (xc <= x2)) || ((xc <= x1) && (xc >= x2));

@@ -19,9 +19,9 @@
 #include "busyform.h"
 #include "ui_busyform.h"
 
-BusyForm::BusyForm(QWidget *parent) :
-    QSplashScreen(parent),
-    ui(new Ui::BusyForm)
+BusyForm::BusyForm(QWidget* parent) :
+        QSplashScreen(parent),
+        ui(new Ui::BusyForm)
 {
     ui->setupUi(this);
     //setAttribute(Qt::WA_DeleteOnClose, true);
@@ -32,6 +32,6 @@ BusyForm::~BusyForm()
     delete ui;
 }
 
-void BusyForm::textOut(const QString &text)
+void BusyForm::textOut(const QString& text)
 {
 }

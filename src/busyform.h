@@ -28,16 +28,19 @@ class BusyForm;
 
 class BusyForm : public QSplashScreen
 {
-    Q_OBJECT
+Q_OBJECT
 
 public:
-    explicit BusyForm(QWidget *parent = 0);
+    explicit BusyForm(QWidget* parent = 0);
+
     ~BusyForm();
+
 public slots:
-    void textOut(const QString &text);
+
+    void textOut(const QString& text);
 
 private:
-    Ui::BusyForm *ui;
+    Ui::BusyForm* ui;
 };
 
 #endif // BUSYFORM_H

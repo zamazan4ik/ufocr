@@ -25,7 +25,8 @@
 class XSaneScannerFE : public ScannerBase
 {
 public:
-    XSaneScannerFE(const QString &PLL, QObject *parent = 0) : ScannerBase(parent) {
+    XSaneScannerFE(const QString& PLL, QObject* parent = 0) : ScannerBase(parent)
+    {
 
         addParameter("-s");
         addParameter("-n");
@@ -36,15 +37,16 @@ public:
 
     }
 
-    void exec() {
+    void exec()
+    {
         waitFor();
         execInternal("xsane");
     }
 };
 
 
-ScannerBase::ScannerBase(QObject *parent) :
-    QObject(parent), scanProcess(this)
+ScannerBase::ScannerBase(QObject* parent) :
+        QObject(parent), scanProcess(this)
 {
     environment.append(QProcess::systemEnvironment());
 }
@@ -54,17 +56,17 @@ ScannerBase::~ScannerBase()
     waitFor();
 }
 
-void ScannerBase::addParameter(const QString &s)
+void ScannerBase::addParameter(const QString& s)
 {
     parameters.append(s);
 }
 
-void ScannerBase::addEnvironmentVar(const QString &s)
+void ScannerBase::addEnvironmentVar(const QString& s)
 {
     environment.append(s);
 }
 
-void ScannerBase::setOutputFile(const QString &s)
+void ScannerBase::setOutputFile(const QString& s)
 {
     outputFile = s;
 }
@@ -80,22 +82,22 @@ void ScannerBase::waitFor()
     scanProcess.waitForFinished(10000);
 }
 
-void ScannerBase::execInternal(const QString &s)
+void ScannerBase::execInternal(const QString& s)
 {
     scanProcess.setEnvironment(environment);
     QStringList sl;
     sl.append(parameters);
     sl.append(outputFile);
-    connect(&scanProcess, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(finished(int,QProcess::ExitStatus)));
+    connect(&scanProcess, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(finished(int, QProcess::ExitStatus)));
     scanProcess.start(s, sl);
 }
 
-void ScannerBase::setProgramName(const QString &s)
+void ScannerBase::setProgramName(const QString& s)
 {
     pName = s;
 }
 
-void ScannerBase::setPreloadLibrary(const QString &s)
+void ScannerBase::setPreloadLibrary(const QString& s)
 {
     preloadLibrary = s;
 }
@@ -103,16 +105,16 @@ void ScannerBase::setPreloadLibrary(const QString &s)
 QString ScannerFactory::findPreloadLibrary()
 {
     QString path = QString(PRILIBRARY_PATH);
-    return  path + QString("libxspreload.so");
+    return path + QString("libxspreload.so");
 }
 
 void ScannerFactory::findFEs()
 {
     if (findProgram("xsane"))
+    {
         fes << "xsane";
+    }
 }
-
-
 
 
 ScannerFactory::ScannerFactory()
@@ -122,10 +124,12 @@ ScannerFactory::ScannerFactory()
 }
 
 
-ScannerBase *ScannerFactory::createScannerFE(const QString &name)
+ScannerBase* ScannerFactory::createScannerFE(const QString& name)
 {
     if (fes.contains(name))
+    {
         return new XSaneScannerFE(preloadPath);
+    }
     return NULL;
 }
 

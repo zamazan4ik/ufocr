@@ -19,24 +19,32 @@
 
 #ifndef DROPLABEL_H
 #define DROPLABEL_H
+
 #include <QLabel>
 
 class QListWidget;
 
 class DropLabel : public QLabel
 {
-    Q_OBJECT
+Q_OBJECT
 public:
-    DropLabel(QWidget *parent = 0, Qt::WindowFlags f = 0);
-    void setListWidget(QListWidget *w);
+    DropLabel(QWidget* parent = 0, Qt::WindowFlags f = 0);
+
+    void setListWidget(QListWidget* w);
+
 signals:
+
     void pageRemoved(int id);
+
 protected:
-    void dragEnterEvent(QDragEnterEvent *event);
-    void dragLeaveEvent(QDragLeaveEvent *event);
-    void dropEvent(QDropEvent *event);
+    void dragEnterEvent(QDragEnterEvent* event);
+
+    void dragLeaveEvent(QDragLeaveEvent* event);
+
+    void dropEvent(QDropEvent* event);
+
 private:
-    QListWidget *lw;
+    QListWidget* lw;
 };
 
 #endif // DROPLABEL_H

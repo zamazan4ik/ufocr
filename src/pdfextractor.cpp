@@ -31,11 +31,10 @@
 #include <QFileInfoList>
 
 
-
-PDFExtractor::PDFExtractor(QObject *parent) :
-    QObject(parent), proc(), convertEntire(false)
+PDFExtractor::PDFExtractor(QObject* parent) :
+        QObject(parent), proc(), convertEntire(false)
 {
-    connect (&proc, SIGNAL(started()), this, SIGNAL(processStarted()), Qt::QueuedConnection);
+    connect(&proc, SIGNAL(started()), this, SIGNAL(processStarted()), Qt::QueuedConnection);
     connect(&proc, SIGNAL(finished(int)), this, SLOT(procFinished()), Qt::QueuedConnection);
     //connect(&proc, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(procFinishedError()));
     connect(&proc, SIGNAL(error(QProcess::ProcessError)), this, SLOT(procFinishedError()));
@@ -47,28 +46,30 @@ PDFExtractor::~PDFExtractor()
     clearFiles();
 }
 
-void PDFExtractor::setCommandStringPaged(const QString &cmdStr)
+void PDFExtractor::setCommandStringPaged(const QString& cmdStr)
 {
     commandStringPaged = cmdStr;
 }
 
-void PDFExtractor::setConvertEntire(const QString &cmdStr)
+void PDFExtractor::setConvertEntire(const QString& cmdStr)
 {
     commandStringEntire = cmdStr;
 }
 
 void PDFExtractor::setOutputDir()
 {
-    QString pdfout = Settings::instance()->workingDir()+ QString("pdfout/");
+    QString pdfout = Settings::instance()->workingDir() + QString("pdfout/");
     outputDir = pdfout;
     QDir dir(pdfout);
     if (!dir.exists())
+    {
         dir.mkdir(pdfout);
-    else {
+    }
+    else
+    {
         dir.setFilter(QDir::Files);
         QStringList sl = dir.entryList();
-        foreach (QString s, sl)
-        dir.remove(pdfout+s);
+                foreach (QString s, sl)dir.remove(pdfout + s);
     }
 }
 
@@ -77,7 +78,7 @@ QString PDFExtractor::getOutputDir()
     return outputDir;
 }
 
-void PDFExtractor::setOutputExtension(const QString &value)
+void PDFExtractor::setOutputExtension(const QString& value)
 {
     outputExtension = value;
 }
@@ -96,7 +97,7 @@ void PDFExtractor::run()
     proc.start(cmd, sl);
 }
 
-void PDFExtractor::setOutputPrefix(const QString &value)
+void PDFExtractor::setOutputPrefix(const QString& value)
 {
     outputPrefix = value;
 }
@@ -106,7 +107,7 @@ QString PDFExtractor::getOutputPrefix()
     return outputPrefix;
 }
 
-void PDFExtractor::setResolution(const QString &value)
+void PDFExtractor::setResolution(const QString& value)
 {
     resolution = value;
 }
@@ -116,7 +117,7 @@ QString PDFExtractor::getResolution()
     return resolution;
 }
 
-void PDFExtractor::setSourcePDF(const QString &value)
+void PDFExtractor::setSourcePDF(const QString& value)
 {
     sourcePDF = value;
 }
@@ -126,7 +127,7 @@ QString PDFExtractor::getSourcePDF()
     return sourcePDF;
 }
 
-void PDFExtractor::setStartPage(const QString &value)
+void PDFExtractor::setStartPage(const QString& value)
 {
     startPage = value.toInt();
 }
@@ -136,7 +137,7 @@ int PDFExtractor::getStartPage()
     return startPage;
 }
 
-void PDFExtractor::setStopPage(const QString &value)
+void PDFExtractor::setStopPage(const QString& value)
 {
     stopPage = value.toInt();
 }
@@ -153,7 +154,7 @@ void PDFExtractor::cancelProcess()
 }
 
 
-void PDFExtractor::sortDir(QDir &dir)
+void PDFExtractor::sortDir(QDir& dir)
 {
     //pageCount();
     dir.setFilter(QDir::Files | QDir::Hidden | QDir::NoSymLinks);
@@ -186,12 +187,13 @@ void PDFExtractor::processFiles()
     sortDir(dir);
     QFileInfoList fil;
     fil = dir.entryInfoList(filters, QDir::Files, QDir::Name);
-    int counter =  fil.count();
-    while (counter > 0) {
-            int current = fil.count() - counter;
-            QApplication::processEvents();
-                    emit addPage(fil[current].absoluteFilePath(), current+1, fil.count());
-                    counter--;
+    int counter = fil.count();
+    while (counter > 0)
+    {
+        int current = fil.count() - counter;
+        QApplication::processEvents();
+        emit addPage(fil[current].absoluteFilePath(), current + 1, fil.count());
+        counter--;
     }
     clearFiles();
     emit extractingFinished();
@@ -203,26 +205,32 @@ void PDFExtractor::clearFiles()
     dir.setPath(outputDir);
     QFileInfoList fil;
     fil = dir.entryInfoList(filters, QDir::Files, QDir::Name);
-    foreach (QFileInfo fi, fil) {
+            foreach (QFileInfo fi, fil)
+        {
             dir.remove(fi.absoluteFilePath());
-    }
+        }
 }
 
 void PDFExtractor::removeRemaining()
 {
-    if (lastFile != "") {
+    if (lastFile != "")
+    {
         QDir dir;
         sortDir(dir);
-        QStringList sl =  dir.entryList();
+        QStringList sl = dir.entryList();
         sl.sort();
         bool doDelete = false;
-        for (int i = 0; i < sl.count(); i++) {
-            if (doDelete) {
-                QFile f(outputDir+sl.at(i));
+        for (int i = 0; i < sl.count(); i++)
+        {
+            if (doDelete)
+            {
+                QFile f(outputDir + sl.at(i));
                 f.remove();
             }
             if (lastFile.endsWith(sl.at(i)))
+            {
                 doDelete = true;
+            }
 
         }
 

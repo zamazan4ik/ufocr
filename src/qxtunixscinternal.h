@@ -16,18 +16,22 @@
 
 #include <QObject>
 
-class QXtUnixSignalCatcherInternal  : public QObject
+class QXtUnixSignalCatcherInternal : public QObject
 {
-    Q_OBJECT
+Q_OBJECT
 
 public:
-    QXtUnixSignalCatcherInternal(QObject *parent = 0) :
-        QObject(parent) {}
-    void emitSignal(int sig_num) {
+    QXtUnixSignalCatcherInternal(QObject* parent = 0) :
+            QObject(parent)
+    {}
+
+    void emitSignal(int sig_num)
+    {
         emit unixSignalInternal(sig_num);
     }
 
 signals:
+
     void unixSignalInternal(int sig_num);
 
 };

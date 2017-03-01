@@ -31,25 +31,38 @@ class QIPBlackAndWhiteImage;
 class TableAnalizer
 {
 public:
-    TableAnalizer(QIPBlackAndWhiteImage *image);
-    QList<Rect> splitTable(const QRect &bounds);
-    QList<Rect> splitTableForce(const QRect &bounds);
-    Rect getSkew(const QRect &bounds);
+    TableAnalizer(QIPBlackAndWhiteImage* image);
+
+    QList<Rect> splitTable(const QRect& bounds);
+
+    QList<Rect> splitTableForce(const QRect& bounds);
+
+    Rect getSkew(const QRect& bounds);
+
 private:
-    QIPBlackAndWhiteImage * img;
+    QIPBlackAndWhiteImage* img;
     Rect maxRect;
     QList<Rect> blocks;
 private:
-    bool findRect(const QRect &bounds);
+    bool findRect(const QRect& bounds);
+
     void updateComponents(int x, int y, int label);
-    bool findMax(const QRect &bounds);
+
+    bool findMax(const QRect& bounds);
+
     void clearImage();
+
     void clearGarbage();
+
     void drawHorzLine(int y, int minx, int maxx);
+
     void drawVertLine(int x, int miny, int maxy);
-    void addBars(const QRect &bounds);
-    QList<Rect> sortBlocks(const QList<Rect> &blocks);
-    Rect getSkew2(const QRect &bounds);
+
+    void addBars(const QRect& bounds);
+
+    QList<Rect> sortBlocks(const QList<Rect>& blocks);
+
+    Rect getSkew2(const QRect& bounds);
 };
 
 #endif // TABLEANALIZER_H

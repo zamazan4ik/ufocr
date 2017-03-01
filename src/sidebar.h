@@ -26,28 +26,43 @@ class QSnippet;
 
 class SideBar : public QListWidget
 {
-    Q_OBJECT
+Q_OBJECT
 public:
-    explicit SideBar(QWidget *parent = 0);
-    void addItem ( QSnippet *item );
+    explicit SideBar(QWidget* parent = 0);
+
+    void addItem(QSnippet* item);
+
     void clearBlocks();
-    void select(const QString &name);
+
+    void select(const QString& name);
+
     void selectFirstFile();
+
 signals:
+
     void pageSelected(int id);
+
     void filesDropped(QStringList);
+
     void fileRemoved(int id);
+
 private slots:
-    void itemActive( QListWidgetItem *item, QListWidgetItem *item2 );
+
+    void itemActive(QListWidgetItem* item, QListWidgetItem* item2);
+
 protected:
-    QStringList mimeTypes () const;
-    Qt::DropActions supportedDropActions () const;
-    bool dropMimeData(int index, const QMimeData *data, Qt::DropAction action);
+    QStringList mimeTypes() const;
+
+    Qt::DropActions supportedDropActions() const;
+
+    bool dropMimeData(int index, const QMimeData* data, Qt::DropAction action);
+
     void startDrag(Qt::DropActions supportedActions);
 
 private:
-    QSnippet *getItemByName(const QString &name);
-    QSnippet *current;
+    QSnippet* getItemByName(const QString& name);
+
+    QSnippet* current;
     bool lock;
     bool dragging;
 };

@@ -39,11 +39,11 @@ The elements of the resulting array may be accesed using the label() method.
 
 class CCBuilder : public QObject
 {
-    Q_OBJECT
+Q_OBJECT
 public:
 
     /* pixmap is the image to be analysed */
-    explicit CCBuilder(const QImage &img,  QObject *parent = 0);
+    explicit CCBuilder(const QImage& img, QObject* parent = 0);
 
     ~CCBuilder();
 
@@ -64,31 +64,43 @@ public:
 
     QRect crop();
 
-    quint32 * scanLine(int y);
+    quint32* scanLine(int y);
 
-    quint8 getMediumBWBG(quint32 *hist);
+    quint8 getMediumBWBG(quint32* hist);
 
 signals:
 
 public slots:
 private:
     void initialScan();
+
     void backwardScan();
+
     void forwardScan();
+
     int labelChecked(int x, int y);
+
     void setLabel(int x, int y, int newValue);
+
     void relabelLineLR(int y);
+
     void relabelLineRL(int y);
+
     inline bool isForeground(int x, QRgb value);
+
     void scanFirstLineLR();
+
     void scanLineLR(int y);
+
     void labelLeftmostPoint(int y);
+
     void labelRightmostPoint(int y);
+
 private:
     quint32 thr1, thr2;
     QImage image;
-    quint32 * labels;
-    bool * flags;
+    quint32* labels;
+    bool* flags;
     bool skipNext;
     IntList recolor;
     quint32 maxlabel;
@@ -99,6 +111,7 @@ private:
     int dcounter;
     int gcounter;
 #endif
+
     friend class Cropper;
 };
 

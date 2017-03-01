@@ -27,27 +27,33 @@
 
 #define _GNU_SOURCE
 #define __USE_GNU
+
 #include <dlfcn.h>
 
 //static int fd = 0;
-static FILE * f;
+static FILE* f;
 
 /*int open(const char *pathname, int flags)
 {
         printf("called %s\n", pathname);
 }*/
-FILE* fopen(const char* path, const char* mode) {
+FILE* fopen(const char* path, const char* mode)
+{
     printf("called %s\n", path);
-FILE* (*real_fopen)(const char*, const char*) =
-dlsym(RTLD_NEXT, "fopen");
-    if (strstr(path, "input.png")== NULL)
+    FILE* (* real_fopen)(const char*, const char*) =
+    dlsym(RTLD_NEXT, "fopen");
+    if (strstr(path, "input.png") == NULL)
+    {
         return real_fopen(path, mode);
-if (strstr(mode, "r"))
-    return 0;
+    }
+    if (strstr(mode, "r"))
+    {
+        return 0;
+    }
 //if (fd <= 0)
 //fd = open("/var/tmp/yagf.fifo", O_WRONLY);
-f = real_fopen(path, mode);
-return f;
+    f = real_fopen(path, mode);
+    return f;
 }
 
 /*size_t fwrite(const void *ptr, size_t size, size_t nmemb,
@@ -62,10 +68,12 @@ dlsym(RTLD_NEXT, "fwrite");
 
 }*/
 
-int fclose(FILE *fp) {
-    int (* real_fclose)(FILE *fp) = dlsym(RTLD_NEXT, "fclose");
-    if (f == fp) {
-   //     write(fd, endmark, 6);
+int fclose(FILE* fp)
+{
+    int (* real_fclose)(FILE* fp) = dlsym(RTLD_NEXT, "fclose");
+    if (f == fp)
+    {
+        //     write(fd, endmark, 6);
         int ppid = getppid();
         kill(ppid, SIGUSR2);
     }

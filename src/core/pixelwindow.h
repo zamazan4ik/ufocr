@@ -26,21 +26,26 @@
 class PixelWindow
 {
 public:
-    PixelWindow(QIPBlackAndWhiteImage *image, int x, int y, int width, int height);
-    PixelWindow(QIPGrayscaleImage * image, int x, int y, int width, int height);
+    PixelWindow(QIPBlackAndWhiteImage* image, int x, int y, int width, int height);
+
+    PixelWindow(QIPGrayscaleImage* image, int x, int y, int width, int height);
+
     ~PixelWindow();
+
     void move(int newX, int newY);
+
     quint8 pixel(int x, int y);
+
 private:
-    QIPBlackAndWhiteImage * img;
-    QIPGrayscaleImage * gsimg;
+    QIPBlackAndWhiteImage* img;
+    QIPGrayscaleImage* gsimg;
     int xStart;
     int yStart;
     int w;
     int h;
     int iw;
-    quint8 ** lines;
-    quint8 * blankLine;
+    quint8** lines;
+    quint8* blankLine;
 };
 
 #endif // PIXELWINDOW_H

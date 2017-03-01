@@ -3,20 +3,22 @@
 
 #include <QWidget>
 
-namespace Ui {
+namespace Ui
+{
 class WaitWindow;
 }
 
 class WaitWindow : public QWidget
 {
-    Q_OBJECT
-    
+Q_OBJECT
+
 public:
-    explicit WaitWindow(QWidget *parent = 0);
+    explicit WaitWindow(QWidget* parent = 0);
+
     ~WaitWindow();
-    
+
 private:
-    Ui::WaitWindow *ui;
+    Ui::WaitWindow* ui;
 };
 
 #endif // WAITWINDOW_H

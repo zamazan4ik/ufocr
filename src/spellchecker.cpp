@@ -27,7 +27,7 @@
 #include "spellchecker.h"
 
 
-SpellChecker::SpellChecker(QTextEdit *textEdit): m_textEdit(textEdit)
+SpellChecker::SpellChecker(QTextEdit* textEdit) : m_textEdit(textEdit)
 {
     m_regExp = new QRegExp("[^\\s]*");
     //m_cursor= new QTextCursor(m_textEdit->document());
@@ -90,10 +90,10 @@ SpellChecker::SpellChecker(QTextEdit *textEdit): m_textEdit(textEdit)
 
 void SpellChecker::enumerateDicts()
 {
-    AspellConfig *config;
-    AspellDictInfoList *dlist;
-    AspellDictInfoEnumeration *dels;
-    const AspellDictInfo *entry;
+    AspellConfig* config;
+    AspellDictInfoList* dlist;
+    AspellDictInfoEnumeration* dels;
+    const AspellDictInfo* entry;
 
     config = new_aspell_config();
 
@@ -105,7 +105,8 @@ void SpellChecker::enumerateDicts()
 
     dels = aspell_dict_info_list_elements(dlist);
 
-    while ((entry = aspell_dict_info_enumeration_next(dels)) != 0) {
+    while ((entry = aspell_dict_info_enumeration_next(dels)) != 0)
+    {
         dictList->append(entry->code);
     }
 
@@ -113,9 +114,10 @@ void SpellChecker::enumerateDicts()
 
 }
 
-bool SpellChecker::hasDict(const QString &shname)
+bool SpellChecker::hasDict(const QString& shname)
 {
-    if (shname.contains("+")) {
+    if (shname.contains("+"))
+    {
         return dictList->contains(m_map->value(shname.split("+")[0]));
     }
     return dictList->contains(m_map->value(shname));
@@ -134,91 +136,120 @@ SpellChecker::~SpellChecker()
     delete dictList;
 }
 
-void SpellChecker::setLanguage(const QString &lang)
+void SpellChecker::setLanguage(const QString& lang)
 {
-    if (lang.isEmpty()) return;
+    if (lang.isEmpty())
+    { return; }
     delete_aspell_speller(spell_checker1);
     delete_aspell_speller(spell_checker2);
     bad_language.clear();
 
     m_lang2 = "en";
     m_lang1 = m_map->value(lang, QString("en"));
-    if (lang.contains("+")) {
+    if (lang.contains("+"))
+    {
         QStringList sl = lang.split("+");
         m_lang1 = m_map->value(sl[0], QString("en"));
         m_lang2 = m_map->value(sl[1], QString("en"));
-        if ((m_lang1 == "deu")||(lang == "ger")) {
+        if ((m_lang1 == "deu") || (lang == "ger"))
+        {
             m_lang1 = "de_DE";
         }
-        if ((m_lang2 == "deu")||(lang == "ger")) {
+        if ((m_lang2 == "deu") || (lang == "ger"))
+        {
             m_lang2 = "de_DE";
         }
     }
-    if (lang == "rus_fra") {
+    if (lang == "rus_fra")
+    {
         m_lang1 = "ru";
         m_lang2 = "fr";
-    } else if (lang == "rus_ger") {
+    }
+    else if (lang == "rus_ger")
+    {
         m_lang1 = "ru";
         m_lang2 = "de";
-    } else if (lang == "rus_spa") {
+    }
+    else if (lang == "rus_spa")
+    {
         m_lang1 = "ru";
         m_lang2 = "es";
     }
-    if ((lang == "deu")||(lang == "ger")) {
+    if ((lang == "deu") || (lang == "ger"))
+    {
         m_lang1 = "de_DE";
         m_lang2 = "de_AT";
 
     }
-    if (lang == "ruseng") {
+    if (lang == "ruseng")
+    {
         m_lang1 = "ru";
         m_lang2 = "en";
 
     }
     aspell_config_replace(spell_config1, "lang", m_lang1.toLatin1());
     aspell_config_replace(spell_config2, "lang", m_lang2.toLatin1());
-    AspellCanHaveError *possible_err = new_aspell_speller(spell_config1);
+    AspellCanHaveError* possible_err = new_aspell_speller(spell_config1);
     spell_checker1 = 0;
     if (aspell_error_number(possible_err) == 0)
+    {
         spell_checker1 = to_aspell_speller(possible_err);
+    }
     else
+    {
         delete_aspell_can_have_error(possible_err);
+    }
     possible_err = new_aspell_speller(spell_config2);
     spell_checker2 = 0;
     if (aspell_error_number(possible_err) == 0)
+    {
         spell_checker2 = to_aspell_speller(possible_err);
+    }
     else
+    {
         delete_aspell_can_have_error(possible_err);
+    }
 
     // Check absent dictionary
     if (spell_checker1 == 0)
+    {
         bad_language = m_lang1;
+    }
     if (spell_checker2 == 0)
+    {
         bad_language = m_lang2;
+    }
 
 }
 
 bool SpellChecker::spellCheck()
 {
-    if ((spell_checker1 == 0) && (spell_checker2 == 0)) {
+    if ((spell_checker1 == 0) && (spell_checker2 == 0))
+    {
         QPixmap icon;
         icon.load(":/warning.png");
-        QMessageBox messageBox(QMessageBox::NoIcon, "YAGF", QObject::trUtf8("Required spelling dictionary (%1) is not found.\nSpell-checking is disabled.\nTry to install an appropriate aspell dictionary.").arg(bad_language),
+        QMessageBox messageBox(QMessageBox::NoIcon, "YAGF", QObject::trUtf8(
+                "Required spelling dictionary (%1) is not found.\nSpell-checking is disabled.\nTry to install an appropriate aspell dictionary.").arg(
+                bad_language),
                                QMessageBox::Ok, 0);
         messageBox.setIconPixmap(icon);
         messageBox.exec();
         return false;
     }
     QTextCursor cursor(m_textEdit->document());
-    while (!cursor.isNull() && !cursor.atEnd()) {
-        if (hasLongHyphen(&cursor)) {
+    while (!cursor.isNull() && !cursor.atEnd())
+    {
+        if (hasLongHyphen(&cursor))
+        {
             cursor.select(QTextCursor::WordUnderCursor);
             QString word1 = cursor.selectedText();
-            word1.truncate(word1.length()-1);
+            word1.truncate(word1.length() - 1);
             cursor.movePosition(QTextCursor::NextWord);
             cursor.select(QTextCursor::WordUnderCursor);
             QString word2 = cursor.selectedText();
-            word1 = word1 +word2;
-            if (checkWordSpelling(word1)) {
+            word1 = word1 + word2;
+            if (checkWordSpelling(word1))
+            {
                 cursor.movePosition(QTextCursor::PreviousWord);
                 cursor.select(QTextCursor::WordUnderCursor);
                 cursor.removeSelectedText();
@@ -229,13 +260,16 @@ bool SpellChecker::spellCheck()
         }
         cursor.select(QTextCursor::WordUnderCursor);
         QString word = cursor.selectedText();
-        if (word == QString::fromUtf8("вЂ”")) {
+        if (word == QString::fromUtf8("вЂ”"))
+        {
             cursor.removeSelectedText();
             cursor.insertText(QString::fromUtf8("—"));
         }
-        if (hasHyphen(&cursor)) {
+        if (hasHyphen(&cursor))
+        {
             QString cc = checkConcatenation(&cursor);
-            if (!cc.isEmpty()) {
+            if (!cc.isEmpty())
+            {
                 cursor.movePosition(QTextCursor::PreviousWord);
                 cursor.movePosition(QTextCursor::PreviousWord);
                 cursor.select(QTextCursor::WordUnderCursor);
@@ -252,17 +286,23 @@ bool SpellChecker::spellCheck()
         QTextCursor oldc = cursor;
         if (!cursor.movePosition(QTextCursor::NextWord,
                                  QTextCursor::MoveAnchor))
+        {
             break;
+        }
 //cursor.movePosition(QTextCursor::EndOfWord,  QTextCursor::MoveAnchor);
 
         //cursor = m_textEdit->document()->find(*m_regExp, cursor);
         int oldpos = oldc.position();
         int newpos = cursor.position();
         if (abs(newpos - oldpos) < 3)
+        {
             cursor.setPosition(newpos + 1);
+        }
     }
     if (!cursor.isNull())
+    {
         _checkWord(&cursor);
+    }
     return true;
 }
 
@@ -276,25 +316,30 @@ void SpellChecker::unSpellCheck()
     cursor.clearSelection();
 }
 
-void SpellChecker::_checkWord(QTextCursor *cursor)
+void SpellChecker::_checkWord(QTextCursor* cursor)
 {
     cursor->select(QTextCursor::WordUnderCursor);
     QString selText = cursor->selectedText();
     static const QRegExp nonDigits("\\D");
     if (!selText.contains(nonDigits))
+    {
         return;
+    }
     selText = selText.remove(QString::fromUtf8("«"));
     selText = selText.remove(QString::fromUtf8("»"));
     //selText = selText.remove("\"");
     selText = selText.remove(QString::fromUtf8("("));
     selText = selText.remove(QString::fromUtf8(")"));
 
-    if (!checkWordSpelling(selText)) {
+    if (!checkWordSpelling(selText))
+    {
         QTextCharFormat fmt = cursor->charFormat();
         fmt.setUnderlineColor(QColor(Qt::red));
         fmt.setUnderlineStyle(QTextCharFormat::SpellCheckUnderline);
         cursor->setCharFormat(fmt);
-    } else {
+    }
+    else
+    {
         QTextCharFormat fmt = cursor->charFormat();
         fmt.setUnderlineStyle(QTextCharFormat::NoUnderline);
         cursor->setCharFormat(fmt);
@@ -302,7 +347,7 @@ void SpellChecker::_checkWord(QTextCursor *cursor)
     cursor->clearSelection();
 }
 
-bool SpellChecker::checkWordSpelling(const QString &word)
+bool SpellChecker::checkWordSpelling(const QString& word)
 {
     QString tmp = word;
     tmp = tmp.remove(QString::fromUtf8("»"));
@@ -310,39 +355,46 @@ bool SpellChecker::checkWordSpelling(const QString &word)
 
     QByteArray ba = tmp.toUtf8();
     return (aspell_speller_check(spell_checker1, ba.data(), ba.size()) != 0) ||
-           (aspell_speller_check((spell_checker2 != NULL ? spell_checker2 : spell_checker1), ba.data(), ba.size()) != 0);
+           (aspell_speller_check((spell_checker2 != NULL ? spell_checker2 : spell_checker1), ba.data(), ba.size()) !=
+            0);
 }
 
 void SpellChecker::checkWord()
 {
     if ((spell_checker1 == 0) && (spell_checker2 == 0))
+    {
         return;
+    }
     QTextCursor cursor = m_textEdit->textCursor();
     _checkWord(&cursor);
 }
 
-bool SpellChecker::hasHyphen(QTextCursor *cursor)
+bool SpellChecker::hasHyphen(QTextCursor* cursor)
 {
     if ((spell_checker1 == 0) || (spell_checker2 == 0))
+    {
         return false;
+    }
     cursor->movePosition(QTextCursor::EndOfWord);
     //cursor->movePosition(QTextCursor::NextCharacter);
     cursor->select(QTextCursor::WordUnderCursor);
     QString selText = cursor->selectedText();
     cursor->movePosition(QTextCursor::PreviousWord);
     if (selText.endsWith(QString::fromUtf8("-")))
+    {
         return true;
+    }
     return false;
 }
 
-bool SpellChecker::hasLongHyphen(QTextCursor *cursor)
+bool SpellChecker::hasLongHyphen(QTextCursor* cursor)
 {
     cursor->select(QTextCursor::WordUnderCursor);
     QString selText = cursor->selectedText();
     return selText.endsWith(QString::fromUtf8("—"));
 }
 
-QString SpellChecker::checkConcatenation(QTextCursor *cursor)
+QString SpellChecker::checkConcatenation(QTextCursor* cursor)
 {
     cursor->movePosition(QTextCursor::PreviousWord);
     cursor->select(QTextCursor::WordUnderCursor);
@@ -352,9 +404,11 @@ QString SpellChecker::checkConcatenation(QTextCursor *cursor)
     cursor->select(QTextCursor::WordUnderCursor);
     QString word2 = cursor->selectedText();
     cursor->movePosition(QTextCursor::PreviousWord);
-    QString word = word1+word2;
+    QString word = word1 + word2;
     if (checkWordSpelling(word))
+    {
         return word;
+    }
     return "";
 }
 
@@ -362,19 +416,26 @@ QStringList SpellChecker::suggestions()
 {
     QStringList sl;
     if ((spell_checker1 == 0) || (spell_checker2 == 0))
+    {
         return sl;
+    }
     QTextCursor cursor = m_textEdit->textCursor();
     cursor.select(QTextCursor::WordUnderCursor);
     QString word = cursor.selectedText();
     QByteArray ba = word.toUtf8();
-    if ((aspell_speller_check(spell_checker2, ba.data(), ba.size()) != 0)||(aspell_speller_check(spell_checker1, ba.data(), ba.size()) != 0))
+    if ((aspell_speller_check(spell_checker2, ba.data(), ba.size()) != 0) ||
+        (aspell_speller_check(spell_checker1, ba.data(), ba.size()) != 0))
+    {
         return sl;
-    const struct AspellWordList *awl = aspell_speller_suggest(spell_checker1, ba.data(), ba.size());
-    if (aspell_word_list_size(awl) > 0) {
-        struct AspellStringEnumeration *ase = aspell_word_list_elements(awl);
-        int i  = 0;
-        while ((!aspell_string_enumeration_at_end(ase))&&(i < 10)) {
-            const char *text = aspell_string_enumeration_next(ase);
+    }
+    const struct AspellWordList* awl = aspell_speller_suggest(spell_checker1, ba.data(), ba.size());
+    if (aspell_word_list_size(awl) > 0)
+    {
+        struct AspellStringEnumeration* ase = aspell_word_list_elements(awl);
+        int i = 0;
+        while ((!aspell_string_enumeration_at_end(ase)) && (i < 10))
+        {
+            const char* text = aspell_string_enumeration_next(ase);
             sl << QString::fromUtf8(text);
             i++;
         }

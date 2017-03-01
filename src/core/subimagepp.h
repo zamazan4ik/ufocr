@@ -27,19 +27,26 @@
 class SubimagePP
 {
 public:
-    explicit SubimagePP(QImage &image);
+    explicit SubimagePP(QImage& image);
+
     ~SubimagePP();
+
     void fillComponents();
+
     void removeBars();
+
     void removeNoise();
+
     void stregthen();
+
 signals:
-    
+
 public slots:
 private:
-    void labelsToBackground(QSet<quint32> &labels);
+    void labelsToBackground(QSet<quint32>& labels);
+
 private:
-    QImage &img;
+    QImage& img;
     CCBuilder ccbuilder;
     QList<Rect> components;
     quint32 color;

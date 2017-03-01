@@ -28,79 +28,145 @@
 #include <QPixmap>
 
 class CCBuilder;
+
 class Settings;
 
 class Page : public QObject
 {
-    Q_OBJECT
+Q_OBJECT
 public:
-    explicit Page(const int pid, QObject *parent = 0);
+    explicit Page(const int pid, QObject* parent = 0);
+
     ~Page();
+
     bool loadFile(QString fileName, int tiled, bool loadIntoView = true);
+
     QPixmap displayPixmap();
+
     QImage thumbnail();
+
     QString recognizedText();
-    void setRecognizedText(const QString &t);
+
+    void setRecognizedText(const QString& t);
+
     bool makeLarger();
+
     bool makeSmaller();
+
     void rotate(qreal angle);
+
     void unload();
+
     void addBlock(Block block, int blocknum = 0, int inTable = 0);
-    void deleteBlock(const Block &b);
-    void deleteBlock(const QRect &r);
-    Block getBlock(const QRect &r);
+
+    void deleteBlock(const Block& b);
+
+    void deleteBlock(const QRect& r);
+
+    Block getBlock(const QRect& r);
+
     Block getBlock(int index);
+
     int blockCount();
+
     void clearBlocks();
-    void savePageForRecognition(const QString &fileName);
-    bool savePageAsImage(const QString &fileName, const QString &format);
-    void saveRawBlockForRecognition(QRect r, const QString &fileName);
-    void saveSubimage(QRect r, const QString &fileName);
-    void saveBlockForRecognition(QRect r, const QString &fileName, const QString &format);
-    void saveBlockForRecognition(int index, const QString &fileName);
-    void selectBlock(const QRect &r);
+
+    void savePageForRecognition(const QString& fileName);
+
+    bool savePageAsImage(const QString& fileName, const QString& format);
+
+    void saveRawBlockForRecognition(QRect r, const QString& fileName);
+
+    void saveSubimage(QRect r, const QString& fileName);
+
+    void saveBlockForRecognition(QRect r, const QString& fileName, const QString& format);
+
+    void saveBlockForRecognition(int index, const QString& fileName);
+
+    void selectBlock(const QRect& r);
+
     Block getSelectedBlock();
+
     bool deskew(bool recreateCB = true);
+
     void deskew(int x1, int y1, int x2, int y2);
+
     void rotate90CW();
+
     void rotate90CCW();
+
     void rotate180();
+
     void blockAllText();
+
     bool splitPage(bool preprocess);
+
     bool textHorizontal();
+
     QString fileName();
+
     QString originalFileName() const;
-    void setOriginalFileName(const QString &fn);
+
+    void setOriginalFileName(const QString& fn);
+
     int pageID();
+
     void sortBlocksInternal();
+
     bool isDeskewed();
+
     bool isCropped();
+
     void setCropped(bool value);
+
     bool isPreprocessed();
+
     qreal getRotation();
+
     void setDeskewed(bool value);
+
     void setPreprocessed(bool value);
+
     void reSaveTmpPage();
-    QRect scaleRect(QRect &rect);
-    QRect scaleTo(QRect &rect, qreal newScale);
-    QRect scaleRectToScale(QRect &rect);
+
+    QRect scaleRect(QRect& rect);
+
+    QRect scaleTo(QRect& rect, qreal newScale);
+
+    QRect scaleRectToScale(QRect& rect);
+
     void splitTable();
+
 signals:
+
     void refreshView(bool show);
-    void textOut(const QString &msg);
+
+    void textOut(const QString& msg);
+
 public slots:
 private:
     void renumberBlocks();
-    void applyTransforms(QImage &image, qreal scale);
-    void rotateImageInternal(QImage &image, qreal angle);
-    QRect shiftRectBeforeScale(QRect &rect, int sx, int sy);
+
+    void applyTransforms(QImage& image, qreal scale);
+
+    void rotateImageInternal(QImage& image, qreal angle);
+
+    QRect shiftRectBeforeScale(QRect& rect, int sx, int sy);
+
     QImage tryRotate(QImage image, qreal angle);
+
     QImage currentImage();
-    QString saveTmpPage(const QString &format);
+
+    QString saveTmpPage(const QString& format);
+
     QList<Rect> splitInternal();
+
     void prepareCCBuilder();
-    Block includes(const QRect &rect);
+
+    Block includes(const QRect& rect);
+
     void clearIntersected();
+
 private:
     QString originalFN;
     qreal scale;
@@ -115,8 +181,8 @@ private:
     bool loadedBefore;
     bool preprocessed;
     QString mFileName;
-    CCBuilder *ccbuilder;
-    Settings *settings;
+    CCBuilder* ccbuilder;
+    Settings* settings;
     int blockPointer;
     int pid;
     Block selectedBlock;

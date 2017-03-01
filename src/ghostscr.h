@@ -27,6 +27,7 @@ class GhostScr : public PDFExtractor
 {
 public:
     GhostScr();
+
     virtual QStringList makeCommandString();
 };
 

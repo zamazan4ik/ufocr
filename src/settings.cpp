@@ -17,14 +17,14 @@
 #include <QLocale>
 #include <QVariant>
 
-Settings *Settings::m_instance = NULL;
+Settings* Settings::m_instance = NULL;
 
 Settings::Settings()
 {
     //makeLanguageMaps();
 }
 
-Settings::Settings(const Settings &)
+Settings::Settings(const Settings&)
 {
     upscale = false;
 }
@@ -33,39 +33,54 @@ Settings::~Settings()
 {
 }
 
-Settings *Settings::instance()
+Settings* Settings::instance()
 {
     if (!m_instance)
+    {
         m_instance = new Settings();
+    }
     return m_instance;
 }
 
-void Settings::readSettings(const QString &path)
+void Settings::readSettings(const QString& path)
 {
     mPath = path;
     mPath = mPath.append("yagf.ini");
     settings = new QSettings(mPath, QSettings::IniFormat);
     version = settings->value("program/version").toString();
     if (version.isEmpty())
+    {
         fr = true;
+    }
     else
+    {
         fr = false;
+    }
     lastDir = settings->value("mainwindow/lastDir").toString();
     lastOutputDir = settings->value("mainwindow/lastOutputDir").toString();
     QString defEngine;
     if (findProgram("tesseract"))
+    {
         defEngine = "tesseract";
+    }
     else
+    {
         defEngine = "cuneiform";
+    }
     QString engine = settings->value("ocr/engine", QVariant(defEngine)).toString();
     if (engine == "cuneiform")
+    {
         selectedEngine = UseCuneiform;
+    }
     else
+    {
         selectedEngine = UseTesseract;
-    language = settings->value("ocr/language",  selectDefaultLanguageName()).toString();
+    }
+    language = settings->value("ocr/language", selectDefaultLanguageName()).toString();
     //selectLangsBox->setCurrentIndex(selectLangsBox->findData(QVariant(language)));
     outputFormat = settings->value("ocr/outputFormat", QString("text")).toString();
-    if (outputFormat == "") outputFormat = "text";
+    if (outputFormat == "")
+    { outputFormat = "text"; }
     checkSpelling = settings->value("mainWindow/checkSpelling", bool(true)).toBool();
     bool ok;
     fontSize = settings->value("mainwindow/fontSize", int(12)).toInt(&ok);
@@ -75,14 +90,16 @@ void Settings::readSettings(const QString &path)
     tessdataPath = settings->value("ocr/tessData", QVariant(tessdataPath)).toString();
     keepLines = settings->value("ocr/keepLines", QVariant(false)).toBool();
     if (tessdataPath.isEmpty())
+    {
         findTessDataPath();
+    }
     languages = settings->value("ocr/selectedLanguages", QStringList(language)).toStringList();
     rowBegin = settings->value("ocr/rowBegin", QVariant(QString("["))).toString();
     rowEnd = settings->value("ocr/rowEnd", QVariant(QString("]"))).toString();
-    cellSeparator =settings->value("ocr/cellSeparator", QVariant("|")).toString();
+    cellSeparator = settings->value("ocr/cellSeparator", QVariant("|")).toString();
     rowFromNewLine = settings->value("ocr/rowFromNewLine", QVariant(true)).toBool();
-    cropLoaded =  settings->value("processing/crop1", QVariant(true)).toBool();
-    autoDeskew =  settings->value("processing/deskew", QVariant(true)).toBool();
+    cropLoaded = settings->value("processing/crop1", QVariant(true)).toBool();
+    autoDeskew = settings->value("processing/deskew", QVariant(true)).toBool();
     preprocess = settings->value("processing/preprocess", QVariant(true)).toBool();
     doublePreprocess = settings->value("processing/dpreprocess", QVariant(false)).toBool();
     size = settings->value("mainwindow/size", QSize(800, 600)).toSize();
@@ -123,11 +140,15 @@ void Settings::writeSettings()
     settings->setValue("mainwindow/nolocale", noLocale);
     settings->setValue("mainwindow/rulocale", RussianLocale);
     settings->setValue("ocr/language", language);
-    for (int i = languages.count()-1; i >= 0; i--)
+    for (int i = languages.count() - 1; i >= 0; i--)
         if (languages.at(i).contains("+"))
+        {
             languages.removeAt(i);
+        }
     if (!languages.contains("digits"))
+    {
         languages << "digits";
+    }
     settings->setValue("ocr/selectedLanguages", languages);
 
     //settings->setValue("ocr/singleColumn", singleColumn);
@@ -137,7 +158,9 @@ void Settings::writeSettings()
     settings->setValue("ocr/tessData", tessdataPath);
     settings->setValue("processing/crop1", cropLoaded);
     if (doublePreprocess)
+    {
         autoDeskew = true;
+    }
     settings->setValue("processing/deskew", autoDeskew);
     settings->setValue("processing/preprocess", preprocess);
     settings->setValue("processing/dpreprocess", doublePreprocess);
@@ -190,7 +213,9 @@ bool Settings::getCheckSpelling()
 QString Settings::getTessdataPath()
 {
     if (!tessdataPath.endsWith("/"))
+    {
         tessdataPath = tessdataPath.append("/");
+    }
     return tessdataPath;
 }
 
@@ -234,24 +259,32 @@ void Settings::setMaxRecentProjects(const int value)
     maxRecentProjects = value;
 }
 
-QString Settings::getFullLanguageName(const QString &abbr)
+QString Settings::getFullLanguageName(const QString& abbr)
 {
-    QMap<QString, QString> * map;
+    QMap<QString, QString>* map;
     if (selectedEngine == UseCuneiform)
+    {
         map = &cuMap;
+    }
     if (selectedEngine == UseTesseract)
+    {
         map = &tesMap;
+    }
     return map->key(abbr, "");
 }
 
-QString Settings::getFullLanguageName(const QString &abbr, const QString &engine)
+QString Settings::getFullLanguageName(const QString& abbr, const QString& engine)
 {
-    QMap<QString, QString> * map;
+    QMap<QString, QString>* map;
     if (engine == "cuneiform")
+    {
         map = &cuMap;
-    if (engine == "tesseract") {
+    }
+    if (engine == "tesseract")
+    {
         map = &tesMap;
-        if (abbr.contains("+")) {
+        if (abbr.contains("+"))
+        {
             QStringList sl = abbr.split("+");
             return map->key(sl[0], "") + "+" + map->key(sl[1], "");
         }
@@ -259,23 +292,31 @@ QString Settings::getFullLanguageName(const QString &abbr, const QString &engine
     return map->key(abbr, "");
 }
 
-QString Settings::getShortLanguageName(const QString &lang)
+QString Settings::getShortLanguageName(const QString& lang)
 {
-    QMap<QString, QString> * map;
+    QMap<QString, QString>* map;
     if (selectedEngine == UseCuneiform)
+    {
         map = &cuMap;
+    }
     if (selectedEngine == UseTesseract)
+    {
         map = &tesMap;
+    }
     return map->value(lang, "");
 }
 
-QString Settings::getShortLanguageName(const QString &lang, const QString &engine)
+QString Settings::getShortLanguageName(const QString& lang, const QString& engine)
 {
-    QMap<QString, QString> * map;
+    QMap<QString, QString>* map;
     if (engine == "tesseract")
+    {
         map = &tesMap;
+    }
     if (engine == "cuneiform")
+    {
         map = &cuMap;
+    }
     return map->value(lang, "");
 }
 
@@ -299,22 +340,22 @@ bool Settings::getDoublePreprocessed()
     return doublePreprocess;
 }
 
-void Settings::setLanguage(const QString &value)
+void Settings::setLanguage(const QString& value)
 {
     language = value;
 }
 
-void Settings::setOutputFormat(const QString &value)
+void Settings::setOutputFormat(const QString& value)
 {
     outputFormat = value;
 }
 
-void Settings::setLastDir(const QString &value)
+void Settings::setLastDir(const QString& value)
 {
     lastDir = value;
 }
 
-void Settings::setLastOutputDir(const QString &value)
+void Settings::setLastOutputDir(const QString& value)
 {
     lastOutputDir = value;
 }
@@ -324,7 +365,7 @@ void Settings::setCheckSpelling(const bool value)
     checkSpelling = value;
 }
 
-void Settings::setTessdataPath(const QString &value)
+void Settings::setTessdataPath(const QString& value)
 {
     tessdataPath = value;
 }
@@ -334,12 +375,12 @@ void Settings::setSelectedEngine(const SelectedEngine value)
     selectedEngine = value;
 }
 
-void Settings::setSize(const QSize &value)
+void Settings::setSize(const QSize& value)
 {
     size = value;
 }
 
-void Settings::setPosition(const QPoint &value)
+void Settings::setPosition(const QPoint& value)
 {
     position = value;
 }
@@ -349,7 +390,7 @@ void Settings::setFullScreen(const bool value)
     fullScreen = value;
 }
 
-void Settings::setFontSize(const int &value)
+void Settings::setFontSize(const int& value)
 {
     fontSize = value;
 }
@@ -474,42 +515,59 @@ QStringList Settings::fullLanguageNames()
 QStringList Settings::getSelectedLanguages()
 {
     QStringList res;
-    foreach (QString s, languages) {
-        QString l = getFullLanguageName(s, "tesseract");
-        if (l!="")
-            res.append(l);
-        l = getFullLanguageName(s, "cuneiform");
-        if (l!="")
-            res.append(l);
-    }
+            foreach (QString s, languages)
+        {
+            QString l = getFullLanguageName(s, "tesseract");
+            if (l != "")
+            {
+                res.append(l);
+            }
+            l = getFullLanguageName(s, "cuneiform");
+            if (l != "")
+            {
+                res.append(l);
+            }
+        }
     res.removeDuplicates();
     return res;
 }
 
-QStringList Settings::selectedLanguagesAvailableTo(const QString &engine)
+QStringList Settings::selectedLanguagesAvailableTo(const QString& engine)
 {
     QStringList res;
-    if (engine == "cuneiform") {
-        foreach(QString s, languages) {
-            if (cuMap.values().contains(s))
-                res.append(cuMap.key(s, ""));
-        }
+    if (engine == "cuneiform")
+    {
+                foreach(QString s, languages)
+            {
+                if (cuMap.values().contains(s))
+                {
+                    res.append(cuMap.key(s, ""));
+                }
+            }
     }
-    if (engine == "tesseract") {
-        foreach(QString s, languages) {
-            if (tesMap.values().contains(s))
-                res.append(tesMap.key(s, ""));
-        }
+    if (engine == "tesseract")
+    {
+                foreach(QString s, languages)
+            {
+                if (tesMap.values().contains(s))
+                {
+                    res.append(tesMap.key(s, ""));
+                }
+            }
     }
     return res;
 }
 
-QStringList Settings::languagesAvailableTo(const QString &engine)
+QStringList Settings::languagesAvailableTo(const QString& engine)
 {
     if (engine == "cuneiform")
+    {
         return cuMap.keys();
+    }
     if (engine == "tesseract")
+    {
         return tesMap.keys();
+    }
     return QStringList();
 }
 
@@ -519,12 +577,16 @@ QStringList Settings::installedTesseractLanguages()
     QDir d(tessPath);
     QStringList res;
     QStringList sl = d.entryList(QStringList("*.traineddata"));
-    foreach (QString s, tesMap.values()) {
-        foreach(QString s1, sl) {
-            if (s1.startsWith(s))
-                res.append(tesMap.key(s, ""));
+            foreach (QString s, tesMap.values())
+        {
+                    foreach(QString s1, sl)
+                {
+                    if (s1.startsWith(s))
+                    {
+                        res.append(tesMap.key(s, ""));
+                    }
+                }
         }
-    }
     res.removeDuplicates();
     return res;
 }
@@ -550,15 +612,18 @@ bool Settings::getRowFromBNewLine()
     return rowFromNewLine;
 }
 
-void Settings::setSelectedLanguages(const QStringList &value)
+void Settings::setSelectedLanguages(const QStringList& value)
 {
     languages.clear();
-    foreach (QString s, value) {
-        QString l = getShortLanguageName(s, "tesseract");
-        if (l!="") languages.append(l);
-        l =getShortLanguageName(s, "cuneiform");
-        if (l!="") languages.append(l);
-    }
+            foreach (QString s, value)
+        {
+            QString l = getShortLanguageName(s, "tesseract");
+            if (l != "")
+            { languages.append(l); }
+            l = getShortLanguageName(s, "cuneiform");
+            if (l != "")
+            { languages.append(l); }
+        }
     languages.removeDuplicates();
 }
 
@@ -566,19 +631,27 @@ QString Settings::workingDir()
 {
     QString wDir = QDir::homePath();
     if (!wDir.endsWith("/"))
+    {
         wDir += '/';
+    }
     QDir d(wDir + ".config");
-    if (d.exists()) wDir += ".config/";
+    if (d.exists())
+    { wDir += ".config/"; }
     QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
     wDir = env.value("XDG_CONFIG_HOME", wDir);
     if (!wDir.endsWith("/"))
+    {
         wDir += '/';
+    }
     wDir += "yagf/";
     QDir dir(wDir);
-    if (!dir.exists()) {
+    if (!dir.exists())
+    {
         dir.mkdir(wDir);
         fr = true;
-    } else fr= false;
+    }
+    else
+    { fr = false; }
     return wDir;
 }
 
@@ -587,16 +660,23 @@ void Settings::startLangPair()
     lpi = 0;
 }
 
-bool Settings::getLangPair(QString &full, QString &abbr, bool forceTesseract)
+bool Settings::getLangPair(QString& full, QString& abbr, bool forceTesseract)
 {
-    QMap<QString, QString> * map;
+    QMap<QString, QString>* map;
     if (selectedEngine == UseCuneiform)
+    {
         map = &cuMap;
+    }
     if (selectedEngine == UseTesseract)
+    {
         map = &tesMap;
+    }
     if (forceTesseract)
+    {
         map = &tesMap;
-    if (lpi < map->count()) {
+    }
+    if (lpi < map->count())
+    {
         full = map->keys().at(lpi);
         abbr = map->value(full);
         lpi++;
@@ -605,7 +685,7 @@ bool Settings::getLangPair(QString &full, QString &abbr, bool forceTesseract)
     return false;
 }
 
-void Settings::setProjectDir(const QString &dir)
+void Settings::setProjectDir(const QString& dir)
 {
     projectDir = dir;
 }
@@ -713,9 +793,12 @@ void Settings::setLangTess()
     QStringList llanguages = languages;
     llanguages.removeAll("digits");
     int lc = llanguages.count();
-    for (int i= 0; i < lc; i++) {
-        for (int j = i+1; j < lc; j++) {
-            if ((tesMap.values().contains(llanguages[j]))&&(tesMap.values().contains(llanguages[i]))) {
+    for (int i = 0; i < lc; i++)
+    {
+        for (int j = i + 1; j < lc; j++)
+        {
+            if ((tesMap.values().contains(llanguages[j])) && (tesMap.values().contains(llanguages[i])))
+            {
                 QString nl = llanguages[i] + "+" + llanguages[j];
                 languages.append(nl);
                 tesMap.insert(getFullLanguageName((nl), "tesseract"), nl);
@@ -734,17 +817,17 @@ void Settings::setKeepLines(const bool value)
     keepLines = value;
 }
 
-void Settings::setRowBegin(const QString &value)
+void Settings::setRowBegin(const QString& value)
 {
     rowBegin = value;
 }
 
-void Settings::setRowEnd(const QString &value)
+void Settings::setRowEnd(const QString& value)
 {
     rowEnd = value;
 }
 
-void Settings::setCellSeparator(const QString &value)
+void Settings::setCellSeparator(const QString& value)
 {
     cellSeparator = value;
 }
@@ -754,28 +837,40 @@ void Settings::setRowFromBNewLine(const bool value)
     rowFromNewLine = value;
 }
 
-void Settings::addRecentProject(const QString &project)
+void Settings::addRecentProject(const QString& project)
 {
     if (project.contains("autosave"))
+    {
         return;
-    for(int i = recentProjects.count()-1; i >= 0; i--) {
+    }
+    for (int i = recentProjects.count() - 1; i >= 0; i--)
+    {
         QString p = recentProjects.at(i);
         if (!projectExists(p))
+        {
             recentProjects.removeAll(p);
+        }
     }
 
-    if(!recentProjects.contains(project)) {
+    if (!recentProjects.contains(project))
+    {
         recentProjects.prepend(project);
         if (recentProjects.count() >= maxRecentProjects)
+        {
             recentProjects.removeLast();
-    } else {
-       int i = recentProjects.indexOf(project);
-       if (i > 0)
-           recentProjects.swap(i, i-1);
+        }
+    }
+    else
+    {
+        int i = recentProjects.indexOf(project);
+        if (i > 0)
+        {
+            recentProjects.swap(i, i - 1);
+        }
     }
 }
 
-void Settings::removeRecentProject(const QString &project)
+void Settings::removeRecentProject(const QString& project)
 {
     recentProjects.removeAll(project);
 }
@@ -785,7 +880,7 @@ void Settings::setAutosaveInterval(const int value)
     autosaveInterval = value;
 }
 
-bool Settings::projectExists(const QString &dir)
+bool Settings::projectExists(const QString& dir)
 {
     QString project = dir + "yagf_project.xml";
     QFileInfo fi;
@@ -796,10 +891,12 @@ bool Settings::projectExists(const QString &dir)
 void Settings::findTessDataPath()
 {
     QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-    if (env.contains("TESSDATA_PREFIX")) {
+    if (env.contains("TESSDATA_PREFIX"))
+    {
         tessdataPath = env.value("TESSDATA_PREFIX");
-        if (tessdataPath.contains("$HOME")){
-            QString hp = QDir::homePath() +"/";
+        if (tessdataPath.contains("$HOME"))
+        {
+            QString hp = QDir::homePath() + "/";
             tessdataPath = tessdataPath.replace("$HOME", hp);
             tessdataPath = tessdataPath.replace("//", "/");
         }
@@ -807,22 +904,26 @@ void Settings::findTessDataPath()
     }
     QDir dir;
     dir.setPath("/usr/share/tessdata");
-    if (dir.exists()) {
+    if (dir.exists())
+    {
         tessdataPath = "/usr/share/";
         return;
     }
     dir.setPath("/usr/local/share/tessdata");
-    if (dir.exists()) {
+    if (dir.exists())
+    {
         tessdataPath = "/usr/local/share/";
         return;
     }
     dir.setPath("/usr/local/share/tesseract-ocr/tessdata");
-    if (dir.exists()) {
+    if (dir.exists())
+    {
         tessdataPath = "/usr/local/share/tesseract-ocr/";
         return;
     }
     dir.setPath("/usr/share/tesseract-ocr/tessdata");
-    if (dir.exists()) {
+    if (dir.exists())
+    {
         tessdataPath = "/usr/share/tesseract-ocr/";
         return;
     }
@@ -834,12 +935,17 @@ QString Settings::selectDefaultLanguageName()
 {
     QLocale loc = QLocale::system();
     QString name = "";
-    QMap<QString, QString> * map;
+    QMap<QString, QString>* map;
     if (selectedEngine == UseCuneiform)
+    {
         map = &cuMap;
+    }
     if (selectedEngine == UseTesseract)
+    {
         map = &tesMap;
-    switch (loc.language()) {
+    }
+    switch (loc.language())
+    {
         case QLocale::Bulgarian:
             name = map->value("Bulgarian");
             break;
@@ -923,7 +1029,9 @@ QString Settings::selectDefaultLanguageName()
             break;
     }
     if (name == "")
+    {
         name = "eng";
+    }
     return name;
 }
 
@@ -932,7 +1040,7 @@ QSize Settings::getIconSize()
     return iconSize;
 }
 
-void Settings::setIconSize(const QSize &value)
+void Settings::setIconSize(const QSize& value)
 {
     iconSize = value;
 }

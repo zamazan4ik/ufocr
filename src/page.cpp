@@ -774,8 +774,7 @@ int Page::pageID()
 void Page::sortBlocksInternal()
 {
     bool allBlocksNumbered = true;
-            foreach(Block b, blocks)
-            if (b.blockNumber() == 0)
+            foreach(Block b, blocks)if (b.blockNumber() == 0)
             {
                 allBlocksNumbered = false;
             }

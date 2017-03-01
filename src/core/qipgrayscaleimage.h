@@ -31,6 +31,7 @@
 */
 
 typedef qreal QIPHistogram[256];
+
 class QFile;
 
 /*!
@@ -51,7 +52,8 @@ public:
       MaxEntropyChannel and MinValue suite best if you canvert to grayscale for the further text extarction.
     */
 
-    enum GrayscaleConversion {
+    enum GrayscaleConversion
+    {
         RGBDevideByThree = 0, /*!< gray(i) = (r(i)+g(i)+b(i))/3 */
         MinMaxValue, /*!< gray(i) = (min(r(i), g(i), b(i)) + max(r(i), g(i), b(i)))/2 */
         MinValue, /*!< gray(i) = min(r(i), g(i), b(i)) */
@@ -71,14 +73,15 @@ public:
      */
 
 
-    explicit QIPGrayscaleImage(const QImage &image, GrayscaleConversion conversionMethod = RGBDevideByThree);
-    QIPGrayscaleImage( QIPBlackAndWhiteImage &image1, QIPBlackAndWhiteImage &image2);
+    explicit QIPGrayscaleImage(const QImage& image, GrayscaleConversion conversionMethod = RGBDevideByThree);
+
+    QIPGrayscaleImage(QIPBlackAndWhiteImage& image1, QIPBlackAndWhiteImage& image2);
 
     /*!
       Makes QIPGrayscaleImage from QImage.
       \sa toImage
     */
-    static QIPGrayscaleImage fromImage(const QImage &image, GrayscaleConversion conversionMethod = RGBDevideByThree);
+    static QIPGrayscaleImage fromImage(const QImage& image, GrayscaleConversion conversionMethod = RGBDevideByThree);
 
     /*!
       Returns true if the instance contains no data.
@@ -86,8 +89,10 @@ public:
 
     bool isNull() const;
 
-    QIPGrayscaleImage(const QIPGrayscaleImage &I);
-    QIPGrayscaleImage(const QString &ygfFileName);
+    QIPGrayscaleImage(const QIPGrayscaleImage& I);
+
+    QIPGrayscaleImage(const QString& ygfFileName);
+
     ~QIPGrayscaleImage();
 
     /*!
@@ -99,7 +104,8 @@ public:
       These flags specify which type of binariztion to use when calling binarize() method.
       \sa binarize()
     */
-    enum BinarizationMethod {
+    enum BinarizationMethod
+    {
         OtsuBinarization, /*!< Otsu global binarization */
         OtsuMABinarization,
         NiblackBinarization, /*!< Niblack adaptive binarization */
@@ -116,7 +122,7 @@ public:
         \sa equalize
         \sa entropy
     */
-    void histogram(QIPHistogram &result, quint32 x1=0, quint32 x2 = 0, quint32 y1 = 0, quint32 y2 = 0) const;
+    void histogram(QIPHistogram& result, quint32 x1 = 0, quint32 x2 = 0, quint32 y1 = 0, quint32 y2 = 0) const;
 
     /*!
      *  Finds foreground/background threshold using Otsu method for the rectangle specified by (x1,y1) (x2,y2). the reault is returned in result variable. If x1, y1, x2, y2 are set to zero the result for the whole image is calculated.
@@ -142,6 +148,7 @@ public:
         \sa simpleThreshold
     */
     quint8 maxEntropyThreshold(quint32 x1 = 0, quint32 x2 = 0, quint32 y1 = 0, quint32 y2 = 0) const;
+
     /*!
      *  Finds mean of distribution for the rectangle specified by (x1,y1) (x2,y2). the reault is returned in result variable. If x1, y1, x2, y2 are set to zero the result for the whole image is calculated.
      *  Note that the values of x1, x2, y1, y2 should not exceed those of the original image (this is not checked).
@@ -149,56 +156,69 @@ public:
         \sa simpleThreshold
     */
     qreal meanOfDistribution(quint32 x1 = 0, quint32 x2 = 0, quint32 y1 = 0, quint32 y2 = 0);
+
     /*!
      *  Finds the entropy (-Sum(p(i)*Log(p(i)) for the rectangle specified by (x1,y1) (x2,y2). the reault is returned in result variable. If x1, y1, x2, y2 are set to zero the result for the whole image is calculated.
      *  Note that the values of x1, x2, y1, y2 should not exceed those of the original image (this is not checked).
     */
     qreal entropy(quint32 x1 = 0, quint32 x2 = 0, quint32 y1 = 0, quint32 y2 = 0);
+
     /*!
      *  Equalizes the image histogram (spreads colors).
      * \sa histogram
     */
     void equalize();
+
     void equalize2();
+
     qreal lpcEntropy(int x1 = 0, int x2 = 0, int y1 = 0, int y2 = 0);
+
     qreal variance(quint32 x1, quint32 x2, quint32 y1, quint32 y2);
+
     /*!
      *  Returns the image's width.
      * \sa height
     */
     int width() const;
+
     /*!
      *  Returns the image's height.
      * \sa width
     */
     int height() const;
+
     /*!
      *  Returns the part of the original grayscale image bounded by the rectangle (x1,y1) (x2,y2) as a new instance of QIPGrayscaleImage.
      *  Note that the boundaries should not exceed those of the original image (this is not checked).
      *  \sa toImage
     */
     QIPGrayscaleImage copy(int x1, int x2, int y1, int y2) const;
-    void copyInternal2(IntRect &r, quint8 *s, quint8 *d) const;
 
-    static quint8 * scanLinePtr(quint8 * ptr, int y, int wth) ;
+    void copyInternal2(IntRect& r, quint8* s, quint8* d) const;
+
+    static quint8* scanLinePtr(quint8* ptr, int y, int wth);
 
     /*!
       Converts the grayscaled image to binary format using the specified method.
     */
 
     QIPBlackAndWhiteImage binarize(BinarizationMethod method) const;
+
     /*!
       Sharpens the image.
     */
     QIPGrayscaleImage sharpen() const;
+
     /*!
       Blurs the image.
     */
     QIPGrayscaleImage blur() const;
+
     /*!
       Transforms the image so then edges appear as white lines on black.
     */
     void isolateEdges();
+
     /*!
       Inverts the intensity levels of the grayscale image.
     */
@@ -206,62 +226,103 @@ public:
 
     void wienerFilter();
 
-    void blendImage(const QIPBlackAndWhiteImage &image);
+    void blendImage(const QIPBlackAndWhiteImage& image);
+
     void darken(quint8 factor);
+
     void smoother();
+
     void quantisize();
-    bool save(const QString &fileName, bool overwrite = false);
-    static bool saveGrayscale(const QImage &image, const QString &fileName, bool overwrite = false);
-    quint8 * scanLine(quint32 y) const;
+
+    bool save(const QString& fileName, bool overwrite = false);
+
+    static bool saveGrayscale(const QImage& image, const QString& fileName, bool overwrite = false);
+
+    quint8* scanLine(quint32 y) const;
+
     QIPGrayscaleImage scaleX2();
+
 signals:
-    
+
 public slots:
 protected:
     QIPGrayscaleImage(quint32 width, quint32 height);
+
 private:
     int w, h;
     QSharedPointer<quint8> data;
-    enum {
+    enum
+    {
         SharpenFilter,
         BlurFilter,
         EdgesFilter
     } FilterType;
 private:
-    QPoint loadHeader(QFile * file);
-    void toGSRGDBBy3(const QImage &input, int top, int left, int bottom, int right);
-    void toImageInternal(uchar *image, const IntRect &rect, int imageWidth) const;
-    void toGrayScale(const QImage &input);
+    QPoint loadHeader(QFile* file);
+
+    void toGSRGDBBy3(const QImage& input, int top, int left, int bottom, int right);
+
+    void toImageInternal(uchar* image, const IntRect& rect, int imageWidth) const;
+
+    void toGrayScale(const QImage& input);
+
     inline quint8 pixel(quint32 x, quint32 y) const;
+
     inline void setPixel(quint32 x, quint32 y, quint8 value);
-    inline quint8 nextInColumn(quint32 x, quint32 &y);
-    inline quint8 prevInColumn(quint32 x, quint32 &y);
+
+    inline quint8 nextInColumn(quint32 x, quint32& y);
+
+    inline quint8 prevInColumn(quint32 x, quint32& y);
+
     qreal cdf(QIPHistogram hist, quint8 x);
-    quint8 predictor(quint8 *x);
+
+    quint8 predictor(quint8* x);
+
     QIPGrayscaleImage applyFilter(int type) const;
+
     void dilateImage(quint8 threshold = 0);
+
     QIPBlackAndWhiteImage niblackSauvolaBinarize(bool sauvola) const;
+
     QIPBlackAndWhiteImage otsuBinarize() const;
+
     QIPBlackAndWhiteImage otsuBinarizeMA() const;
+
     QIPBlackAndWhiteImage gatosBinarize() const;
+
     QIPBlackAndWhiteImage maxEntropyBinarize() const;
+
     QIPBlackAndWhiteImage bradleyBinarize() const;
+
     QIPBlackAndWhiteImage iterativeBinarize() const;
+
     QIPBlackAndWhiteImage bernsenBinarize() const;
+
     quint8 CalculateIterativeThreshold() const;
-    void integralImage(uint w, uint h, uint * image) const;
-    void toGrayscaleFast(const QImage &input);
-    void toGrayscaleMinMax(const QImage &input);
-    void toGrayscaleMinOrMax(const QImage &input, bool min);
-    void toGrayscaleMinOrMaxInternal(const QImage &input, const IntRect &rect, bool min);
-    void toGrayscaleMinMaxInternal(const QImage &input, const IntRect &rect);
-    void toGrayScaleByEntropyChannel(const QImage &input, bool maxEntropy);
-    void histogramInternal(qreal *result, const IntRect &r) const;
-    void copyInternal(const IntRect &r, uint * image) const;
-    void blendImageInternal(const IntRect &r, quint8 * p1, const quint8 * p2);
+
+    void integralImage(uint w, uint h, uint* image) const;
+
+    void toGrayscaleFast(const QImage& input);
+
+    void toGrayscaleMinMax(const QImage& input);
+
+    void toGrayscaleMinOrMax(const QImage& input, bool min);
+
+    void toGrayscaleMinOrMaxInternal(const QImage& input, const IntRect& rect, bool min);
+
+    void toGrayscaleMinMaxInternal(const QImage& input, const IntRect& rect);
+
+    void toGrayScaleByEntropyChannel(const QImage& input, bool maxEntropy);
+
+    void histogramInternal(qreal* result, const IntRect& r) const;
+
+    void copyInternal(const IntRect& r, uint* image) const;
+
+    void blendImageInternal(const IntRect& r, quint8* p1, const quint8* p2);
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(QIPGrayscaleImage::BinarizationMethods)
+
 Q_DECLARE_OPERATORS_FOR_FLAGS(QIPGrayscaleImage::GrayscaleTransformations)
 
 #endif // QIPGRAYSCALEIMAGE_H

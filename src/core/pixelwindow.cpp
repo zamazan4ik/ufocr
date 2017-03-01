@@ -18,31 +18,35 @@
 */
 
 #include "pixelwindow.h"
-PixelWindow::PixelWindow(QIPBlackAndWhiteImage * image, int x, int y, int width, int height)
+
+PixelWindow::PixelWindow(QIPBlackAndWhiteImage* image, int x, int y, int width, int height)
 {
-        img = image;
-        gsimg = 0;
-        xStart = x;
-        yStart = y;
-        w = width;
-        h = height;
-        iw = image->width();
-        lines = new  quint8 * [h];
-        int yt = yStart;
-        while ((yt < 0)&&(yt - yStart < h)) {
-            lines[yt - yStart] = 0;
-            yt++;
-        }
-        while (yt + h < (int) img->height()) {
-            lines[yt] = img->scanLine(yt - yStart);
-        }
-        while (yt - yStart < h) {
-            lines[yt - yStart] = 0;
-            yt++;
-        }
+    img = image;
+    gsimg = 0;
+    xStart = x;
+    yStart = y;
+    w = width;
+    h = height;
+    iw = image->width();
+    lines = new quint8* [h];
+    int yt = yStart;
+    while ((yt < 0) && (yt - yStart < h))
+    {
+        lines[yt - yStart] = 0;
+        yt++;
+    }
+    while (yt + h < (int) img->height())
+    {
+        lines[yt] = img->scanLine(yt - yStart);
+    }
+    while (yt - yStart < h)
+    {
+        lines[yt - yStart] = 0;
+        yt++;
+    }
 }
 
-PixelWindow::PixelWindow(QIPGrayscaleImage *image, int x, int y, int width, int height)
+PixelWindow::PixelWindow(QIPGrayscaleImage* image, int x, int y, int width, int height)
 {
     img = 0;
     gsimg = image;
@@ -51,16 +55,19 @@ PixelWindow::PixelWindow(QIPGrayscaleImage *image, int x, int y, int width, int 
     w = width;
     h = height;
     iw = image->width();
-    lines = new quint8 * [h];
+    lines = new quint8* [h];
     int yt = yStart;
-    while ((yt < 0)&&(yt - yStart < h)) {
+    while ((yt < 0) && (yt - yStart < h))
+    {
         lines[yt - yStart] = 0;
         yt++;
     }
-    while (yt + h < gsimg->height()) {
+    while (yt + h < gsimg->height())
+    {
         lines[yt] = gsimg->scanLine(yt - yStart);
     }
-    while (yt - yStart < h) {
+    while (yt - yStart < h)
+    {
         lines[yt - yStart] = 0;
         yt++;
     }
@@ -76,22 +83,29 @@ void PixelWindow::move(int newX, int newY)
     xStart = newX;
     yStart = newY;
     delete[] lines;
-    lines = new quint8 * [h];
+    lines = new quint8* [h];
     int yt = yStart;
-    while ((yt < 0)&&(yt - yStart < h)) {
+    while ((yt < 0) && (yt - yStart < h))
+    {
         lines[yt - yStart] = 0;
         yt++;
     }
-    if (gsimg == 0) {
-        while (yt + h < (int) img->height()) {
+    if (gsimg == 0)
+    {
+        while (yt + h < (int) img->height())
+        {
             lines[yt] = img->scanLine(yt - yStart);
         }
-    } else {
-        while (yt + h < gsimg->height()) {
+    }
+    else
+    {
+        while (yt + h < gsimg->height())
+        {
             lines[yt] = gsimg->scanLine(yt - yStart);
         }
-   }
-    while (yt - yStart < h) {
+    }
+    while (yt - yStart < h)
+    {
         lines[yt - yStart] = 0;
         yt++;
     }
@@ -101,11 +115,16 @@ quint8 PixelWindow::pixel(int x, int y)
 {
     int yt = yStart - y;
     if (lines[yt] == 0)
+    {
         return 255;
-    if (x < 0) return 255;
-    if ((x < xStart)||(x+xStart >= iw))
-            return 255;
-    return lines[yt][xStart+x];
+    }
+    if (x < 0)
+    { return 255; }
+    if ((x < xStart) || (x + xStart >= iw))
+    {
+        return 255;
+    }
+    return lines[yt][xStart + x];
 }
 
 

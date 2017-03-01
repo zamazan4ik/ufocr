@@ -27,25 +27,39 @@
 
 class ScannerBase : public QObject
 {
-    Q_OBJECT
+Q_OBJECT
 public:
-    explicit ScannerBase(QObject *parent = 0);
+    explicit ScannerBase(QObject* parent = 0);
+
     ~ScannerBase();
-    void addParameter(const QString &s);
-    void addEnvironmentVar(const QString &s);
-    void setOutputFile(const QString &s);
+
+    void addParameter(const QString& s);
+
+    void addEnvironmentVar(const QString& s);
+
+    void setOutputFile(const QString& s);
+
     QString programName();
+
     virtual void exec() = 0;
+
 signals:
+
     void processFinished();
+
 public slots:
 private slots:
-    void finished( int, QProcess::ExitStatus );
+
+    void finished(int, QProcess::ExitStatus);
+
 protected:
     void waitFor();
-    void execInternal(const QString &s);
-    void setProgramName(const QString &s);
-    void setPreloadLibrary(const QString &s);
+
+    void execInternal(const QString& s);
+
+    void setProgramName(const QString& s);
+
+    void setPreloadLibrary(const QString& s);
 
 private:
     QProcess scanProcess;
@@ -60,11 +74,16 @@ class ScannerFactory
 {
 public:
     ScannerFactory();
+
     QStringList frontEnds();
-    ScannerBase *createScannerFE(const QString &name);
+
+    ScannerBase* createScannerFE(const QString& name);
+
 private:
     QString findPreloadLibrary();
+
     void findFEs();
+
 private:
     QString preloadPath;
     QStringList fes;

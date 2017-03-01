@@ -21,28 +21,41 @@ class QXtUnixSignalCatcherInternal;
 
 class QXtUnixSignalCatcher : public QObject
 {
-    Q_OBJECT
+Q_OBJECT
 public:
-    static QXtUnixSignalCatcher *catcher();
+    static QXtUnixSignalCatcher* catcher();
+
     static bool connectUnixSignal(int sig_num);
+
     void disconnectUnixSugnals();
+
 signals:
+
     void unixSignal(int sig_num);
+
 private slots:
+
     void doEmit(int sig_num);
 
 private:
-    QXtUnixSignalCatcher(QObject *parent = 0);
+    QXtUnixSignalCatcher(QObject* parent = 0);
+
     QXtUnixSignalCatcher();
-    QXtUnixSignalCatcher(QXtUnixSignalCatcher &);
+
+    QXtUnixSignalCatcher(QXtUnixSignalCatcher&);
+
     ~QXtUnixSignalCatcher();
+
     static void signalHandler(int sig_num);
+
     void emitSignal(int sig_num);
+
     bool connectUnixSignalInternal(int sig_num);
+
 private:
-    static QXtUnixSignalCatcher *sc;
-    static QMutex *mutex;
-    QXtUnixSignalCatcherInternal *sci;
+    static QXtUnixSignalCatcher* sc;
+    static QMutex* mutex;
+    QXtUnixSignalCatcherInternal* sci;
 };
 
 #endif // QXTUNIXSIGNALCTACHER_H

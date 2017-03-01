@@ -29,16 +29,21 @@ class QImage;
 class RotationCropper
 {
 public:
-    RotationCropper(QImage * image, QRgb color);
+    RotationCropper(QImage* image, QRgb color);
+
     ~RotationCropper();
+
     QRect crop();
+
 private:
     void recolor();
+
     bool checkHorzLine(int y);
+
     bool checkVertLine(int x);
 
 private:
-    QImage * image;
+    QImage* image;
     QRgb whitePixel;
     QRgb replaceColor;
     int darksCount;

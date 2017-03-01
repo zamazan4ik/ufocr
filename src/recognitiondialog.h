@@ -23,23 +23,30 @@
 
 #include <QDialog>
 
-namespace Ui {
+namespace Ui
+{
 class RecognitionDialog;
 }
 
 class RecognitionDialog : public QDialog
 {
-    Q_OBJECT
-    
+Q_OBJECT
+
 public:
-    explicit RecognitionDialog(QWidget *parent = 0);
+    explicit RecognitionDialog(QWidget* parent = 0);
+
     ~RecognitionDialog();
+
 signals:
+
     void cancel();
+
 public slots:
+
     void blockRecognized(int n);
+
 private:
-    Ui::RecognitionDialog *ui;
+    Ui::RecognitionDialog* ui;
 };
 
 #endif // RECOGNITIONDIALOG_H

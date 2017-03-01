@@ -22,24 +22,32 @@
 
 #include <QDialog>
 
-namespace Ui {
+namespace Ui
+{
 class ExtProcessDialog;
 }
 
 class ExtProcessDialog : public QDialog
 {
-    Q_OBJECT
-    
+Q_OBJECT
+
 public:
-    explicit ExtProcessDialog(QWidget *parent = 0);
+    explicit ExtProcessDialog(QWidget* parent = 0);
+
     ~ExtProcessDialog();
+
     void hideButton();
+
 public slots:
+
     void hide();
+
 private slots:
+
     void on_pushButton_clicked();
+
 private:
-    Ui::ExtProcessDialog *ui;
+    Ui::ExtProcessDialog* ui;
 };
 
 #endif // EXTPROCESSDIALOG_H

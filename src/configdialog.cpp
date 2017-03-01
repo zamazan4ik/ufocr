@@ -6,9 +6,9 @@
 #include <QStringList>
 #include <QLocale>
 
-ConfigDialog::ConfigDialog(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::ConfigDialog)
+ConfigDialog::ConfigDialog(QWidget* parent) :
+        QDialog(parent),
+        ui(new Ui::ConfigDialog)
 {
     ui->setupUi(this);
     ui->stackedWidget->setCurrentIndex(0);
@@ -26,13 +26,18 @@ ConfigDialog::~ConfigDialog()
 
 void ConfigDialog::accept()
 {
-    Settings *settings = Settings::instance();
+    Settings* settings = Settings::instance();
     if (ui->radioButtonCuneiform->isChecked())
+    {
         settings->setSelectedEngine(UseCuneiform);
+    }
     else
+    {
         settings->setSelectedEngine(UseTesseract);
+    }
     settings->setTessdataPath(ui->lineEditTessData->text());
-    if (ui->checkBoxSingleLang->isChecked()) {
+    if (ui->checkBoxSingleLang->isChecked())
+    {
         QStringList sl;
         sl << ui->comboBoxSingleLang->currentText();
         settings->setSelectedLanguages(sl);
@@ -43,15 +48,22 @@ void ConfigDialog::accept()
     settings->setPreprocessed(ui->checkBoxPreprocess->isChecked());
     settings->setDoublePreprocessed(ui->checkBoxProcessAfterDeskew->isChecked());
     settings->setNoLocale(false);
-    if (ui->checkBox->isChecked()) {
+    if (ui->checkBox->isChecked())
+    {
         settings->setNoLocale(true);
-    } else {
+    }
+    else
+    {
         settings->setNoLocale(false);
     }
     if (ui->checkBox_2->isChecked())
+    {
         settings->setAutosaveInterval(ui->spinBox_2->value());
+    }
     else
+    {
         settings->setAutosaveInterval(30000);
+    }
     settings->setFontSize(ui->fontSizeSpinBox->value());
     settings->setMaxRecentProjects(ui->recentProjectsSpinBox->value());
     QDialog::accept();
@@ -59,7 +71,7 @@ void ConfigDialog::accept()
 
 void ConfigDialog::init()
 {
-    Settings *settings = Settings::instance();
+    Settings* settings = Settings::instance();
     ui->radioButtonCuneiform->setChecked(settings->getSelectedEngine() == UseCuneiform);
     ui->radioButtonTesseract->setChecked(settings->getSelectedEngine() == UseTesseract);
     ui->lineEditTessData->setText(settings->getTessdataPath());
@@ -75,18 +87,23 @@ void ConfigDialog::init()
     ui->checkBoxDeskew->setChecked(settings->getAutoDeskew());
     ui->checkBoxPreprocess->setChecked(settings->getPreprocessed());
     ui->checkBoxProcessAfterDeskew->setChecked(settings->getDoublePreprocessed());
-    if (settings->getAutosaveInterval() > 60) {
+    if (settings->getAutosaveInterval() > 60)
+    {
         ui->checkBox_2->setChecked(false);
         ui->spinBox_2->setValue(15);
         ui->spinBox_2->setEnabled(false);
-    } else{
+    }
+    else
+    {
         ui->spinBox_2->setValue(settings->getAutosaveInterval());
         ui->spinBox_2->setEnabled(true);
     }
 
     QStringList sl3;
     if (settings->useNoLocale())
+    {
         sl3 << "English";
+    }
     sl3 << QLocale::languageToString(QLocale::system().language()) << "English" << "Russian";
     sl3.removeDuplicates();
     //ui->comboBoxInterfaceLang->addItems(sl3);
@@ -98,17 +115,23 @@ void ConfigDialog::init()
 }
 
 
-
 void ConfigDialog::on_pushButtonTessData_clicked()
 {
     QString dir = QFileDialog::getExistingDirectory(this, trUtf8("Tesseract Data Directory"), "/");
-    if (dir != "") {
+    if (dir != "")
+    {
         if (dir.endsWith("tessdata/"))
-            dir.truncate(dir.length()-9);
+        {
+            dir.truncate(dir.length() - 9);
+        }
         if (dir.endsWith("tessdata"))
-            dir.truncate(dir.length()-8);
+        {
+            dir.truncate(dir.length() - 8);
+        }
         if (!dir.endsWith("/"))
+        {
             dir = dir + "/";
+        }
         ui->lineEditTessData->setText(dir);
     }
 }
@@ -120,7 +143,7 @@ void ConfigDialog::on_pushButtonLangs_clicked()
     lsd.exec();
 }
 
-void ConfigDialog::itemClicked(QListWidgetItem *item)
+void ConfigDialog::itemClicked(QListWidgetItem* item)
 {
     ui->stackedWidget->setCurrentIndex(ui->listWidget->row(item));
 }
@@ -128,7 +151,9 @@ void ConfigDialog::itemClicked(QListWidgetItem *item)
 void ConfigDialog::on_checkBoxProcessAfterDeskew_toggled(bool checked)
 {
     if (ui->checkBoxProcessAfterDeskew->isChecked())
+    {
         ui->checkBoxDeskew->setChecked(true);
+    }
 }
 
 void ConfigDialog::on_checkBox_2_toggled(bool checked)

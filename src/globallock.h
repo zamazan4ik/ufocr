@@ -5,7 +5,9 @@ class Unlocker
 {
 public:
     explicit Unlocker(bool locked);
+
     ~Unlocker();
+
 private:
     bool unlock;
 };
@@ -13,15 +15,21 @@ private:
 class GlobalLock
 {
 public:
-    static GlobalLock *instance();
+    static GlobalLock* instance();
+
     bool lock();
+
     void unlock();
+
     bool isLocked();
+
 private:
     GlobalLock();
-    GlobalLock(const GlobalLock &);
+
+    GlobalLock(const GlobalLock&);
+
 private:
-    static GlobalLock *m_instance;
+    static GlobalLock* m_instance;
 };
 
 #endif // GLOBALLOCK_H

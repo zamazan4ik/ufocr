@@ -17,28 +17,45 @@
 #include "tblock.h"
 
 class QString;
+
 class RecognizerWrapperInternal;
+
 class RecognizerWrapper : public QObject
 {
-    Q_OBJECT
+Q_OBJECT
 public:
-    explicit RecognizerWrapper(QObject *parent = 0);
+    explicit RecognizerWrapper(QObject* parent = 0);
+
     ~RecognizerWrapper();
+
     static bool findEngine(bool selected = false);
+
 signals:
+
     void started();
+
     void finished(int);
-    void error(const QString &text);
+
+    void error(const QString& text);
+
     void blockRecognized(int n);
+
     void readOutput(QString text, QChar separator);
+
 public slots:
+
     void start();
+
     void startSingleBlock();
+
     void cancel();
+
 private slots:
+
     void onError();
+
 private:
-    RecognizerWrapperInternal * rwi;
+    RecognizerWrapperInternal* rwi;
 };
 
 #endif // RECOGNIZERWRAPPER_H

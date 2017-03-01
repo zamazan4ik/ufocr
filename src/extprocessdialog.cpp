@@ -20,9 +20,9 @@
 #include "extprocessdialog.h"
 #include "ui_extprocessdialog.h"
 
-ExtProcessDialog::ExtProcessDialog(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::ExtProcessDialog)
+ExtProcessDialog::ExtProcessDialog(QWidget* parent) :
+        QDialog(parent),
+        ui(new Ui::ExtProcessDialog)
 {
     ui->setupUi(this);
     ui->widget->startAnimation();

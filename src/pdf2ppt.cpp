@@ -30,9 +30,12 @@ QStringList PDF2PPT::makeCommandString()
     QStringList args;
     args.append("pdftoppm");
     args << "-jpeg";
-    if (getStopPage() > 0) {
+    if (getStopPage() > 0)
+    {
         if (getStartPage() == 0)
+        {
             this->setStartPage("1");
+        }
         args << "-f" << QString::number(getStartPage()) << "-l" << QString::number(getStopPage());
     }
     args << "-rx" << "600" << "-ry" << "600" << this->getSourcePDF();

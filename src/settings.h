@@ -22,7 +22,8 @@
 #include <QStringList>
 
 
-enum SelectedEngine {
+enum SelectedEngine
+{
     UseCuneiform,
     UseTesseract
 };
@@ -30,106 +31,205 @@ enum SelectedEngine {
 class Settings
 {
 public:
-    static Settings *instance();
-    void readSettings(const QString &path);
+    static Settings* instance();
+
+    void readSettings(const QString& path);
+
     bool firstRun();
+
     void writeSettings();
+
     QString getLanguage();
+
     bool useNoLocale();
+
     void setNoLocale(bool value);
+
     void setRussianLocale(bool value);
+
     QString getOutputFormat();
+
     QString getLastDir();
+
     QString getLastOutputDir();
+
     bool getCheckSpelling();
+
     QString getTessdataPath();
+
     SelectedEngine getSelectedEngine();
+
     QSize getSize();
+
     QSize getIconSize();
+
     QPoint getPosition();
+
     bool getFullScreen();
+
     int getFontSize();
+
     QStringList getRecentProjects();
+
     int getMaxRecentProjects();
+
     void setMaxRecentProjects(const int value);
-    QString getFullLanguageName(const QString &abbr);
-    QString getFullLanguageName(const QString &abbr, const QString &engine);
-    QString getShortLanguageName(const QString &lang);
-    QString getShortLanguageName(const QString &lang, const QString &engine);
+
+    QString getFullLanguageName(const QString& abbr);
+
+    QString getFullLanguageName(const QString& abbr, const QString& engine);
+
+    QString getShortLanguageName(const QString& lang);
+
+    QString getShortLanguageName(const QString& lang, const QString& engine);
+
     bool getAutoDeskew();
+
     bool getCropLoaded();
+
     bool getPreprocessed();
+
     bool getDoublePreprocessed();
-    void setLanguage(const QString &value);
-    void setOutputFormat(const QString &value);
-    void setLastDir(const QString &value);
-    void setLastOutputDir(const QString &value);
+
+    void setLanguage(const QString& value);
+
+    void setOutputFormat(const QString& value);
+
+    void setLastDir(const QString& value);
+
+    void setLastOutputDir(const QString& value);
+
     void setCheckSpelling(const bool value);
-    void setTessdataPath(const QString &value);
+
+    void setTessdataPath(const QString& value);
+
     void setSelectedEngine(const SelectedEngine value);
-    void setSize(const QSize &value);
-    void setIconSize(const QSize &value);
-    void setPosition(const QPoint &value);
+
+    void setSize(const QSize& value);
+
+    void setIconSize(const QSize& value);
+
+    void setPosition(const QPoint& value);
+
     void setFullScreen(const bool value);
-    void setFontSize(const int &value);
+
+    void setFontSize(const int& value);
+
     void setCropLoaded(const bool value);
+
     void setAutoDeskew(const bool value);
+
     void setPreprocessed(const bool value);
+
     void setDoublePreprocessed(const bool value);
+
     void setUpscale(bool value);
+
     bool getUpscale();
+
     void setSkipWidth(int value);
+
     QString getRecognizeInputFile() const;
+
     QString getRecognizeOutputExt() const;
+
     QString getRecognizeOutputFile() const;
+
     QString getRecognizeOutputBase() const;
+
     QString getScanOutputFile() const;
+
     int getSkipWidth();
+
     QString uniqueSeed();
+
     QString tiffPageSize();
+
     QString tiffDensity();
+
     int getDarkBackgroundThreshold();
+
     int getForegroundBrightenFactor();
+
     int getGlobalBrightenFactor();
+
     int getGlobalDarkenFactor();
+
     int getGlobalDarkenThreshold();
+
     int getAutosaveInterval();
+
     QStringList fullLanguageNames();
+
     QStringList getSelectedLanguages();
-    QStringList selectedLanguagesAvailableTo(const QString &engine);
-    QStringList languagesAvailableTo(const QString &engine);
+
+    QStringList selectedLanguagesAvailableTo(const QString& engine);
+
+    QStringList languagesAvailableTo(const QString& engine);
+
     QStringList installedTesseractLanguages();
+
     QString getRowBegin();
+
     QString getRowEnd();
+
     QString getCellSeparator();
+
     bool getRowFromBNewLine();
-    void setSelectedLanguages(const QStringList &value);
+
+    void setSelectedLanguages(const QStringList& value);
+
     QString workingDir();
+
     void startLangPair();
-    bool getLangPair(QString &full, QString &abbr, bool forceTesseract = false);
-    void setProjectDir(const QString &dir);
+
+    bool getLangPair(QString& full, QString& abbr, bool forceTesseract = false);
+
+    void setProjectDir(const QString& dir);
+
     QString getProjectDir();
+
     void makeLanguageMaps();
+
     QString tmpFileName();
+
     QString tmpYGFFileName();
+
     void setLangTess();
+
     bool getKeepLines() const;
+
     void setKeepLines(const bool value);
-    void setRowBegin(const QString &value);
-    void setRowEnd(const QString &value);
-    void setCellSeparator(const QString &value);
+
+    void setRowBegin(const QString& value);
+
+    void setRowEnd(const QString& value);
+
+    void setCellSeparator(const QString& value);
+
     void setRowFromBNewLine(const bool value);
-    void addRecentProject(const QString &project);
-    void removeRecentProject(const QString &project);
+
+    void addRecentProject(const QString& project);
+
+    void removeRecentProject(const QString& project);
+
     void setAutosaveInterval(const int value);
-    bool projectExists(const QString &dir);
+
+    bool projectExists(const QString& dir);
+
 private:
     void findTessDataPath();
+
     QString selectDefaultLanguageName();
+
     Settings();
-    Settings(const Settings &);
+
+    Settings(const Settings&);
+
     bool useRussianLocale();
+
     ~Settings();
+
 private:
     QString language;
     QString outputFormat;
@@ -162,8 +262,8 @@ private:
     int uSeed;
     QStringList languages;
     QString mPath;
-    QSettings *settings;
-    static Settings *m_instance;
+    QSettings* settings;
+    static Settings* m_instance;
     QString tiffPS;
     QString tiffD;
     bool upscale;

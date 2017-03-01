@@ -26,49 +26,87 @@
 #include <QStringList>
 
 class QDir;
+
 class PDFExtractor : public QObject
 {
-    Q_OBJECT
+Q_OBJECT
 public:
-    explicit PDFExtractor(QObject *parent = 0);
+    explicit PDFExtractor(QObject* parent = 0);
+
     ~PDFExtractor();
-    void setCommandStringPaged(const QString &cmdStr);
-    void setConvertEntire(const QString &cmdStr);
+
+    void setCommandStringPaged(const QString& cmdStr);
+
+    void setConvertEntire(const QString& cmdStr);
+
     bool isConvertEntire();
-    void setSourcePDF(const QString &value);
+
+    void setSourcePDF(const QString& value);
+
     QString getSourcePDF();
+
     void setOutputDir();
+
     QString getOutputDir();
-    void setStartPage(const QString &value);
+
+    void setStartPage(const QString& value);
+
     int getStartPage();
-    void setStopPage(const QString &value);
+
+    void setStopPage(const QString& value);
+
     int getStopPage();
-    void setResolution(const QString &value);
+
+    void setResolution(const QString& value);
+
     QString getResolution();
-    void setOutputPrefix(const QString &value);
+
+    void setOutputPrefix(const QString& value);
+
     QString getOutputPrefix();
-    void setOutputExtension(const QString &value);
+
+    void setOutputExtension(const QString& value);
+
     QString getOutputExtension();
+
     void run();
+
     static bool findCProgram();
+
     void removeRemaining();
+
 signals:
+
     void processStarted();
+
     void processFinished(bool error);
+
     void addPage(QString pageName, int current, int total);
+
     void extractingFinished();
-    void error(const QString &text);
+
+    void error(const QString& text);
+
 public slots:
+
     void cancelProcess();
+
 private slots:
+
     void procFinished();
+
     void procFinishedError();
+
 protected:
-    void sortDir(QDir &dir);
+    void sortDir(QDir& dir);
+
     virtual QStringList makeCommandString() = 0;
+
 private:
     void processFiles();
+
     void clearFiles();
+
 private:
     QString commandStringPaged;
     QString commandStringEntire;

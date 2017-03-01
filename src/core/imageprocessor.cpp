@@ -30,9 +30,8 @@
 
 const uint m_treshold = 0;
 
-ImageProcessor::ImageProcessor(QObject *parent) :
-    QObject(parent)
-
+ImageProcessor::ImageProcessor(QObject* parent) :
+        QObject(parent)
 {
     //img = NULL;
     //bwimg = NULL;
@@ -45,12 +44,15 @@ ImageProcessor::~ImageProcessor()
 QRect ImageProcessor::crop()
 {
     QRect r;
-    try {
+    try
+    {
         QIPBlackAndWhiteImage bwimg1 = QIPBlackAndWhiteImage(img.binarize(QIPGrayscaleImage::OtsuMABinarization));
         r = bwimg1.cropGrayScaleImage(img);
         //bwimg1.free();
-        img = img.copy(r.x(), r.x()+r.width(), r.y(), r.y()+r.height());
-    } catch(...) {
+        img = img.copy(r.x(), r.x() + r.width(), r.y(), r.y() + r.height());
+    }
+    catch (...)
+    {
         r.setX(0);
         r.setY(0);
         r.setWidth(img.width());
@@ -60,20 +62,24 @@ QRect ImageProcessor::crop()
     return r;
 }
 
-void ImageProcessor::loadImage(const QImage &image)
+void ImageProcessor::loadImage(const QImage& image)
 {
-    img = QIPGrayscaleImage(image,QIPGrayscaleImage::MinValue);
+    img = QIPGrayscaleImage(image, QIPGrayscaleImage::MinValue);
 }
 
-QImage ImageProcessor::loadFromFile(const QString &fn)
+QImage ImageProcessor::loadFromFile(const QString& fn)
 {
-    if (!fn.endsWith(".ygf", Qt::CaseInsensitive)) {
+    if (!fn.endsWith(".ygf", Qt::CaseInsensitive))
+    {
         QImageReader ir(fn);
         if (!ir.canRead())
-            return QImage(0,0,QImage::Format_ARGB32);
-        int total = ir.size().width()*ir.size().height();
-        if ( total > 0x8000000) {
-            ir.setScaledSize(QSize(ir.size().width()/2, ir.size().height()/2));
+        {
+            return QImage(0, 0, QImage::Format_ARGB32);
+        }
+        int total = ir.size().width() * ir.size().height();
+        if (total > 0x8000000)
+        {
+            ir.setScaledSize(QSize(ir.size().width() / 2, ir.size().height() / 2));
         }
 
         return ir.read();
@@ -113,15 +119,19 @@ QIPBlackAndWhiteImage ImageProcessor::fastBinarize()
     return img.binarize(QIPGrayscaleImage::BradleyBinarization);
 }
 
-void ImageProcessor::saveForPDF(const QImage &image, const QString &fileName, int squish)
+void ImageProcessor::saveForPDF(const QImage& image, const QString& fileName, int squish)
 {
     QIPGrayscaleImage img;
-    if (squish > 1) {
-        QImage im = image.scaled(image.width()/squish, image.height()/squish, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    if (squish > 1)
+    {
+        QImage im = image.scaled(image.width() / squish, image.height() / squish, Qt::KeepAspectRatio,
+                                 Qt::SmoothTransformation);
         img = QIPGrayscaleImage::fromImage(im, QIPGrayscaleImage::FastConversion);
     }
     else
+    {
         img = QIPGrayscaleImage::fromImage(image, QIPGrayscaleImage::FastConversion);
+    }
 
     //img.smoother();
     QIPBlackAndWhiteImage bwimg = img.binarize(QIPGrayscaleImage::GatosBinarization);
@@ -129,45 +139,53 @@ void ImageProcessor::saveForPDF(const QImage &image, const QString &fileName, in
     bwimg.toImage().save(filename);
 }
 
-void ImageProcessor::saveYGF(const QImage &image, const QString &fileName)
+void ImageProcessor::saveYGF(const QImage& image, const QString& fileName)
 {
     //QIPGrayscaleImage gsi(image, QIPGrayscaleImage::MinValue);
     QIPGrayscaleImage::saveGrayscale(image, fileName);
 }
 
-QImage ImageProcessor::loadYGF(const QString &fileName)
+QImage ImageProcessor::loadYGF(const QString& fileName)
 {
     QIPGrayscaleImage gsi(fileName);
     return gsi.toImage();
 }
 
-void ImageProcessor::polishImage(QImage &image)
+void ImageProcessor::polishImage(QImage& image)
 {
-    for(int y =1; y < image.height()-1; y++) {
-        QRgb * line = (QRgb *) image.scanLine(y);
-        QRgb * linep = (QRgb *) image.scanLine(y-1);
-        QRgb * linen = (QRgb *) image.scanLine(y+1);
+    for (int y = 1; y < image.height() - 1; y++)
+    {
+        QRgb* line = (QRgb*) image.scanLine(y);
+        QRgb* linep = (QRgb*) image.scanLine(y - 1);
+        QRgb* linen = (QRgb*) image.scanLine(y + 1);
         //if
-        for (int x = 1; x < image.width()-1; x++) {
-            if (line[x]%255 > 64) {
-                if ((line[x-1]%255 < 64)&&(line[x+1]%255 < 64))
+        for (int x = 1; x < image.width() - 1; x++)
+        {
+            if (line[x] % 255 > 64)
+            {
+                if ((line[x - 1] % 255 < 64) && (line[x + 1] % 255 < 64))
+                {
                     line[x] = 0xFF404040;
-                else
-                if ((linep[x]%255 < 64)&&(linen[x]%255 < 64))
+                }
+                else if ((linep[x] % 255 < 64) && (linen[x] % 255 < 64))
+                {
                     line[x] = 0xFF404040;
-                else
-                    if ((linep[x-1]%255 < 64)&&(linen[x+1]%255 < 64))
-                        line[x] = 0xFF404040;
-                else
-                        if ((linep[x+1]%255 < 64)&&(linen[x-1]%255 < 64))
-                            line[x] = 0xFF404040;
+                }
+                else if ((linep[x - 1] % 255 < 64) && (linen[x + 1] % 255 < 64))
+                {
+                    line[x] = 0xFF404040;
+                }
+                else if ((linep[x + 1] % 255 < 64) && (linen[x - 1] % 255 < 64))
+                {
+                    line[x] = 0xFF404040;
+                }
             }
         }
     }
 
 }
 
-void ImageProcessor::polishImage2(QImage &image)
+void ImageProcessor::polishImage2(QImage& image)
 {
 
     /*for (int y = 0; y < image.height(); y++) {
@@ -228,73 +246,115 @@ void ImageProcessor::polishImage2(QImage &image)
     }*/
 }
 
-bool ImageProcessor::isTextHorizontal(QImage &image)
+bool ImageProcessor::isTextHorizontal(QImage& image)
 {
     return true;
     if (image.width() > image.height())
+    {
         return true;
+    }
     QMap<int, int> stripes;
-    for (int y = 600; y < image.height() - 600; y++) {
-        quint8 * line = image.scanLine(y);
-        for (int x = 1200; x < image.width()*4 - 1200; x+=160) {
-            if (stripes.contains(x)) {
+    for (int y = 600; y < image.height() - 600; y++)
+    {
+        quint8* line = image.scanLine(y);
+        for (int x = 1200; x < image.width() * 4 - 1200; x += 160)
+        {
+            if (stripes.contains(x))
+            {
                 if (line[x] > 128)
-                    stripes.insert(x, stripes.value(x)+1);
-                else
-                    if (stripes.value(x) < 600)
-                        stripes.insert(x, 0);
-            } else
+                {
+                    stripes.insert(x, stripes.value(x) + 1);
+                }
+                else if (stripes.value(x) < 600)
+                {
+                    stripes.insert(x, 0);
+                }
+            }
+            else
+            {
                 stripes.insert(x, 0);
+            }
         }
     }
     int longCount = 0;
     int shortCount = 0;
-    foreach (int count, stripes.values()) {
-        if (count >= 600)
-            longCount++;
-        else
-            shortCount++;
-    }
-    if (longCount*2 > shortCount)
+            foreach (int count, stripes.values())
+        {
+            if (count >= 600)
+            {
+                longCount++;
+            }
+            else
+            {
+                shortCount++;
+            }
+        }
+    if (longCount * 2 > shortCount)
+    {
         return false;
-    if (longCount*3 > shortCount)
+    }
+    if (longCount * 3 > shortCount)
+    {
         return true;
+    }
     return true;
 }
 
-void ImageProcessor::cropAngles(QImage &image)
+void ImageProcessor::cropAngles(QImage& image)
 {
 //    int prevLen = 0;
-    for (int y = 0; y < image.height(); y++) {
-        QRgb * line = (QRgb *) image.scanLine(y);
-        for (int x = 0; x < image.width(); x++) {
-            if ((line[x]&0x00FFFFFF) == 0)
-                line[x] =0xFFFFFFFF;
+    for (int y = 0; y < image.height(); y++)
+    {
+        QRgb* line = (QRgb*) image.scanLine(y);
+        for (int x = 0; x < image.width(); x++)
+        {
+            if ((line[x] & 0x00FFFFFF) == 0)
+            {
+                line[x] = 0xFFFFFFFF;
+            }
             else
+            {
                 break;
+            }
         }
-        for (int x = image.width()-1; x > 0; x--) {
-            if ((line[x]&0x00FFFFFF) == 0)
-                line[x] =0xFFFFFFFF;
+        for (int x = image.width() - 1; x > 0; x--)
+        {
+            if ((line[x] & 0x00FFFFFF) == 0)
+            {
+                line[x] = 0xFFFFFFFF;
+            }
             else
+            {
                 break;
+            }
         }
 
     }
-    for (int x = 0; x < image.width(); x++) {
-        for (int y = 0; y < image.height(); y++) {
-            QRgb * line = (QRgb *) image.scanLine(y);
-            if ((line[x]&0x00FFFFFF) == 0)
-                line[x] =0xFFFFFFFF;
+    for (int x = 0; x < image.width(); x++)
+    {
+        for (int y = 0; y < image.height(); y++)
+        {
+            QRgb* line = (QRgb*) image.scanLine(y);
+            if ((line[x] & 0x00FFFFFF) == 0)
+            {
+                line[x] = 0xFFFFFFFF;
+            }
             else
+            {
                 break;
+            }
         }
-        for (int y = image.height()-1; y > 0 ; y--) {
-            QRgb * line = (QRgb *) image.scanLine(y);
-            if ((line[x]&0x00FFFFFF) == 0)
-                line[x] =0xFFFFFFFF;
+        for (int y = image.height() - 1; y > 0; y--)
+        {
+            QRgb* line = (QRgb*) image.scanLine(y);
+            if ((line[x] & 0x00FFFFFF) == 0)
+            {
+                line[x] = 0xFFFFFFFF;
+            }
             else
+            {
                 break;
+            }
         }
     }
 }
@@ -302,19 +362,23 @@ void ImageProcessor::cropAngles(QImage &image)
 void ImageProcessor::flatten()
 {
     int tr = Settings::instance()->getDarkBackgroundThreshold();
-    for (int y = 0; y < img.height(); y++) {
-        quint8 * line = img.scanLine(y);
-        for (int x = 0; x < img.width(); x++) {
+    for (int y = 0; y < img.height(); y++)
+    {
+        quint8* line = img.scanLine(y);
+        for (int x = 0; x < img.width(); x++)
+        {
             line[x] = line[x] > tr ? 255 : line[x];
         }
     }
 }
 
-void ImageProcessor::bust(QImage &image)
+void ImageProcessor::bust(QImage& image)
 {
-    for (int y = 0; y < image.height(); y++) {
-        QRgb * line = (QRgb *) image.scanLine(y);
-        for (int x = 0; x < image.width(); x++) {
+    for (int y = 0; y < image.height(); y++)
+    {
+        QRgb* line = (QRgb*) image.scanLine(y);
+        for (int x = 0; x < image.width(); x++)
+        {
             quint8 ov = line[x] & 0x000000FF;
             quint32 np = (ov << 16) + (ov << 8) + ov + 0xFF000000;
             line[x] = np;
@@ -322,31 +386,34 @@ void ImageProcessor::bust(QImage &image)
     }
 }
 
-QImage ImageProcessor::upScale(const QImage &image, bool bolden)
+QImage ImageProcessor::upScale(const QImage& image, bool bolden)
 {
-    QImage scImage = image.scaled(image.width()*2, image.height()*2, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    QImage scImage = image.scaled(image.width() * 2, image.height() * 2, Qt::KeepAspectRatio, Qt::SmoothTransformation);
     loadImage(scImage);
     binarize();
-    if (bolden) {
-        QImage limage  = gsImage();
+    if (bolden)
+    {
+        QImage limage = gsImage();
         SubimagePP spp(limage);
         spp.stregthen();
         return limage;
     }
     else
+    {
         return gsImage();
+    }
 }
 
-QList<Rect> ImageProcessor::splitTable(const QRect &bounds)
+QList<Rect> ImageProcessor::splitTable(const QRect& bounds)
 {
-   QRect brect = bounds;
-   QIPBlackAndWhiteImage bwi = fastBinarize();
-   normalizeBounds(brect, bwi.width(), bwi.height());
-   TableAnalizer ti(&bwi);
-   return ti.splitTable(brect);
+    QRect brect = bounds;
+    QIPBlackAndWhiteImage bwi = fastBinarize();
+    normalizeBounds(brect, bwi.width(), bwi.height());
+    TableAnalizer ti(&bwi);
+    return ti.splitTable(brect);
 }
 
-QList<Rect> ImageProcessor::splitTableForce(const QRect &bounds)
+QList<Rect> ImageProcessor::splitTableForce(const QRect& bounds)
 {
     QRect brect = bounds;
     QIPBlackAndWhiteImage bwi = fastBinarize();
@@ -355,19 +422,20 @@ QList<Rect> ImageProcessor::splitTableForce(const QRect &bounds)
     return ti.splitTableForce(brect);
 }
 
-QRect ImageProcessor::deskewByTable(const QRect &bounds)
+QRect ImageProcessor::deskewByTable(const QRect& bounds)
 {
     QRect brect = bounds;
     QIPBlackAndWhiteImage bwi = fastBinarize();
     normalizeBounds(brect, bwi.width(), bwi.height());
     TableAnalizer ti(&bwi);
     Rect r = ti.getSkew(brect);
-    return QRect(r.x1, r.y1, r.x2-r.x1, r.y2-r.y1);
+    return QRect(r.x1, r.y1, r.x2 - r.x1, r.y2 - r.y1);
 }
 
-void ImageProcessor::normalizeBounds(QRect &bounds, int w, int h)
+void ImageProcessor::normalizeBounds(QRect& bounds, int w, int h)
 {
-    if ((bounds.width() == 0)||(bounds.height() == 0)) {
+    if ((bounds.width() == 0) || (bounds.height() == 0))
+    {
         bounds.setX(0);
         bounds.setY(0);
         bounds.setWidth(w);

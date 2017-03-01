@@ -26,40 +26,63 @@
 #include <QList>
 
 class QIPBlackAndWhiteImage;
+
 class ImageProcessor : public QObject
 {
-    Q_OBJECT
+Q_OBJECT
 public:
-    explicit ImageProcessor(QObject *parent = 0);
+    explicit ImageProcessor(QObject* parent = 0);
+
     ~ImageProcessor();
+
     QRect crop();
-    void loadImage(const QImage &image);
-    QImage loadFromFile(const QString &fn);
+
+    void loadImage(const QImage& image);
+
+    QImage loadFromFile(const QString& fn);
+
     QImage gsImage() const;
+
     void binarize();
+
     void altBinarize();
+
     QIPBlackAndWhiteImage fastBinarize();
-    static void saveForPDF(const QImage &image, const QString &fileName, int squish = 1);
-    void saveYGF(const QImage &image, const QString &fileName);
-    QImage loadYGF(const QString &fileName);
-    static void polishImage(QImage &image);
-    static void polishImage2(QImage &image);
-    static bool isTextHorizontal(QImage &image);
-    static void cropAngles(QImage &image);
+
+    static void saveForPDF(const QImage& image, const QString& fileName, int squish = 1);
+
+    void saveYGF(const QImage& image, const QString& fileName);
+
+    QImage loadYGF(const QString& fileName);
+
+    static void polishImage(QImage& image);
+
+    static void polishImage2(QImage& image);
+
+    static bool isTextHorizontal(QImage& image);
+
+    static void cropAngles(QImage& image);
+
     void flatten();
-    static void bust(QImage &image);
-    QImage upScale(const QImage &image, bool bolden);
-    QList<Rect> splitTable(const QRect &bounds);
-    QList<Rect> splitTableForce(const QRect &bounds);
-    QRect deskewByTable(const QRect &bounds);
+
+    static void bust(QImage& image);
+
+    QImage upScale(const QImage& image, bool bolden);
+
+    QList<Rect> splitTable(const QRect& bounds);
+
+    QList<Rect> splitTableForce(const QRect& bounds);
+
+    QRect deskewByTable(const QRect& bounds);
+
 signals:
-    
+
 public slots:
 
 private:
     QIPGrayscaleImage img;
 private:
-    void normalizeBounds(QRect &bounds, int w, int h);
+    void normalizeBounds(QRect& bounds, int w, int h);
 };
 
 #endif // IMAGEPROCESSOR_H

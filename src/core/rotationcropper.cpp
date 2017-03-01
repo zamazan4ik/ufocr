@@ -21,7 +21,7 @@
 #include <QImage>
 #include <QColor>
 
-RotationCropper::RotationCropper(QImage * image, QRgb color)
+RotationCropper::RotationCropper(QImage* image, QRgb color)
 {
     this->image = image;
     darksCount = 0;
@@ -36,81 +36,115 @@ RotationCropper::RotationCropper(QImage * image, QRgb color)
     //replaceColor = color;
 }
 
-RotationCropper::~RotationCropper() {}
+RotationCropper::~RotationCropper()
+{}
 
 QRect RotationCropper::crop()
 {
     y1 = 0;
     int tolerance = 3;
     recolor();
-    for (int y = 0; y < image->height(); y ++) {
-        if (checkHorzLine(y)) {
+    for (int y = 0; y < image->height(); y++)
+    {
+        if (checkHorzLine(y))
+        {
             tolerance--;
-            if (tolerance == 0) {
+            if (tolerance == 0)
+            {
                 y1 = y;
                 break;
             }
 
-        } else
+        }
+        else
+        {
             tolerance = 3;
+        }
     }
-    y2 = image->height()-1;
+    y2 = image->height() - 1;
     tolerance = 3;
-    for (int y = y2; y >= 0; y--) {
-        if (checkHorzLine(y)) {
+    for (int y = y2; y >= 0; y--)
+    {
+        if (checkHorzLine(y))
+        {
             tolerance--;
-            if (tolerance == 0) {
+            if (tolerance == 0)
+            {
                 y2 = y;
                 break;
             }
 
-        } else
+        }
+        else
+        {
             tolerance = 3;
+        }
     }
     x1 = 0;
     tolerance = 3;
-    for (int x = x1; x < image->width(); x++) {
-        if (checkVertLine(x)) {
+    for (int x = x1; x < image->width(); x++)
+    {
+        if (checkVertLine(x))
+        {
             tolerance--;
-            if (tolerance == 0) {
+            if (tolerance == 0)
+            {
                 x1 = x;
                 break;
             }
 
-        } else
+        }
+        else
+        {
             tolerance = 3;
+        }
     }
-    x2 = image->width()-1;
+    x2 = image->width() - 1;
     tolerance = 3;
-    for (int x = x2; x >= 0; x--) {
-        if (checkVertLine(x)) {
+    for (int x = x2; x >= 0; x--)
+    {
+        if (checkVertLine(x))
+        {
             tolerance--;
-            if (tolerance == 0) {
+            if (tolerance == 0)
+            {
                 x2 = x;
                 break;
             }
 
-        } else
+        }
+        else
+        {
             tolerance = 3;
+        }
     }
-    return QRect(x1, y1, x2-x1, y2-y1);
+    return QRect(x1, y1, x2 - x1, y2 - y1);
 }
 
 void RotationCropper::recolor()
 {
-    QColor repColor(1,2,3);
-    for (int y = 0; y < image->height(); y++) {
-        QRgb * line = (QRgb *) image->scanLine(y);
-        for (int x = 0; x < image->width(); x++) {
-            if (line[x] == whitePixel )
+    QColor repColor(1, 2, 3);
+    for (int y = 0; y < image->height(); y++)
+    {
+        QRgb* line = (QRgb*) image->scanLine(y);
+        for (int x = 0; x < image->width(); x++)
+        {
+            if (line[x] == whitePixel)
+            {
                 line[x] = repColor.rgb();
-            else break;
+            }
+            else
+            { break; }
 
         }
-        for (int x = image->width() - 1; x >= 0; x--) {
-            if (line[x] == whitePixel )
+        for (int x = image->width() - 1; x >= 0; x--)
+        {
+            if (line[x] == whitePixel)
+            {
                 line[x] = repColor.rgb();
-            else break;
+            }
+            else
+            { break; }
 
         }
     }
@@ -128,46 +162,62 @@ bool RotationCropper::checkHorzLine(int y)
     whiteAlt = 0;
     //int maxlstripe = 0;
     //int currentlstripe = 0;
-    QRgb * line = (QRgb *) image->scanLine(y);
-    for (int i = 0; i < image->width(); i++) {
-        if ((qRed(line[i]) == 1) && (qGreen(line[i]) == 2) && (qBlue(line[i]) == 3)) {
+    QRgb* line = (QRgb*) image->scanLine(y);
+    for (int i = 0; i < image->width(); i++)
+    {
+        if ((qRed(line[i]) == 1) && (qGreen(line[i]) == 2) && (qBlue(line[i]) == 3))
+        {
             skipCount++;
             continue;
         }
         int pixel = qRed(line[i]) + qGreen(line[i]) + qBlue(line[i]);
-        if (pixel <= 382) {
+        if (pixel <= 382)
+        {
             darksCount++;
 //             if (currentlstripe > maxlstripe) maxlstripe = currentlstripe;
 //             currentlstripe = 0;
-       } else {
+        }
+        else
+        {
             lightsCount++;
 //               currentlstripe++;
-            if (pixel >= whitetr) {
+            if (pixel >= whitetr)
+            {
                 whitesCount++;
-                if (whiteAlt == 0) {
+                if (whiteAlt == 0)
+                {
                     whiteAlt = 1;
                     clWhiteCount++;
                 }
-            } else
+            }
+            else
+            {
                 whiteAlt = 0;
+            }
         }
         minval = pixel < minval ? pixel : minval;
         maxval = pixel > maxval ? pixel : maxval;
     }
     qreal d = image->width() - skipCount;
     if (d == 0)
+    {
         return false;
-    clBrighttoWidth = (qreal)lightsCount/d;
+    }
+    clBrighttoWidth = (qreal) lightsCount / d;
     if (clBrighttoWidth <= clBrighttoWidthtr)
+    {
         return false;
+    }
     if (maxval - minval < 40)
+    {
         return false;
+    }
     //if (clAltCount < 10)
-      //  return false;
+    //  return false;
     //if (maxlstripe < 10)
     //    return false;
-   // if ((clWhiteCount > 0)&&(clWhiteCount < 3))
-     //       return false;
+    // if ((clWhiteCount > 0)&&(clWhiteCount < 3))
+    //       return false;
     return true;
 }
 
@@ -182,48 +232,66 @@ bool RotationCropper::checkVertLine(int x)
     //clAltCount = 0;
     whiteAlt = 0;
     //int curline =0;
-    for (int y = 0; y < image->height(); y++) {
-        QRgb * line = (QRgb *) image->scanLine(y);
-        if ((qRed(line[x]) == 1) && (qGreen(line[x]) == 2) && (qBlue(line[x]) == 3)) {
+    for (int y = 0; y < image->height(); y++)
+    {
+        QRgb* line = (QRgb*) image->scanLine(y);
+        if ((qRed(line[x]) == 1) && (qGreen(line[x]) == 2) && (qBlue(line[x]) == 3))
+        {
             skipCount++;
             continue;
         }
         int pixel = qRed(line[x]) + qGreen(line[x]) + qBlue(line[x]);
-        if (pixel <= 382) {
+        if (pixel <= 382)
+        {
             darksCount++;
 //                if (curline) {
 //                    clAltCount++;
 //                    curline = 0;
 //                }
-        } else {
+        }
+        else
+        {
             lightsCount++;
 //                if (!curline) {
 //                    clAltCount++;
 //                    curline = 1;
 //                }
-            if (pixel >= whitetr) {
+            if (pixel >= whitetr)
+            {
                 whitesCount++;
-                if (whiteAlt == 0) {
+                if (whiteAlt == 0)
+                {
                     whiteAlt = 1;
                     clWhiteCount++;
                 }
-            } else
+            }
+            else
+            {
                 whiteAlt = 0;
+            }
         }
         minval = pixel < minval ? pixel : minval;
         maxval = pixel > maxval ? pixel : maxval;
     }
     qreal d = image->height() - skipCount;
     if (d == 0)
+    {
         return false;
-    clBrighttoWidth = (qreal)lightsCount/d;
+    }
+    clBrighttoWidth = (qreal) lightsCount / d;
     if (clBrighttoWidth <= clBrighttoWidthtr)
+    {
         return false;
+    }
     if (maxval - minval < 40)
+    {
         return false;
+    }
 //        if (clAltCount < 10)
 //            return false;
-    if ((clWhiteCount > 0)&&(clWhiteCount < 3))
-            return false;
+    if ((clWhiteCount > 0) && (clWhiteCount < 3))
+    {
+        return false;
+    }
     return true;
 }

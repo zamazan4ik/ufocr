@@ -24,20 +24,29 @@
 
 class LoadProjectDialog : public SaveProjectDialog
 {
-    Q_OBJECT
+Q_OBJECT
 public:
-    explicit LoadProjectDialog(const QString &path, QWidget *parent = 0);
+    explicit LoadProjectDialog(const QString& path, QWidget* parent = 0);
+
     QString projectPath();
+
     QString projectName();
+
 signals:
 public slots:
 protected slots:
+
     void accept();
+
     void reject();
+
 private slots:
-    void onProjectClicked(const QString &path, const QString &name);
+
+    void onProjectClicked(const QString& path, const QString& name);
+
 protected:
-    virtual void onLineEditTextChanged(QLineEdit * le, const QString &arg1);
+    virtual void onLineEditTextChanged(QLineEdit* le, const QString& arg1);
+
 private:
     QString pPath;
     QString pName;

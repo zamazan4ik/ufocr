@@ -13,8 +13,8 @@
 #include "recognizerwrapper.h"
 #include "recognizerwrapperinternal.h"
 
-RecognizerWrapper::RecognizerWrapper(QObject *parent) :
-    QObject(parent)
+RecognizerWrapper::RecognizerWrapper(QObject* parent) :
+        QObject(parent)
 {
     rwi = new RecognizerWrapperInternal(this);
     rwi->init();
@@ -55,7 +55,7 @@ void RecognizerWrapper::cancel()
 void RecognizerWrapper::onError()
 {
     if (!rwi->supressErros)
-        emit error(trUtf8("Recognizer error."));
+            emit { error(trUtf8("Recognizer error.")); }
 }
 
 

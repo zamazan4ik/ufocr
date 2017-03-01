@@ -23,8 +23,8 @@
 #include <QDir>
 #include <QImageReader>
 
-TiffImporter::TiffImporter(const QString &fileName, QObject *parent) :
-    QObject(parent), tiffName(fileName)
+TiffImporter::TiffImporter(const QString& fileName, QObject* parent) :
+        QObject(parent), tiffName(fileName)
 {
 }
 
@@ -41,44 +41,57 @@ void TiffImporter::exec()
     proc.setWorkingDirectory(wd);
     QString size = Settings::instance()->tiffPageSize();
     QString density = Settings::instance()->tiffDensity();
-    QString cmd = QString("convert %1  -units PixelsPerInch -resize %2x%3 -units PixelsPerInch -density %4  t%5_out.jpg").arg(tiffName).arg(size).arg(size).arg(density).arg(Settings::instance()->uniqueSeed());
+    QString cmd = QString(
+            "convert %1  -units PixelsPerInch -resize %2x%3 -units PixelsPerInch -density %4  t%5_out.jpg").arg(
+            tiffName).arg(size).arg(size).arg(density).arg(Settings::instance()->uniqueSeed());
     proc.start(cmd);
     proc.waitForFinished();
-    if (proc.exitStatus() != QProcess::NormalExit) {
+    if (proc.exitStatus() != QProcess::NormalExit)
+    {
         emit error();
         return;
     }
     nf = dir.entryList(sl);
 
-    foreach(QString s, nf) {
-        if (!pf.contains(s))
-            files.append(wd+s);
-    }
+            foreach(QString s, nf)
+        {
+            if (!pf.contains(s))
+            {
+                files.append(wd + s);
+            }
+        }
     if (files.count())
-        emit finished(files);
-    else {
+            emit { finished(files); }
+    else
+    {
         QImageReader ir(tiffName);
         if (!ir.read().isNull())
+        {
             files.append(tiffName);
-        else {
+        }
+        else
+        {
             const QString ppmFile = QString::fromLatin1("input.ppm");
-            if (dir.exists(ppmFile)) {
+            if (dir.exists(ppmFile))
+            {
                 dir.remove(ppmFile);
                 QProcess proc;
                 proc.setEnvironment(QProcess::systemEnvironment());
                 proc.setWorkingDirectory(wd);
                 proc.start("tifftopnm > " + ppmFile);
                 proc.waitForFinished();
-                QImageReader ir(wd+ppmFile);
+                QImageReader ir(wd + ppmFile);
                 if (!ir.read().isNull())
+                {
                     files.append(wd + ppmFile);
+                }
             }
         }
     }
     if (files.count())
-        emit finished(files);
+            emit { finished(files); }
     else
-        emit error();
+            emit { error(); }
 }
 
 QStringList TiffImporter::extractedFiles()

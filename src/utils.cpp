@@ -28,52 +28,62 @@
 #include <stdlib.h>
 #include "utils.h"
 
-QString extractFileName(const QString &path)
+QString extractFileName(const QString& path)
 {
     QFileInfo fi(path);
     return fi.fileName();
 }
 
-QString extractFilePath(const QString &path)
+QString extractFilePath(const QString& path)
 {
     QFileInfo fi(path);
     QString s = fi.dir().path();
     if (!s.endsWith("/"))
+    {
         s += '/';
+    }
     return s;
 }
 
-QString extractDigits(const QString &fn)
+QString extractDigits(const QString& fn)
 {
     bool extracting = false;
     QString result = "";
     for (int i = 0; i < fn.size(); i++)
-        if ((fn.at(i) >= '0') && (fn.at(i) <= '9')) {
+        if ((fn.at(i) >= '0') && (fn.at(i) <= '9'))
+        {
             extracting = true;
             result += fn.at(i);
-        } else {
-            if (extracting) break;
+        }
+        else
+        {
+            if (extracting)
+            { break; }
         }
     return result;
 }
 
-bool findProgram(const QString &name)
+bool findProgram(const QString& name)
 {
     QStringList sl = QString(getenv("PATH")).split(":");
     QFileInfo fi;
-    for (int i = 0; i < sl.count(); i++) {
+    for (int i = 0; i < sl.count(); i++)
+    {
         fi.setFile(sl.at(i), name);
         if (fi.exists())
+        {
             return true;
+        }
     }
     return false;
 }
 
 static bool mbShown = false;
 
-void styledWarningMessage(QWidget *parent, const QString &text)
+void styledWarningMessage(QWidget* parent, const QString& text)
 {
-    if (mbShown) return;
+    if (mbShown)
+    { return; }
     QMessageBox mb(parent);
     mb.setIconPixmap(QPixmap(":warning.png"));
     mb.setWindowTitle(QObject::trUtf8("Warning"));
@@ -84,7 +94,7 @@ void styledWarningMessage(QWidget *parent, const QString &text)
     mbShown = false;
 }
 
-void styledInfoMessage(QWidget *parent, const QString &text)
+void styledInfoMessage(QWidget* parent, const QString& text)
 {
     QMessageBox mb(parent);
     mb.setIconPixmap(QPixmap(":/images/info.png"));
@@ -94,7 +104,7 @@ void styledInfoMessage(QWidget *parent, const QString &text)
     mb.exec();
 }
 
-void styledCriticalMessage(QWidget *parent, const QString &text)
+void styledCriticalMessage(QWidget* parent, const QString& text)
 {
     QMessageBox mb(parent);
     mb.setIconPixmap(QPixmap(":/critical.png"));
@@ -105,7 +115,10 @@ void styledCriticalMessage(QWidget *parent, const QString &text)
 }
 
 
-struct SleepThread : public QThread { using QThread::msleep;};
+struct SleepThread : public QThread
+{
+    using QThread::msleep;
+};
 
 void qSleep(int msecs)
 {
@@ -114,11 +127,11 @@ void qSleep(int msecs)
 
 void clearTmpFiles()
 {
-    Settings * settings = Settings::instance();
+    Settings* settings = Settings::instance();
     QFile::remove(settings->workingDir() + "tmp*.bmp");
     QFile::remove(settings->workingDir() + "tmp*.ygf");
-    QFile f(settings->workingDir()+settings->getRecognizeInputFile());
+    QFile f(settings->workingDir() + settings->getRecognizeInputFile());
     f.remove();
-    f.setFileName(settings->workingDir()+settings->getRecognizeOutputFile());
+    f.setFileName(settings->workingDir() + settings->getRecognizeOutputFile());
     f.remove();
 }

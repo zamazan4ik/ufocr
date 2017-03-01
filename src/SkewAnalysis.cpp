@@ -26,7 +26,7 @@
 #include <QPen>
 #include <QColor>
 
-SkewAnalysis::SkewAnalysis(QPointList *pointList, int width, int height)
+SkewAnalysis::SkewAnalysis(QPointList* pointList, int width, int height)
 {
     /* for (int i = 0; i < 360; i++)
          for (int j = 0; j < 2000; j++)
@@ -83,32 +83,45 @@ signed int SkewAnalysis::getSkew()
 {
     int minLeftDist = 10000;
     int minRightDist = 0;
-    for (int i = 0; i < pointList->count(); i++) {
-        if (!(i%2)) {
+    for (int i = 0; i < pointList->count(); i++)
+    {
+        if (!(i % 2))
+        {
             if (minLeftDist > pointList->at(i).x())
+            {
                 minLeftDist = pointList->at(i).x();
-        } else {
+            }
+        }
+        else
+        {
             if (minRightDist < pointList->at(i).x())
+            {
                 minRightDist = pointList->at(i).x();
+            }
         }
     }
     minRightDist = m_width - minRightDist;
 
     signed int res;
-    if (minRightDist > minLeftDist) {
+    if (minRightDist > minLeftDist)
+    {
         phi = getRightPhi();
-    } else {
+    }
+    else
+    {
         phi = getLeftPhi();
     }
-    res = (phi/(2*M_PI))*360+1;
-    if (res > 45) return 90 - res;
-    if (res < 45) return -(90 + res);
+    res = (phi / (2 * M_PI)) * 360 + 1;
+    if (res > 45)
+    { return 90 - res; }
+    if (res < 45)
+    { return -(90 + res); }
     return -res;
 }
 
 double SkewAnalysis::getPhi()
 {
-    return getSkew()*2*M_PI/(double)360;
+    return getSkew() * 2 * M_PI / (double) 360;
     //if (phi > 0.7854) return M_PI_2 - phi;
     //if (phi < 0.7854) return -(M_PI_2 + phi);
 }
@@ -116,45 +129,57 @@ double SkewAnalysis::getPhi()
 double SkewAnalysis::getRightPhi()
 {
     double phi = 0;
-    int maxx = 0, maxy = 0, minx = 10000, miny  = 10000;
-    for (int i = 1; i < pointList->count(); i +=2) {
-        if (maxx< pointList->at(i).x()) {
+    int maxx = 0, maxy = 0, minx = 10000, miny = 10000;
+    for (int i = 1; i < pointList->count(); i += 2)
+    {
+        if (maxx < pointList->at(i).x())
+        {
             maxx = pointList->at(i).x();
             maxy = pointList->at(i).y();
         }
-        if (miny > pointList->at(i).y()) {
+        if (miny > pointList->at(i).y())
+        {
             minx = pointList->at(i).x();
             miny = pointList->at(i).y();
         }
     }
     phi = 0;
-    if (maxy-miny < m_height - maxy) {
+    if (maxy - miny < m_height - maxy)
+    {
         miny = 0;
-        for (int i = 1; i < pointList->count(); i +=2)
-            if (miny < pointList->at(i).y()) {
+        for (int i = 1; i < pointList->count(); i += 2)
+            if (miny < pointList->at(i).y())
+            {
                 minx = pointList->at(i).x();
                 miny = pointList->at(i).y();
             }
-    } else  {
+    }
+    else
+    {
         miny = 10000;
-        for (int i = 1; i < pointList->count(); i +=2)
-            if (miny > pointList->at(i).y()) {
+        for (int i = 1; i < pointList->count(); i += 2)
+            if (miny > pointList->at(i).y())
+            {
                 minx = pointList->at(i).x();
                 miny = pointList->at(i).y();
             }
     }
 
-    if (maxx-minx == 0)
+    if (maxx - minx == 0)
+    {
         return 0;
-    if (m_height/abs(maxx-minx) >=100 )
+    }
+    if (m_height / abs(maxx - minx) >= 100)
+    {
         return 0;
+    }
     // if (maxy > miny)
     p1->setX(maxx);
     p1->setY(maxy);
     p2->setX(minx);
     p2->setY(miny);
 
-    phi = atan((double)(maxy-miny)/(double)(maxx-minx));
+    phi = atan((double) (maxy - miny) / (double) (maxx - minx));
     //else
     //phi = atan((double)(miny - maxy)/(double)(maxx-minx));
     // phi = - (M_PI_2 -phi);
@@ -165,29 +190,37 @@ double SkewAnalysis::getRightPhi()
 double SkewAnalysis::getLeftPhi()
 {
     double phi = 0;
-    int maxx = 0, maxy = 0, minx = 10000, miny  = 10000;
-    for (int i = 0; i < pointList->count(); i +=2) {
-        if (minx > pointList->at(i).x()) {
+    int maxx = 0, maxy = 0, minx = 10000, miny = 10000;
+    for (int i = 0; i < pointList->count(); i += 2)
+    {
+        if (minx > pointList->at(i).x())
+        {
             minx = pointList->at(i).x();
             miny = pointList->at(i).y();
         }
-        if (maxy > pointList->at(i).y()) {
+        if (maxy > pointList->at(i).y())
+        {
             maxx = pointList->at(i).x();
             maxy = pointList->at(i).y();
         }
     }
     phi = 0;
-    if (miny < m_height - miny) {
+    if (miny < m_height - miny)
+    {
         maxy = 0;
-        for (int i = 0; i < pointList->count(); i +=2)
-            if ((maxy < pointList->at(i).y()) && (pointList->at(i).y() < 0.9*m_height)) {
+        for (int i = 0; i < pointList->count(); i += 2)
+            if ((maxy < pointList->at(i).y()) && (pointList->at(i).y() < 0.9 * m_height))
+            {
                 maxx = pointList->at(i).x();
                 maxy = pointList->at(i).y();
             }
-    } else  {
+    }
+    else
+    {
         maxy = 10000;
-        for (int i = 0; i < pointList->count(); i +=2)
-            if ((maxy > pointList->at(i).y()) && (pointList->at(i).y() < 0.9*m_height)) {
+        for (int i = 0; i < pointList->count(); i += 2)
+            if ((maxy > pointList->at(i).y()) && (pointList->at(i).y() < 0.9 * m_height))
+            {
                 maxx = pointList->at(i).x();
                 maxy = pointList->at(i).y();
             }
@@ -198,15 +231,19 @@ double SkewAnalysis::getLeftPhi()
     p2->setX(minx);
     p2->setY(miny);
 
-    if (maxx-minx == 0)
+    if (maxx - minx == 0)
+    {
         return 0;
-    if (m_height/abs(maxx-minx) >=100 )
+    }
+    if (m_height / abs(maxx - minx) >= 100)
+    {
         return 0;
-    phi = atan((double)(maxy-miny)/(double)(maxx-minx));
+    }
+    phi = atan((double) (maxy - miny) / (double) (maxx - minx));
     return phi;
 }
 
-QPixmap SkewAnalysis::drawTriangle(QPixmap &pm)
+QPixmap SkewAnalysis::drawTriangle(QPixmap& pm)
 {
     QImage img = pm.toImage();
     QPainter p(&img);

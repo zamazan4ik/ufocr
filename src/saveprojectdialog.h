@@ -17,45 +17,71 @@
 #include <QModelIndex>
 #include <QStringList>
 
-namespace Ui {
+namespace Ui
+{
 class SaveProjectDialog;
 }
 
 class ProjectFiles;
+
 class QShowEvent;
+
 class QFileSystemWatcher;
+
 class QLineEdit;
+
 class SaveProjectDialog : public QDialog
 {
-    Q_OBJECT
-    
+Q_OBJECT
+
 public:
-    explicit SaveProjectDialog(const QString &dir, QWidget *parent = 0);
+    explicit SaveProjectDialog(const QString& dir, QWidget* parent = 0);
+
     ~SaveProjectDialog();
+
     QString projectPath();
+
     QString upDir();
+
 signals:
-    void projectClicked(const QString &path, const QString &name);
+
+    void projectClicked(const QString& path, const QString& name);
+
 private slots:
-    void onDoubleClicked( const QModelIndex & index );
-    void onClicked( const QModelIndex & index );
+
+    void onDoubleClicked(const QModelIndex& index);
+
+    void onClicked(const QModelIndex& index);
+
     void goBackwards();
+
     void goUp();
-    void lineEditTextChanged(const QString &arg1);
+
+    void lineEditTextChanged(const QString& arg1);
+
     void directoryChanged(const QString s);
+
     void reject();
+
     void accept();
+
 protected:
-    void 	showEvent ( QShowEvent * event );
-    virtual void onLineEditTextChanged(QLineEdit * le, const QString &arg1);
-    void cd(const QString &path);
-    bool isProjectDir(const QString &path);
+    void showEvent(QShowEvent* event);
+
+    virtual void onLineEditTextChanged(QLineEdit* le, const QString& arg1);
+
+    void cd(const QString& path);
+
+    bool isProjectDir(const QString& path);
+
     QString currentPath();
-    QLineEdit * lineEdit();
+
+    QLineEdit* lineEdit();
+
 private:
-    Ui::SaveProjectDialog *ui;
-    ProjectFiles * pf;
-    QFileSystemWatcher * fsw;
+    Ui::SaveProjectDialog* ui;
+    ProjectFiles* pf;
+    QFileSystemWatcher* fsw;
     QString ppath;
     QStringList gbList;
 private:

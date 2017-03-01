@@ -29,23 +29,31 @@ class PopplerDialog;
 
 class PopplerDialog : public QDialog
 {
-    Q_OBJECT
+Q_OBJECT
 
 public:
-    explicit PopplerDialog(QWidget *parent = 0);
+    explicit PopplerDialog(QWidget* parent = 0);
+
     ~PopplerDialog();
+
     void setPDFFile(const QString fileName);
+
     QString getPDFFile();
+
     QString getStartPage();
+
     QString getStopPage();
+
     bool getDeskew();
+
 private slots:
+
     void on_checkBox_toggled(bool checked);
 
     void on_pushButton_clicked();
 
 private:
-    Ui::PopplerDialog *ui;
+    Ui::PopplerDialog* ui;
 };
 
 #endif // POPPLERDIALOG_H

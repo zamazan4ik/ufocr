@@ -26,14 +26,20 @@
 
 class TiffImporter : public QObject
 {
-    Q_OBJECT
+Q_OBJECT
 public:
-    explicit TiffImporter(const QString &fileName, QObject *parent = 0);
+    explicit TiffImporter(const QString& fileName, QObject* parent = 0);
+
     void exec();
+
     QStringList extractedFiles();
+
 signals:
+
     void error();
-    void finished(const QStringList &files);
+
+    void finished(const QStringList& files);
+
 public slots:
 private:
     QStringList files;

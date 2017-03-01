@@ -17,12 +17,12 @@
 #include <QMutex>
 
 
-QXtUnixSignalCatcher *QXtUnixSignalCatcher::sc = NULL;
+QXtUnixSignalCatcher* QXtUnixSignalCatcher::sc = NULL;
 
-QMutex *QXtUnixSignalCatcher::mutex = NULL;
+QMutex* QXtUnixSignalCatcher::mutex = NULL;
 
-QXtUnixSignalCatcher::QXtUnixSignalCatcher(QObject *parent) :
-    QObject(parent)
+QXtUnixSignalCatcher::QXtUnixSignalCatcher(QObject* parent) :
+        QObject(parent)
 {
     mutex = new QMutex();
     sci = new QXtUnixSignalCatcherInternal(0);
@@ -41,7 +41,7 @@ QXtUnixSignalCatcher::QXtUnixSignalCatcher() : QObject(0)
 {
 }
 
-QXtUnixSignalCatcher::QXtUnixSignalCatcher(QXtUnixSignalCatcher &) : QObject(0)
+QXtUnixSignalCatcher::QXtUnixSignalCatcher(QXtUnixSignalCatcher&) : QObject(0)
 {
 }
 
@@ -96,9 +96,11 @@ void QXtUnixSignalCatcher::doEmit(int sig_num)
     emit unixSignal(sig_num);
 }
 
-QXtUnixSignalCatcher *QXtUnixSignalCatcher::catcher()
+QXtUnixSignalCatcher* QXtUnixSignalCatcher::catcher()
 {
     if (!sc)
+    {
         sc = new QXtUnixSignalCatcher(0);
+    }
     return sc;
 }

@@ -1,6 +1,6 @@
 #include "subpagepp.h"
 
-SubpagePP::SubpagePP(QObject *parent) :
-    QObject(parent)
+SubpagePP::SubpagePP(QObject* parent) :
+        QObject(parent)
 {
 }

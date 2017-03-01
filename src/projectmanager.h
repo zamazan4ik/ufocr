@@ -21,52 +21,70 @@
 
 
 class QXmlStreamWriter;
+
 class QXmlStreamReader;
 
 class ProjectSaver : public QObject
 {
-    Q_OBJECT
+Q_OBJECT
 public:
-    explicit ProjectSaver(QObject *parent = 0);
-    bool save(const QString &dir);
+    explicit ProjectSaver(QObject* parent = 0);
+
+    bool save(const QString& dir);
+
 signals:
 
 public slots:
 private:
     void writePages();
+
     void writeBlocks();
+
     void writeSettings();
-    QString copyFile(const QString &source);
+
+    QString copyFile(const QString& source);
+
 private:
-    QXmlStreamWriter *stream;
+    QXmlStreamWriter* stream;
     QString directory;
     QStringList imagesSaved;
 private:
-   void deleteGarbageFiles();
+    void deleteGarbageFiles();
 };
 
 class ProjectLoader : public QObject
 {
-    Q_OBJECT
+Q_OBJECT
 public:
-    explicit ProjectLoader(QObject *parent = 0);
-    bool load(const QString &dir);
+    explicit ProjectLoader(QObject* parent = 0);
+
+    bool load(const QString& dir);
+
 signals:
+
     void languageChanged();
+
     void engineChanged();
+
 public slots:
 private:
     bool readPages();
+
     bool readBlocks();
+
     bool readSettings();
+
     void loadPage();
+
     bool readNextElement();
+
 private:
-    QXmlStreamReader *stream;
+    QXmlStreamReader* stream;
     QString directory;
     QString version;
     QStringList filesLoaded;
 private:
-    bool loadInternal(const QString &dir, const QString &fn);
+    bool loadInternal(const QString& dir, const QString& fn);
+
     void deleteGarbageFiles();
 };

@@ -27,6 +27,7 @@ class PDF2PPT : public PDFExtractor
 {
 public:
     PDF2PPT();
+
     virtual QStringList makeCommandString();
 };
 

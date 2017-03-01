@@ -29,20 +29,25 @@
 class QSnippet : public QListWidgetItem
 {
 public:
-    explicit QSnippet(QListWidget *parent = 0);
-    bool setPage(int id, const QString &name, const QImage &image = QImage());
+    explicit QSnippet(QListWidget* parent = 0);
+
+    bool setPage(int id, const QString& name, const QImage& image = QImage());
+
     QString getName();
+
     int pageID();
+
     int imageHeight();
+
     int imageWidth();
+
 signals:
 public slots:
 private:
     QString name;
     int pid;
     int ih;
-    int iw
-    ;
+    int iw;
 };
 
 #endif // QSNIPPET_H

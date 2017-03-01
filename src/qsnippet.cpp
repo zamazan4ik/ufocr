@@ -19,20 +19,26 @@
 
 #include "qsnippet.h"
 
-QSnippet::QSnippet(QListWidget *parent) :
-    QListWidgetItem(parent)
+QSnippet::QSnippet(QListWidget* parent) :
+        QListWidgetItem(parent)
 {
 }
 
-bool QSnippet::setPage(int id, const QString &name, const QImage &image)
+bool QSnippet::setPage(int id, const QString& name, const QImage& image)
 {
-    if (image.isNull()) {
+    if (image.isNull())
+    {
         QImage img(name);
         if (img.isNull())
+        {
             return false;
+        }
         setIcon(QPixmap::fromImage(img));
-    } else
+    }
+    else
+    {
         setIcon(QPixmap::fromImage(image));
+    }
     this->name = name;
     setToolTip(name);
     pid = id;

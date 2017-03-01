@@ -20,16 +20,16 @@
 #define COMMON_H
 
 
-
 #include <QtGlobal>
 
-template <typename T_>
+template<typename T_>
 void deallocator(T_ buf[])
 {
     delete[] buf;
 }
 
-typedef struct IntRect {
+typedef struct IntRect
+{
     int x1, y1, x2, y2;
 } _IntRect;
 

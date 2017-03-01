@@ -36,28 +36,36 @@
 
 
 class QIPGrayscaleImage;
+
 class QIPBlackAndWhiteImage
 {
     QIPBlackAndWhiteImage(quint32 width, quint32 height);
+
 public:
     QIPBlackAndWhiteImage();
-    QIPBlackAndWhiteImage(const QIPBlackAndWhiteImage &I);
+
+    QIPBlackAndWhiteImage(const QIPBlackAndWhiteImage& I);
+
     ~QIPBlackAndWhiteImage();
+
     /*!
       Converts binary image to QImage object.
     */
     QImage toImage() const;
+
     /*!
      *  Returns the part of the original black and white image bounded by the rectangle (x1,y1) (x2,y2) as a new instance of QIPBlackAndWhiteImage.
      *  Note that the boundaries should not exceed those of the original image (this is not checked).
      *  \sa toImage
     */
     QIPBlackAndWhiteImage copy(quint32 x1, quint32 x2, quint32 y1, quint32 y2) const;
+
     /*!
      *  Returns the image's width.
      * \sa height
     */
     quint32 width();
+
     /*!
      *  Returns the image's height.
      * \sa width
@@ -74,7 +82,7 @@ public:
      * \sa erode
     */
 
-    QIPBlackAndWhiteImage dilate(quint8 *structuringElement, int dimensions) const;
+    QIPBlackAndWhiteImage dilate(quint8* structuringElement, int dimensions) const;
 
     /*!
      *  Returns an image obtained by morphologically eroding the original image with the structuring element defined by the structuringElement variable.
@@ -85,7 +93,7 @@ public:
      * \sa dilate
     */
 
-    QIPBlackAndWhiteImage erode(quint8 *structuringElement, int dimensions) const;
+    QIPBlackAndWhiteImage erode(quint8* structuringElement, int dimensions) const;
 
     /*!
      *  Returns an image obtained by morphologically opening the original image with the structuring element defined by the structuringElement variable.
@@ -95,8 +103,8 @@ public:
      *  dimensions is the size of the side of the square. Odd values like 3, 5, 7 should be used for squares 3*3, 5*5, and 7*7 respectively.
      * \sa close
     */
-	
-	QIPBlackAndWhiteImage open(quint8 *structuringElement, int dimensions) const;
+
+    QIPBlackAndWhiteImage open(quint8* structuringElement, int dimensions) const;
 
     /*!
      *  Returns an image obtained by morphologically closing the original image with the structuring element defined by the structuringElement variable.
@@ -106,12 +114,12 @@ public:
      *  dimensions is the size of the side of the square. Odd values like 3, 5, 7 should be used for squares 3*3, 5*5, and 7*7 respectively.
      * \sa open
     */
-	
-	QIPBlackAndWhiteImage close(quint8 *structuringElement, int dimensions) const;
 
-   /*!
-     *  Returns an inverted image.
-     */
+    QIPBlackAndWhiteImage close(quint8* structuringElement, int dimensions) const;
+
+    /*!
+      *  Returns an inverted image.
+      */
 
     QIPBlackAndWhiteImage inverse() const;
 
@@ -120,25 +128,33 @@ public:
       */
     QIPBlackAndWhiteImage crop() const;
 
-    QRect cropGrayScaleImage(const QIPGrayscaleImage &image);
+    QRect cropGrayScaleImage(const QIPGrayscaleImage& image);
 
     bool isNull() const;
+
     void free();
 
-     quint8 * scanLine(quint32 y) const;
-     quint8 pixel(int x, int y);
+    quint8* scanLine(quint32 y) const;
+
+    quint8 pixel(int x, int y);
+
 private:
     int w, h;
     QSharedPointer<quint8> data;
 private:
-    void toImageInternal(uchar * image, const IntRect &rect, int imageWidth) const;
+    void toImageInternal(uchar* image, const IntRect& rect, int imageWidth) const;
 
 
     inline void setPixel(quint32 x, quint32 y, quint8 value);
-    bool compareElements(quint8 **se, quint8 **w, int dimensions) const;
+
+    bool compareElements(quint8** se, quint8** w, int dimensions) const;
+
     IntRect cropInternal(bool upperLeft) const;
-    void copyInternal(quint8 * data, int x1, int x2, int y1, int y2) const;
+
+    void copyInternal(quint8* data, int x1, int x2, int y1, int y2) const;
+
     friend class QIPGrayscaleImage;
+
     friend class QIPConnectedComponents;
 
 };

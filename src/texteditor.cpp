@@ -31,13 +31,14 @@
 #include <QMenu>
 #include <QTextCursor>
 
-TextEditor::TextEditor(QWidget *parent) :
-    QTextEdit(parent), spellChecker(this)
+TextEditor::TextEditor(QWidget* parent) :
+        QTextEdit(parent), spellChecker(this)
 {
     hasCopy = false;
     setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(contextMenuRequested(QPoint)));
-    connect(document(), SIGNAL(cursorPositionChanged(const QTextCursor &)), this, SLOT(updateSP()));
+    connect(document(), SIGNAL(cursorPositionChanged(
+                                       const QTextCursor &)), this, SLOT(updateSP()));
     connect(this, SIGNAL(copyAvailable(bool)), this, SLOT(copyAvailable(bool)));
     connect(this, SIGNAL(textChanged()), this, SLOT(textChanged()));
 }
@@ -46,7 +47,7 @@ TextEditor::~TextEditor()
 {
 }
 
-bool TextEditor::spellCheck(const QString &lang)
+bool TextEditor::spellCheck(const QString& lang)
 {
     spellChecker.setLanguage(lang);
     return spellChecker.spellCheck();
@@ -62,20 +63,24 @@ void TextEditor::enumerateDicts()
     spellChecker.enumerateDicts();
 }
 
-bool TextEditor::hasDict(const QString &shname)
+bool TextEditor::hasDict(const QString& shname)
 {
     return spellChecker.hasDict(shname);
 }
 
 
-void TextEditor::keyPressEvent(QKeyEvent *e)
+void TextEditor::keyPressEvent(QKeyEvent* e)
 {
-    if (e->modifiers() & Qt::ControlModifier) {
-        if ((e->key() == Qt::Key_Plus) || (e->key() == Qt::Key_Equal)) {
+    if (e->modifiers() & Qt::ControlModifier)
+    {
+        if ((e->key() == Qt::Key_Plus) || (e->key() == Qt::Key_Equal))
+        {
             enlargeFont();
             e->accept();
             return;
-        } else if (e->key() == Qt::Key_Minus) {
+        }
+        else if (e->key() == Qt::Key_Minus)
+        {
             decreaseFont();
             e->accept();
             return;
@@ -84,13 +89,18 @@ void TextEditor::keyPressEvent(QKeyEvent *e)
     QTextEdit::keyPressEvent(e);
 }
 
-void TextEditor::wheelEvent(QWheelEvent *e)
+void TextEditor::wheelEvent(QWheelEvent* e)
 {
-    if (e->modifiers() & Qt::ControlModifier) {
+    if (e->modifiers() & Qt::ControlModifier)
+    {
         if (e->delta() > 0)
+        {
             enlargeFont();
+        }
         else
+        {
             decreaseFont();
+        }
         e->accept();
         return;
     }
@@ -99,7 +109,7 @@ void TextEditor::wheelEvent(QWheelEvent *e)
 
 void TextEditor::replaceWord()
 {
-    QAction *action =  (QAction *) sender();
+    QAction* action = (QAction*) sender();
     QTextCursor cursor = textCursor();
     cursor.select(QTextCursor::WordUnderCursor);
     cursor.removeSelectedText();
@@ -113,7 +123,7 @@ void TextEditor::copyAvailable(bool yes)
 
 void TextEditor::textChanged()
 {
-    Settings *settings = Settings::instance();
+    Settings* settings = Settings::instance();
     QFont f(font());
     f.setPointSize(settings->getFontSize());
     setFont(f);
@@ -121,18 +131,23 @@ void TextEditor::textChanged()
 
 void TextEditor::copyClipboard()
 {
-    if (!hasCopy) {
-        QClipboard *clipboard = QApplication::clipboard();
+    if (!hasCopy)
+    {
+        QClipboard* clipboard = QApplication::clipboard();
         clipboard->setText(toPlainText(), QClipboard::Clipboard);
-    } else
+    }
+    else
+    {
         copy();
+    }
 }
 
-void TextEditor::saveHtml(QFile *file)
+void TextEditor::saveHtml(QFile* file)
 {
     QString text = document()->toHtml().toUtf8();
     QString newDir = extractFilePath(file->fileName()) + extractFileName(file->fileName()) + ".files";
-    text.replace("<meta name=\"qrichtext\" content=\"1\" />", "<meta content=\"text/html; charset=utf-8\" http-equiv=\"content-type\" />");
+    text.replace("<meta name=\"qrichtext\" content=\"1\" />",
+                 "<meta content=\"text/html; charset=utf-8\" http-equiv=\"content-type\" />");
     /*text.replace(workingDir + "output_files",  newDir);
     text.replace("[img src=", "<img src=");
     text.replace(".bmp\"]", ".bmp\">");
@@ -142,20 +157,21 @@ void TextEditor::saveHtml(QFile *file)
     file->write(text.toLatin1());
 }
 
-void TextEditor::globalReplace(const QString &what, const QString &with)
+void TextEditor::globalReplace(const QString& what, const QString& with)
 {
     moveCursor(QTextCursor::Start);
-    while (find(what)) {
+    while (find(what))
+    {
         QTextCursor cursor = textCursor();
         cursor.removeSelectedText();
         cursor.insertText(what);
     }
 }
 
-void TextEditor::contextMenuRequested(const QPoint &point)
+void TextEditor::contextMenuRequested(const QPoint& point)
 {
-    QAction *action;
-    QMenu *menu = new QMenu(this);
+    QAction* action;
+    QMenu* menu = new QMenu(this);
     QStringList sl = spellChecker.suggestions();
     //if (sl.count() == 0) {
 
@@ -200,18 +216,21 @@ void TextEditor::contextMenuRequested(const QPoint &point)
 
     //}
     if (sl.count() > 0)
+    {
         menu->addSeparator();
-    foreach(QString str, sl) {
-        QAction *action = menu->addAction(str);
-        connect(action, SIGNAL(triggered()), this, SLOT(replaceWord()));
     }
+            foreach(QString str, sl)
+        {
+            QAction* action = menu->addAction(str);
+            connect(action, SIGNAL(triggered()), this, SLOT(replaceWord()));
+        }
     menu->exec(mapToGlobal(point));
     delete menu;
 }
 
 void TextEditor::enlargeFont()
 {
-    Settings *settings = Settings::instance();
+    Settings* settings = Settings::instance();
     int fontSize = font().pointSize();
     fontSize++;
     QFont f(font());
@@ -222,9 +241,10 @@ void TextEditor::enlargeFont()
 
 void TextEditor::decreaseFont()
 {
-    Settings *settings = Settings::instance();
+    Settings* settings = Settings::instance();
     int fontSize = font().pointSize();
-    if (fontSize > 1) fontSize--;
+    if (fontSize > 1)
+    { fontSize--; }
     QFont f(font());
     f.setPointSize(fontSize);
     setFont(f);
@@ -233,7 +253,9 @@ void TextEditor::decreaseFont()
 
 void TextEditor::updateSP()
 {
-    Settings *settings = Settings::instance();
+    Settings* settings = Settings::instance();
     if (settings->getCheckSpelling())
+    {
         spellChecker.checkWord();
+    }
 }

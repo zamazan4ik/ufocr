@@ -20,12 +20,12 @@
 #include "loadprojectdialog.h"
 #include <QLineEdit>
 
-LoadProjectDialog::LoadProjectDialog(const QString &path, QWidget *parent) :
-    SaveProjectDialog(path, parent)
+LoadProjectDialog::LoadProjectDialog(const QString& path, QWidget* parent) :
+        SaveProjectDialog(path, parent)
 {
     setWindowTitle(trUtf8("Load Project"));
     lineEdit()->setStyleSheet("color: rgb(0, 0, 0)");
-    connect(this, SIGNAL(projectClicked(QString,QString)), this, SLOT(onProjectClicked(QString,QString)));
+    connect(this, SIGNAL(projectClicked(QString, QString)), this, SLOT(onProjectClicked(QString, QString)));
 }
 
 QString LoadProjectDialog::projectPath()
@@ -40,16 +40,21 @@ QString LoadProjectDialog::projectName()
 
 void LoadProjectDialog::accept()
 {
-    if (lineEdit()->text() != "") {
-        if (isProjectDir(lineEdit()->text())) {
+    if (lineEdit()->text() != "")
+    {
+        if (isProjectDir(lineEdit()->text()))
+        {
             pPath = lineEdit()->text();
             QDialog::accept();
         }
         else
+        {
             cd(lineEdit()->text());
+        }
         return;
     }
-    if (pPath != "") {
+    if (pPath != "")
+    {
         QDialog::accept();
     }
 }
@@ -61,14 +66,14 @@ void LoadProjectDialog::reject()
     QDialog::reject();
 }
 
-void LoadProjectDialog::onProjectClicked(const QString &path, const QString &name)
+void LoadProjectDialog::onProjectClicked(const QString& path, const QString& name)
 {
     pPath = path;
     pName = name;
     QDialog::accept();
 }
 
-void LoadProjectDialog::onLineEditTextChanged(QLineEdit *le, const QString &arg1)
+void LoadProjectDialog::onLineEditTextChanged(QLineEdit* le, const QString& arg1)
 {
     le->setStyleSheet("");
 }

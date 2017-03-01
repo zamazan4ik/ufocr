@@ -29,23 +29,34 @@
 #include "core/analysis.h"
 
 class QPixmap;
+
 class QImage;
+
 class QRect;
 
 class BlockSplitter
 {
 public:
-    void setImage(const QImage &image, qreal rotation, qreal scale);
-    QRect getRootBlock(const QImage &image);
+    void setImage(const QImage& image, qreal rotation, qreal scale);
+
+    QRect getRootBlock(const QImage& image);
+
     Bars getBars(); // call after something calls blockAllText();
     void splitBlocks();
-    QRect getRotationCropRect(const QImage &image);
+
+    QRect getRotationCropRect(const QImage& image);
+
     QList<Rect> getBlocks();
+
 private:
     QRect blockAllText();
+
     void splitVertical();
+
     void splitHorisontal();
-    bool isBlockRecogniseable(const Rect &block);
+
+    bool isBlockRecogniseable(const Rect& block);
+
 private:
     QImage img;
     qreal m_rotate;

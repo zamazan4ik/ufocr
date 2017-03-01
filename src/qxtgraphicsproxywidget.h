@@ -25,11 +25,12 @@ class QXtGraphicsView;
 
 class QXtGraphicsProxyWidget : public QGraphicsProxyWidget
 {
-    Q_OBJECT
+Q_OBJECT
 public:
 
-    QXtGraphicsProxyWidget(QGraphicsItem *parent = 0, Qt::WindowFlags wFlags = 0);
-    void setView(QXtGraphicsView *view);
+    QXtGraphicsProxyWidget(QGraphicsItem* parent = 0, Qt::WindowFlags wFlags = 0);
+
+    void setView(QXtGraphicsView* view);
 
 public slots:
 
@@ -37,10 +38,10 @@ public slots:
 
 protected:
 
-    QVariant itemChange(GraphicsItemChange change, const QVariant &value);
+    QVariant itemChange(GraphicsItemChange change, const QVariant& value);
 
 private:
-    QXtGraphicsView *mview;
+    QXtGraphicsView* mview;
 };
 
 

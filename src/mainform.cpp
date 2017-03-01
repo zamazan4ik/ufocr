@@ -74,7 +74,7 @@
 #include <QAction>
 
 
-MainForm::MainForm(QWidget *parent): QMainWindow(parent)
+MainForm::MainForm(QWidget* parent) : QMainWindow(parent)
 {
     setupUi(this);
 
@@ -87,7 +87,7 @@ MainForm::MainForm(QWidget *parent): QMainWindow(parent)
     frame->show();
     //toolBar->addWidget(label1);
     //toolBar->addWidget(selectLangsBox);
-    graphicsInput = new QGraphicsInput(QRectF(0, 0, 2000, 2000), graphicsView) ;
+    graphicsInput = new QGraphicsInput(QRectF(0, 0, 2000, 2000), graphicsView);
 
     label->setListWidget(sideBar);
     pdfx = NULL;
@@ -115,8 +115,8 @@ MainForm::MainForm(QWidget *parent): QMainWindow(parent)
     connect(action_Save, SIGNAL(triggered()), this, SLOT(saveAllText()));
     connect(actionAbout, SIGNAL(triggered()), this, SLOT(showAboutDlg()));
     connect(actionOnlineHelp, SIGNAL(triggered()), this, SLOT(showHelp()));
-    connect(actionCopyToClipboard, SIGNAL(triggered()),textEdit, SLOT(copyClipboard()));
-    connect(actionSelect_All_Text, SIGNAL(triggered()),textEdit, SLOT(selectAll()));
+    connect(actionCopyToClipboard, SIGNAL(triggered()), textEdit, SLOT(copyClipboard()));
+    connect(actionSelect_All_Text, SIGNAL(triggered()), textEdit, SLOT(selectAll()));
     connect(graphicsInput, SIGNAL(rightMouseClicked(int, int, bool)), this, SLOT(rightMouseClicked(int, int, bool)));
     connect(actionSelect_HTML_format, SIGNAL(triggered()), this, SLOT(selectHTMLformat()));
 
@@ -130,7 +130,7 @@ MainForm::MainForm(QWidget *parent): QMainWindow(parent)
     connect(graphicsInput, SIGNAL(deleteBlock(QRect)), this, SLOT(markDirty()));
     connect(sideBar, SIGNAL(fileRemoved(int)), pages, SLOT(pageRemoved(int)));
     connect(sideBar, SIGNAL(fileRemoved(int)), this, SLOT(markDirty()));
-    connect (pages, SIGNAL(addSnippet(int)), this, SLOT(addSnippet(int)));
+    connect(pages, SIGNAL(addSnippet(int)), this, SLOT(addSnippet(int)));
     connect(actionSelect_languages, SIGNAL(triggered()), this, SLOT(selectLanguages()));
     connect(graphicsInput, SIGNAL(clickMeAgain()), this, SLOT(clickMeAgain()), Qt::QueuedConnection);
     //connect(pdfx, SIGNAL(processStarted()), this, SLOT(extProcStarted()));
@@ -144,12 +144,14 @@ MainForm::MainForm(QWidget *parent): QMainWindow(parent)
     initSettings();
     engineLabel = new QLabel();
     statusBar()->addPermanentWidget(engineLabel, 0);
-    if (settings->getSelectedEngine() == UseCuneiform) {
+    if (settings->getSelectedEngine() == UseCuneiform)
+    {
         //fillLanguagesBoxCuneiform();
         engineLabel->setText(trUtf8("Using Cuneiform"));
 
     }
-    if (settings->getSelectedEngine() == UseTesseract) {
+    if (settings->getSelectedEngine() == UseTesseract)
+    {
         //fillLanguagesBoxTesseract();
         engineLabel->setText(trUtf8("Using Tesseract"));
     }
@@ -159,9 +161,11 @@ MainForm::MainForm(QWidget *parent): QMainWindow(parent)
     //selectLangsBox->setStyleSheet(label_2->text());
     langLabel = new QLabel();
     statusBar()->addPermanentWidget(langLabel);
-    if (settings->getSelectedLanguages().count() == 1) {
+    if (settings->getSelectedLanguages().count() == 1)
+    {
         slAction->setVisible(false);
-        langLabel->setText(trUtf8("Recognition Language") + ": " + settings->getFullLanguageName(settings->getLanguage()));
+        langLabel->setText(
+                trUtf8("Recognition Language") + ": " + settings->getFullLanguageName(settings->getLanguage()));
     }
     fillLangBox();
     delTmpFiles();
@@ -188,25 +192,31 @@ MainForm::MainForm(QWidget *parent): QMainWindow(parent)
     loadFromCommandLine();
     emit windowShown();
 
-    if (findProgram("pdftoppm")) {
+    if (findProgram("pdftoppm"))
+    {
         pdfx = new PDF2PPT();
-    } else if (findProgram("gs")) {
+    }
+    else if (findProgram("gs"))
+    {
         pdfx = new GhostScr();
     }
     dj2pf = new Djvu2PDF();
     epd = new ExtProcessDialog(this);
     epd->hide();
 
-    if (pdfx) {
+    if (pdfx)
+    {
         connect(pdfx, SIGNAL(processStarted()), this, SLOT(extProcStarted()));
         connect(pdfx, SIGNAL(processFinished(bool)), this, SLOT(showPDFprogress()));
-        connect(pdfx, SIGNAL(addPage(QString, int, int)), this, SLOT(addPDFPage(QString, int, int)), Qt::DirectConnection);
-        connect (pdfx, SIGNAL(extractingFinished()), this, SLOT(finishedPDF()));
+        connect(pdfx, SIGNAL(addPage(QString, int, int)), this, SLOT(addPDFPage(QString, int, int)),
+                Qt::DirectConnection);
+        connect(pdfx, SIGNAL(extractingFinished()), this, SLOT(finishedPDF()));
         connect(epd, SIGNAL(rejected()), pdfx, SLOT(cancelProcess()));
         connect(pdfx, SIGNAL(error(QString)), this, SLOT(reportError(QString)), Qt::QueuedConnection);
     }
 
-    if (dj2pf) {
+    if (dj2pf)
+    {
         connect(dj2pf, SIGNAL(started()), this, SLOT(djvuStarted()));
         connect(dj2pf, SIGNAL(finished()), this, SLOT(djvuFinished()));
         connect(dj2pf, SIGNAL(error(QString)), this, SLOT(reportError(QString)), Qt::QueuedConnection);
@@ -223,11 +233,9 @@ MainForm::MainForm(QWidget *parent): QMainWindow(parent)
 
     connect(this, SIGNAL(callAfterConstructor()), this, SLOT(afterConstructor()), Qt::QueuedConnection);
     emit callAfterConstructor();
-    timerId = startTimer(settings->getAutosaveInterval()*60000);
+    timerId = startTimer(settings->getAutosaveInterval() * 60000);
 
 }
-
-
 
 
 void MainForm::onShowWindow()
@@ -238,36 +246,53 @@ void MainForm::onShowWindow()
 }
 
 
-
 void MainForm::loadFromCommandLine()
 {
     QStringList sl = QApplication::arguments();
-    if (sl.count() > 1) {
+    if (sl.count() > 1)
+    {
         if (QFile::exists(sl.at(1)))
+        {
             loadFile(sl.at(1));
-        for (int i = 2; i < sl.count(); i++) {
+        }
+        for (int i = 2; i < sl.count(); i++)
+        {
             QApplication::processEvents();
             if (QFile::exists(sl.at(i)))
+            {
                 loadFile(sl.at(i));
+            }
         }
         sideBar->select(sl.at(1));
     }
 }
 
-void MainForm::loadFiles(const QStringList &files)
+void MainForm::loadFiles(const QStringList& files)
 {
-    if (files.count() == 1) {
-        if (QFile::exists(files.at(0))) {
-            if (files.at(0).endsWith(".tiff", Qt::CaseInsensitive)||files.at(0).endsWith(".tif", Qt::CaseInsensitive))
+    if (files.count() == 1)
+    {
+        if (QFile::exists(files.at(0)))
+        {
+            if (files.at(0).endsWith(".tiff", Qt::CaseInsensitive) || files.at(0).endsWith(".tif", Qt::CaseInsensitive))
+            {
                 loadTIFF(files.at(0));
-            else {
+            }
+            else
+            {
                 if (files.at(0).endsWith(".pdf", Qt::CaseInsensitive))
+                {
                     importPDF(files.at(0));
-                else {
+                }
+                else
+                {
                     if (files.at(0).endsWith(".djvu", Qt::CaseInsensitive))
+                    {
                         importDjVu(files.at(0));
+                    }
                     else
+                    {
                         loadFile(files.at(0));
+                    }
                 }
             }
         }
@@ -279,70 +304,98 @@ void MainForm::loadFiles(const QStringList &files)
     pd.setRange(1, files.count());
     pd.setValue(1);
     pd.show();
-    for (int i = 0; i < files.count(); i++) {
-        if (QFile::exists(files.at(i))) {
-            if (files.at(i).endsWith(".tiff", Qt::CaseInsensitive)||files.at(i).endsWith(".tif", Qt::CaseInsensitive))
+    for (int i = 0; i < files.count(); i++)
+    {
+        if (QFile::exists(files.at(i)))
+        {
+            if (files.at(i).endsWith(".tiff", Qt::CaseInsensitive) || files.at(i).endsWith(".tif", Qt::CaseInsensitive))
+            {
                 loadTIFF(files.at(i));
-            else {
+            }
+            else
+            {
                 if (files.at(i).endsWith(".pdf", Qt::CaseInsensitive))
+                {
                     importPDF(files.at(i));
-                else {
+                }
+                else
+                {
                     if (files.at(i).endsWith(".djvu", Qt::CaseInsensitive))
+                    {
                         importDjVu(files.at(i));
+                    }
                     else
+                    {
                         loadFile(files.at(i));
+                    }
                 }
             }
         }
-        pd.setValue(i+1);
+        pd.setValue(i + 1);
         QApplication::processEvents();
         if (pd.wasCanceled())
-           // connectTC(true);
+        {
+            // connectTC(true);
             break;
+        }
     }
     forbidAutoSave = false;
 }
 
-void MainForm::LangTextChanged(const QString &text)
+void MainForm::LangTextChanged(const QString& text)
 {
     if (selectLangsBox->findText(text, Qt::MatchStartsWith) < 0)
+    {
         selectLangsBox->lineEdit()->setText("");
+    }
 }
 
 void MainForm::showConfigDlg()
 {
     ConfigDialog dialog(this);
-    if (dialog.exec()) {
+    if (dialog.exec())
+    {
 
         //if (settings->getSelectedEngine() != ose) {
         QString oldLang = selectLangsBox->currentText();
         selectLangsBox->clear();
-        if (settings->getSelectedEngine() == UseCuneiform) {
+        if (settings->getSelectedEngine() == UseCuneiform)
+        {
             engineLabel->setText(trUtf8("Using Cuneiform"));
-            if (settings->selectedLanguagesAvailableTo("cuneiform").count() == 0) {
-                styledWarningMessage(this, trUtf8("Cuneiform doesn't support any of selected recognition langualges.\nFalling back to tesseract. Please install tesseract."));
+            if (settings->selectedLanguagesAvailableTo("cuneiform").count() == 0)
+            {
+                styledWarningMessage(this,
+                                     trUtf8("Cuneiform doesn't support any of selected recognition langualges.\nFalling back to tesseract. Please install tesseract."));
                 settings->setSelectedEngine(UseTesseract);
                 engineLabel->setText(trUtf8("Using Tesseract"));
             }
         }
-        if (settings->getSelectedEngine() == UseTesseract) {
+        if (settings->getSelectedEngine() == UseTesseract)
+        {
             engineLabel->setText(trUtf8("Using Tesseract"));
-            if (settings->selectedLanguagesAvailableTo("tesseract").count() == 0) {
-                styledWarningMessage(this, trUtf8("Tesseract doesn't support any of selected recognition langualges.\nFalling back to cueniform. Please install cuneiform."));
+            if (settings->selectedLanguagesAvailableTo("tesseract").count() == 0)
+            {
+                styledWarningMessage(this,
+                                     trUtf8("Tesseract doesn't support any of selected recognition langualges.\nFalling back to cueniform. Please install cuneiform."));
                 settings->setSelectedEngine(UseCuneiform);
                 engineLabel->setText(trUtf8("Using Cuneiform"));
             }
         }
         fillLangBox();
         int newIndex = selectLangsBox->findText(oldLang);
-        if (newIndex >= 0) {
+        if (newIndex >= 0)
+        {
             selectLangsBox->setCurrentIndex(newIndex);
             settings->setLanguage(selectLangsBox->itemData(newIndex).toString());
-        } else {
+        }
+        else
+        {
             settings->setLanguage("eng");
-            for (int i = 0; i < selectLangsBox->count(); i++) {
+            for (int i = 0; i < selectLangsBox->count(); i++)
+            {
                 QString s = selectLangsBox->itemData(i).toString();
-                if (s == "eng") {
+                if (s == "eng")
+                {
                     newLanguageSelected(i);
                     selectLangsBox->setCurrentIndex(i);
                     break;
@@ -354,32 +407,41 @@ void MainForm::showConfigDlg()
 
 
         toolBar->setIconSize(settings->getIconSize());
-        if (selectLangsBox->count() > 1) {
+        if (selectLangsBox->count() > 1)
+        {
             selectLangsBox->setStyleSheet("");
             slAction->setVisible(true);
             langLabel->setText("");
-        } else {
-            if (settings->getSelectedLanguages().count() == 1) {
+        }
+        else
+        {
+            if (settings->getSelectedLanguages().count() == 1)
+            {
                 slAction->setVisible(false);
-                langLabel->setText(trUtf8("Recognition Language") + ": " + settings->getFullLanguageName(settings->getLanguage()));
+                langLabel->setText(
+                        trUtf8("Recognition Language") + ": " + settings->getFullLanguageName(settings->getLanguage()));
             }
         }
         killTimer(timerId);
-        timerId = startTimer(settings->getAutosaveInterval()*60000);
+        timerId = startTimer(settings->getAutosaveInterval() * 60000);
     }
 }
 
-void MainForm::importPDF(const QString &fileName)
+void MainForm::importPDF(const QString& fileName)
 {
-    if (!pdfx) {
-        styledCriticalMessage(this, trUtf8("No compatible PDF converter software could be found. Please install either the pdftoppm utility or the GhostScript package (from this the gs command will be required)."));
+    if (!pdfx)
+    {
+        styledCriticalMessage(this,
+                              trUtf8("No compatible PDF converter software could be found. Please install either the pdftoppm utility or the GhostScript package (from this the gs command will be required)."));
         return;
     }
     PopplerDialog dialog(this);
     dialog.setPDFFile(fileName);
-    if (dialog.exec()) {
+    if (dialog.exec())
+    {
         pdfx->setSourcePDF(dialog.getPDFFile());
-        if (pdfx->getSourcePDF().isEmpty()) {
+        if (pdfx->getSourcePDF().isEmpty())
+        {
             styledCriticalMessage(this, trUtf8("PDF file name may not be empty"));
             return;
         }
@@ -393,7 +455,7 @@ void MainForm::importPDF(const QString &fileName)
     }
 }
 
-void MainForm::importDjVu(const QString &fileName)
+void MainForm::importDjVu(const QString& fileName)
 {
     dj2pf->convert(fileName);
 }
@@ -402,27 +464,42 @@ void MainForm::addPDFPage(QString pageName, int current, int total)
 {
     Unlocker unlocker(GlobalLock::instance()->lock());
     if (pdfPD == 0)
+    {
         return;
-    QFile fl(pageName);
-    while (!fl.exists()) {
-        if (pdfPD == 0)
-            return;
-        else if (!pdfPD->isVisible())
-            return;
     }
-    while (!pages->appendPage(pageName)) {
+    QFile fl(pageName);
+    while (!fl.exists())
+    {
         if (pdfPD == 0)
+        {
             return;
+        }
         else if (!pdfPD->isVisible())
+        {
             return;
+        }
+    }
+    while (!pages->appendPage(pageName))
+    {
+        if (pdfPD == 0)
+        {
+            return;
+        }
+        else if (!pdfPD->isVisible())
+        {
+            return;
+        }
     }
     pages->setDeskewed(true);
-    if (total != 0) {
-        int ratio = (current*100)/total;
+    if (total != 0)
+    {
+        int ratio = (current * 100) / total;
         pdfPD->setValue(ratio);
     }
     else
-        pdfPD->setValue(pdfPD->value()+1);
+    {
+        pdfPD->setValue(pdfPD->value() + 1);
+    }
 }
 
 void MainForm::finishedPDF()
@@ -434,25 +511,36 @@ void MainForm::finishedPDF()
 
 void MainForm::loadImage()
 {
-    if(!GlobalLock::instance()->lock())
+    if (!GlobalLock::instance()->lock())
+    {
         return;
+    }
     Unlocker unlocker(true);
     QFileDialog dialog(this,
-                       trUtf8("Open Image"), settings->getLastDir(), trUtf8("Image Files (*.png *.jpg *.jpeg *.bmp *.tiff *.tif *.gif *.pnm *.pgm *.pbm *.ppm *.pdf *.djvu)"));
+                       trUtf8("Open Image"), settings->getLastDir(),
+                       trUtf8("Image Files (*.png *.jpg *.jpeg *.bmp *.tiff *.tif *.gif *.pnm *.pgm *.pbm *.ppm *.pdf *.djvu)"));
     dialog.setFileMode(QFileDialog::ExistingFiles);
-    if (dialog.exec()) {
+    if (dialog.exec())
+    {
         QStringList fileNames;
         fileNames = dialog.selectedFiles();
         settings->setLastDir(dialog.directory().path());
-        foreach(QString fn, fileNames) {
-            if (fn.endsWith(".pdf", Qt::CaseInsensitive))
-                importPDF(fn);
-        }
-        for (int i = fileNames.count()-1; i >= 0; i--) {
+                foreach(QString fn, fileNames)
+            {
+                if (fn.endsWith(".pdf", Qt::CaseInsensitive))
+                {
+                    importPDF(fn);
+                }
+            }
+        for (int i = fileNames.count() - 1; i >= 0; i--)
+        {
             if (fileNames.at(i).endsWith(".pdf", Qt::CaseInsensitive))
+            {
                 fileNames.removeAt(i);
+            }
         }
-        if (fileNames.count() > 0) {
+        if (fileNames.count() > 0)
+        {
             loadFiles(fileNames);
         }
     }
@@ -463,10 +551,11 @@ void MainForm::singleColumnButtonClicked()
     //singleColumn = singleColumnButton->isChecked();
 }
 
-void MainForm::closeEvent(QCloseEvent *event)
+void MainForm::closeEvent(QCloseEvent* event)
 {
     killTimer(timerId);
-    if (scanner) {
+    if (scanner)
+    {
         delete scanner;
         scanner = NULL;
     }
@@ -474,20 +563,25 @@ void MainForm::closeEvent(QCloseEvent *event)
     settings->setPosition(pos());
     settings->setFullScreen(isFullScreen());
     settings->writeSettings();
-    if (dirty) {
+    if (dirty)
+    {
         QPixmap icon;
         icon.load(":/images/question.png");
-        QMessageBox messageBox(QMessageBox::NoIcon, "YAGF", trUtf8("There is an unsaved data. Do you want to save or to discard it?"),
-                QMessageBox::Save | QMessageBox::Ignore, this);
+        QMessageBox messageBox(QMessageBox::NoIcon, "YAGF",
+                               trUtf8("There is an unsaved data. Do you want to save or to discard it?"),
+                               QMessageBox::Save | QMessageBox::Ignore, this);
         messageBox.setIconPixmap(icon);
         int result = messageBox.exec();
-        if (result == QMessageBox::Save){
-            if (projectName.isEmpty()) {
+        if (result == QMessageBox::Save)
+        {
+            if (projectName.isEmpty())
+            {
                 SaveProjectDialog spd(settings->getProjectDir(), this);
                 spd.exec();
                 projectName = spd.projectPath();
             }
-            if (!projectName.isEmpty()) {
+            if (!projectName.isEmpty())
+            {
                 ProjectSaver ps;
                 ps.save(projectName);
             }
@@ -507,7 +601,9 @@ void MainForm::rotateCWButtonClicked()
     pages->rotate90CW();
     setCursor(oldCursor);
     if (!pages->hasPage())
+    {
         styledWarningMessage(this, trUtf8("No image loaded"));
+    }
 }
 
 void MainForm::rotateCCWButtonClicked()
@@ -517,8 +613,11 @@ void MainForm::rotateCCWButtonClicked()
     pages->rotate90CCW();
     setCursor(oldCursor);
     if (!pages->hasPage())
+    {
         styledWarningMessage(this, trUtf8("No image loaded"));
+    }
 }
+
 void MainForm::rotate180ButtonClicked()
 {
     QCursor oldCursor = cursor();
@@ -526,20 +625,26 @@ void MainForm::rotate180ButtonClicked()
     pages->rotate180();
     setCursor(oldCursor);
     if (!pages->hasPage())
+    {
         styledWarningMessage(this, trUtf8("No image loaded"));
+    }
 }
 
 void MainForm::enlargeButtonClicked()
 {
     if (!pages->hasPage())
+    {
         styledWarningMessage(this, trUtf8("No image loaded"));
+    }
     pages->makeLarger();
 }
 
 void MainForm::decreaseButtonClicked()
 {
     if (!pages->hasPage())
+    {
         styledWarningMessage(this, trUtf8("No image loaded"));
+    }
     pages->makeSmaller();
 }
 
@@ -547,8 +652,11 @@ void MainForm::initSettings()
 {
     settings = Settings::instance();
     if (settings->getFullScreen())
+    {
         showFullScreen();
-    else {
+    }
+    else
+    {
         move(settings->getPosition());
         resize(settings->getSize());
     }
@@ -564,10 +672,12 @@ void MainForm::initSettings()
 
 void MainForm::newLanguageSelected(int index)
 {
-    if (index < 0) return;
+    if (index < 0)
+    { return; }
     settings->setLanguage(selectLangsBox->itemData(index).toString());
     actionCheck_spelling->setEnabled(textEdit->hasDict(settings->getLanguage()));
-    if (settings->getCheckSpelling()) {
+    if (settings->getCheckSpelling())
+    {
         settings->setCheckSpelling(textEdit->spellCheck(settings->getLanguage()));
         //actionCheck_spelling->setEnabled(checkSpelling);
         actionCheck_spelling->setChecked(settings->getCheckSpelling());
@@ -578,14 +688,18 @@ void MainForm::newLanguageSelected(int index)
 void MainForm::scanImage()
 {
 
-    if (useXSane) {
-        if (scanner) {
+    if (useXSane)
+    {
+        if (scanner)
+        {
             delete scanner;
         }
-        ScannerFactory *sf = new ScannerFactory();
+        ScannerFactory* sf = new ScannerFactory();
         scanner = sf->createScannerFE("xsane");
-        if (scanner == NULL) {
-            styledWarningMessage(this, trUtf8("Scanning is impossible. No scanning front-end is found.\nPlease install XSane in order to perform scanning."));
+        if (scanner == NULL)
+        {
+            styledWarningMessage(this,
+                                 trUtf8("Scanning is impossible. No scanning front-end is found.\nPlease install XSane in order to perform scanning."));
             return;
         }
         scanner->setOutputFile(settings->workingDir() + settings->getScanOutputFile());
@@ -595,30 +709,35 @@ void MainForm::scanImage()
     }
 }
 
-void MainForm::loadFile(const QString &fn, bool loadIntoView)
+void MainForm::loadFile(const QString& fn, bool loadIntoView)
 {
-   // dirty = true;
+    // dirty = true;
     QCursor oldCursor = cursor();
     setCursor(Qt::WaitCursor);
-    if (pages->appendPage(fn)) {
-        if (loadIntoView) {
-            pages->makePageCurrent(pages->count()-1);
+    if (pages->appendPage(fn))
+    {
+        if (loadIntoView)
+        {
+            pages->makePageCurrent(pages->count() - 1);
             textEdit->clear();
             loadPage(true);
-            sideBar->item(sideBar->count()-1)->setSelected(true);
+            sideBar->item(sideBar->count() - 1)->setSelected(true);
         }
-    } else {
+    }
+    else
+    {
         styledWarningMessage(this, trUtf8("Failed to load image %1").arg(fn));
     }
     setCursor(oldCursor);
 }
 
-void MainForm::loadTIFF(const QString &fn, bool loadIntoView)
+void MainForm::loadTIFF(const QString& fn, bool loadIntoView)
 {
     TiffImporter ti(fn);
     ti.exec();
     QStringList files = ti.extractedFiles();
-    if (!files.count()) {
+    if (!files.count())
+    {
         QMessageBox mb;
         mb.setWindowTitle("YAGF");
         mb.setIconPixmap(QPixmap(":/critical.png"));
@@ -635,22 +754,29 @@ void MainForm::delTmpFiles()
 
     QDir dir(settings->workingDir());
     dir.setFilter(QDir::Files | QDir::NoSymLinks);
-    for (uint i = 0; i < dir.count(); i++) {
-        if (dir[i].endsWith("jpg") || dir[i].endsWith("bmp") || dir[i].endsWith("png") || dir[i].endsWith("txt") || dir[i].endsWith("ygf"))
+    for (uint i = 0; i < dir.count(); i++)
+    {
+        if (dir[i].endsWith("jpg") || dir[i].endsWith("bmp") || dir[i].endsWith("png") || dir[i].endsWith("txt") ||
+            dir[i].endsWith("ygf"))
+        {
             dir.remove(dir[i]);
+        }
     }
     if (pdfx)
+    {
         pdfx->setOutputDir();
+    }
     delTmpDir();
 }
 
 void MainForm::delAutoSaveFiles()
 {
-    QString autosaveDir = settings->workingDir() +"autosave/";
-        QDir dir1(autosaveDir);
-    foreach(QString s, dir1.entryList()) {
-        QFile::remove(autosaveDir + s);
-    }
+    QString autosaveDir = settings->workingDir() + "autosave/";
+    QDir dir1(autosaveDir);
+            foreach(QString s, dir1.entryList())
+        {
+            QFile::remove(autosaveDir + s);
+        }
 }
 
 void MainForm::loadNextPage()
@@ -665,11 +791,14 @@ void MainForm::showAboutDlg()
 {
     QPixmap icon;
     icon.load(":/yagf.png");
-    QMessageBox aboutBox(QMessageBox::NoIcon, trUtf8("About YAGF"), trUtf8("<p align=\"center\"><b>YAGF - Yet Another Graphical Front-end for cuneiform and tesseract OCR engines</b></p><p align=\"center\">Version %1</p> <p align=\"center\">Ⓒ 2009-2014 Andrei Borovsky</p> This is a free software distributed under GPL v3. Visit <a href=\"http://symmetrica.net/cuneiform-linux/yagf-en.html\">http://symmetrica.net/cuneiform-linux/yagf-en.html</a> for more details.").arg(version), QMessageBox::Ok);
+    QMessageBox aboutBox(QMessageBox::NoIcon, trUtf8("About YAGF"),
+                         trUtf8("<p align=\"center\"><b>YAGF - Yet Another Graphical Front-end for cuneiform and tesseract OCR engines</b></p><p align=\"center\">Version %1</p> <p align=\"center\">Ⓒ 2009-2014 Andrei Borovsky</p> This is a free software distributed under GPL v3. Visit <a href=\"http://symmetrica.net/cuneiform-linux/yagf-en.html\">http://symmetrica.net/cuneiform-linux/yagf-en.html</a> for more details.").arg(
+                                 version), QMessageBox::Ok);
     aboutBox.setIconPixmap(icon);
-    QList<QLabel *> labels = aboutBox.findChildren<QLabel *>();
-    for (int i = 0; i < labels.count(); i++) {
-        QLabel *lab = labels.at(i);
+    QList<QLabel*> labels = aboutBox.findChildren<QLabel*>();
+    for (int i = 0; i < labels.count(); i++)
+    {
+        QLabel* lab = labels.at(i);
         lab->setTextInteractionFlags(Qt::TextBrowserInteraction);
     }
     aboutBox.setTextFormat(Qt::RichText);
@@ -687,7 +816,8 @@ void MainForm::readyRead(int sig)
     QString newName = QString(settings->workingDir() + "scan-input-%1.png").arg(ifCounter);
     ifCounter++;
     QFileInfo fi(newName);
-    if (fi.exists()) {
+    if (fi.exists())
+    {
         QFile f2(newName);
         f2.remove();
     }
@@ -701,9 +831,12 @@ void MainForm::delTmpDir()
     QDir dir;
     dir.setPath(settings->workingDir() + "output_files");
     dir.setFilter(QDir::Files | QDir::NoSymLinks);
-    for (uint i = 0; i < dir.count(); i++) {
+    for (uint i = 0; i < dir.count(); i++)
+    {
         if (dir[i].endsWith("jpg") || dir[i].endsWith("bmp") || dir[i].endsWith("ygf"))
+        {
             dir.remove(dir[i]);
+        }
     }
     dir.rmdir(settings->workingDir() + "output_files");
 
@@ -712,12 +845,17 @@ void MainForm::delTmpDir()
 
 void MainForm::fillLangBox()
 {
-    if (!slAction->isVisible()) {
-        if (settings->getSelectedLanguages().count() > 1) {
+    if (!slAction->isVisible())
+    {
+        if (settings->getSelectedLanguages().count() > 1)
+        {
             slAction->setVisible(true);
         }
-    } else {
-        if (settings->getSelectedLanguages().count() == 1) {
+    }
+    else
+    {
+        if (settings->getSelectedLanguages().count() == 1)
+        {
             slAction->setVisible(false);
         }
     }
@@ -727,17 +865,23 @@ void MainForm::fillLangBox()
     QString full;
     QString abbr;
     selectLangsBox->clear();
-    while (settings->getLangPair(full, abbr)) {
-        if (sl.contains(full)||(sl.count()== 0))
+    while (settings->getLangPair(full, abbr))
+    {
+        if (sl.contains(full) || (sl.count() == 0))
+        {
             selectLangsBox->addItem(full, QVariant(abbr));
+        }
     }
     selectLangsBox->setCurrentIndex(-1);
     connect(selectLangsBox, SIGNAL(currentIndexChanged(int)), this, SLOT(newLanguageSelected(int)));
-    if (selectLangsBox->model()->rowCount()) {
+    if (selectLangsBox->model()->rowCount())
+    {
         int index = 0;
         QString s = Settings::instance()->getLanguage();
-        for (int i =0; i < selectLangsBox->count(); i++) {
-            if (selectLangsBox->itemData(i) == s) {
+        for (int i = 0; i < selectLangsBox->count(); i++)
+        {
+            if (selectLangsBox->itemData(i) == s)
+            {
                 index = i;
                 break;
             }
@@ -762,19 +906,20 @@ void MainForm::createRW()
 
 void MainForm::createRecentMenu()
 {
-    QMenu * project = new QMenu();
+    QMenu* project = new QMenu();
     QStringList sl = settings->getRecentProjects();
-    foreach (QString s, sl) {
-        MenuAction * ma = new MenuAction(s);
-        connect(ma, SIGNAL(triggered(QString)), this, SLOT(menuTriggered(QString)));
-        project->addAction(ma);
-    }
+            foreach (QString s, sl)
+        {
+            MenuAction* ma = new MenuAction(s);
+            connect(ma, SIGNAL(triggered(QString)), this, SLOT(menuTriggered(QString)));
+            project->addAction(ma);
+        }
     actionRecent_Projects->setMenu(project);
 }
 
-void MainForm::loadProjectInternal(const QString &path)
+void MainForm::loadProjectInternal(const QString& path)
 {
-    WaitWindow * ww = new WaitWindow(this);
+    WaitWindow* ww = new WaitWindow(this);
     ww->setWindowOpacity(0);
     ww->show();
     QApplication::processEvents();
@@ -782,59 +927,73 @@ void MainForm::loadProjectInternal(const QString &path)
     pages->clear();
     ProjectLoader pl;
     if (!pl.load(path))
+    {
         styledWarningMessage(this, trUtf8("Failed to load project."));
+    }
     else
+    {
         projectName = path;
+    }
     delete ww;
 }
 
 void MainForm::connectTC(bool doIt)
 {
     if (doIt)
+    {
         connect(textEdit, SIGNAL(textChanged()), this, SLOT(textChanged()), Qt::UniqueConnection);
+    }
     else
+    {
         disconnect(textEdit, SIGNAL(textChanged()), this, SLOT(textChanged()));
+    }
 }
 
 void MainForm::loadAutoSaved()
 {
-    loadProjectInternal(settings->workingDir() + "autosave/" );
+    loadProjectInternal(settings->workingDir() + "autosave/");
     dirty = true;
 }
 
 void MainForm::saveTextInternal(bool allText)
 {
-    if (pages->count()== 0) {
+    if (pages->count() == 0)
+    {
         styledWarningMessage(this, trUtf8("Nothing to save"));
         return;
     }
 
-    Settings *settings = Settings::instance();
+    Settings* settings = Settings::instance();
     QString filter;
     //if (settings->getOutputFormat() == "text")
-        filter = trUtf8("Text Files (*.txt)");
+    filter = trUtf8("Text Files (*.txt)");
     //else
     //    filter = trUtf8("HTML Files (*.html)");
     QString title = allText ? trUtf8("Save All Text") : trUtf8("Save Current Page Text");
     QFileDialog dialog(this,
                        title, settings->getLastOutputDir(), filter);
 //    if (settings->getOutputFormat() == "text")
-        dialog.setDefaultSuffix("txt");
+    dialog.setDefaultSuffix("txt");
 //    else
 //        dialog.setDefaultSuffix("html");
     dialog.setAcceptMode(QFileDialog::AcceptSave);
-    if (dialog.exec()) {
+    if (dialog.exec())
+    {
         QStringList fileNames;
         fileNames = dialog.selectedFiles();
-        settings->setLastOutputDir(dialog.directory().path());        
+        settings->setLastOutputDir(dialog.directory().path());
         //if (settings->getOutputFormat() == "text") {
         if (allText)
+        {
             PageCollection::instance()->saveAllText(fileNames.at(0), true);
+        }
         else
+        {
             PageCollection::instance()->SaveCurrentPageText(fileNames.at(0), true);
+        }
         //}
-       // else
-       //     saveHtml(&textFile);
+        // else
+        //     saveHtml(&textFile);
     }
 }
 
@@ -858,13 +1017,19 @@ void MainForm::loadPage(bool show)
     bool wasDirty = dirty;
     connectTC(false);
     textEdit->clear();
-    try {
+    try
+    {
         if (!pages->currentText().isEmpty())
+        {
             textEdit->setText(pages->currentText());
-    } catch(...) {
+        }
+    }
+    catch (...)
+    {
         textEdit->clear();
     }
-    if (show) {
+    if (show)
+    {
         graphicsInput->loadImage(pages->pixmap());
         graphicsInput->clearBlocks();
     }
@@ -873,11 +1038,13 @@ void MainForm::loadPage(bool show)
 
     QApplication::processEvents();
     if (show)
-    for (int i = 0; i < pages->blockCount(); i++)
-        graphicsInput->addBlockColliding(pages->getBlock(i));
+    {
+        for (int i = 0; i < pages->blockCount(); i++)
+            graphicsInput->addBlockColliding(pages->getBlock(i));
+    }
     QFileInfo fi(pages->originalFileName());
     setWindowTitle(QString("YAGF - %1").arg(fi.fileName()));
-   dirty = wasDirty;
+    dirty = wasDirty;
 }
 
 /*void MainForm::recognizeAll()
@@ -911,7 +1078,8 @@ void MainForm::unalignButtonClicked()
 
 void MainForm::on_ActionClearAllBlocks_activated()
 {
-    if (!pages->hasPage()) {
+    if (!pages->hasPage())
+    {
         styledWarningMessage(this, trUtf8("No image loaded"));
         return;
     }
@@ -923,13 +1091,16 @@ void MainForm::rightMouseClicked(int x, int y, bool inTheBlock)
 {
     m_menu->clear();
     m_menu->addAction(ActionClearAllBlocks);
-    if (inTheBlock) {
+    if (inTheBlock)
+    {
         m_menu->addAction(ActionDeleteBlock);
         m_menu->addAction(actionRecognize_block);
         m_menu->addAction(actionSave_block);
         m_menu->addAction(actionDeskew_by_Block);
         m_menu->addAction(actionSelect_Table);
-    } else {
+    }
+    else
+    {
         m_menu->addAction(actionSelect_Text_Area);
         m_menu->addAction(actionSelect_multiple_blocks);
     }
@@ -957,29 +1128,34 @@ void MainForm::setupPDFPD()
 
 void MainForm::on_ActionDeleteBlock_activated()
 {
-    if (!pages->hasPage()) {
+    if (!pages->hasPage())
+    {
         styledWarningMessage(this, trUtf8("No image loaded"));
         return;
     }
     QRect r = graphicsInput->getCurrentBlock();
     if (r.width() == 0)
+    {
         r = graphicsInput->getActiveBlock();
+    }
     graphicsInput->deleteCurrentBlock();
     graphicsInput->deleteActiveBlock();
     pages->deleteBlock(r);
 }
 
 
-
 void MainForm::on_actionRecognize_block_activated()
 {
     connectTC(false);
-    if (!RecognizerWrapper::findEngine(true)) {
+    if (!RecognizerWrapper::findEngine(true))
+    {
         styledWarningMessage(this, trUtf8("Selected recognition engine not found."));
         return;
     }
     if (graphicsInput->getCurrentBlock().isNull())
+    {
         return;
+    }
     clearTmpFiles();
     QRect r = graphicsInput->getCurrentBlock();
     r = pages->scaleRect(r);
@@ -1011,14 +1187,17 @@ void MainForm::on_actionSave_current_image_activated()
     setCursor(Qt::WaitCursor);
     QString format;
     QString fn = getFileNameToSaveImage(format);
-    if (!fn.isEmpty()) {
+    if (!fn.isEmpty())
+    {
         if (!(pages->savePageAsImage(fn, format)))
+        {
             styledWarningMessage(this, QObject::trUtf8("Failed to save the image"));
+        }
     }
     setCursor(oc);
 }
 
-QString MainForm::getFileNameToSaveImage(QString &format)
+QString MainForm::getFileNameToSaveImage(QString& format)
 {
     QString jpegFilter = QObject::trUtf8("JPEG Files (*.jpg)");
     QString pngFilter = QObject::trUtf8("PNG Files (*.png)");
@@ -1030,11 +1209,15 @@ QString MainForm::getFileNameToSaveImage(QString &format)
     dialog.setNameFilters(filters);
     dialog.setAcceptMode(QFileDialog::AcceptSave);
     dialog.setDefaultSuffix("jpg");
-    if (dialog.exec()) {
-        if (dialog.selectedNameFilter() == jpegFilter) {
+    if (dialog.exec())
+    {
+        if (dialog.selectedNameFilter() == jpegFilter)
+        {
             format = "JPEG";
             dialog.setDefaultSuffix("jpg");
-        } else if (dialog.selectedNameFilter() == pngFilter) {
+        }
+        else if (dialog.selectedNameFilter() == pngFilter)
+        {
             format = "PNG";
             dialog.setDefaultSuffix("png");
         }
@@ -1065,16 +1248,22 @@ void MainForm::on_actionSave_block_activated()
     QString format;
     QString fn = getFileNameToSaveImage(format);
     if (!fn.isEmpty())
+    {
         pages->saveBlockForRecognition(graphicsInput->getCurrentBlock(), fn, format);
+    }
 }
 
 void MainForm::on_actionCheck_spelling_activated()
 {
     settings->setCheckSpelling(actionCheck_spelling->isChecked());
-    if (settings->getCheckSpelling()) {
+    if (settings->getCheckSpelling())
+    {
         actionCheck_spelling->setChecked(textEdit->spellCheck(settings->getLanguage()));
-    } else
+    }
+    else
+    {
         textEdit->unSpellCheck();
+    }
 }
 
 /*void MainForm::on_alignButton_clicked()
@@ -1090,16 +1279,21 @@ void MainForm::upscale()
 void MainForm::on_actionSelect_HTML_format_activated()
 {
     if (actionSelect_HTML_format->isChecked())
+    {
         settings->setOutputFormat("html");
+    }
     else
+    {
         settings->setOutputFormat("text");
+    }
 }
 
 void MainForm::pasteimage()
 {
-    QClipboard *clipboard = QApplication::clipboard();
+    QClipboard* clipboard = QApplication::clipboard();
     QPixmap pm = clipboard->pixmap();
-    if (pm.isNull()) {
+    if (pm.isNull())
+    {
         QMessageBox mb(this);
         mb.setIconPixmap(QPixmap(":/warning.png"));
         mb.setWindowTitle(trUtf8("Warning"));
@@ -1124,7 +1318,8 @@ void MainForm::deskewByBlock()
 
 void MainForm::selectTextArea()
 {
-    if (!pages->hasPage()) {
+    if (!pages->hasPage())
+    {
         styledWarningMessage(this, trUtf8("No image loaded"));
         return;
     }
@@ -1138,14 +1333,18 @@ void MainForm::addSnippet(int index)
 
 void MainForm::preprocessPage()
 {
-    if (!pages->hasPage()) {
+    if (!pages->hasPage())
+    {
         styledWarningMessage(this, trUtf8("No image loaded"));
         return;
     }
     QCursor oldCursor = cursor();
     setCursor(Qt::WaitCursor);
     if (!pages->splitPage(true))
-        styledWarningMessage(this, trUtf8("Failed to detect text areas on this page.\nThe page possibly lacks contrast. Try to select blocks manually."));
+    {
+        styledWarningMessage(this,
+                             trUtf8("Failed to detect text areas on this page.\nThe page possibly lacks contrast. Try to select blocks manually."));
+    }
     setCursor(oldCursor);
 }
 
@@ -1154,28 +1353,36 @@ void MainForm::saveProjectAs()
     SaveProjectDialog sp(settings->getProjectDir(), this);
     sp.exec();
     QString pp = sp.projectPath();
-    if (pp == "") return;
+    if (pp == "")
+    { return; }
     QDir dir(pp);
-    if (!dir.mkpath(pp)) {
+    if (!dir.mkpath(pp))
+    {
         styledCriticalMessage(this, trUtf8("Cannot create the project directory "));
         return;
-   }
-   QCursor oldCursor = cursor();
-   dirty = false;
-   _asm->startAutoSave();
-   projectName = pp;
-   setCursor(oldCursor);
+    }
+    QCursor oldCursor = cursor();
+    dirty = false;
+    _asm->startAutoSave();
+    projectName = pp;
+    setCursor(oldCursor);
 }
 
 void MainForm::saveProject()
 {
     if (projectName.contains(".config/yagf/autosave"))
+    {
         projectName = "";
-    if (projectName != "") {
+    }
+    if (projectName != "")
+    {
         dirty = false;
         _asm->startAutoSave();
-    } else
+    }
+    else
+    {
         saveProjectAs();
+    }
 }
 
 void MainForm::loadProject()
@@ -1184,7 +1391,8 @@ void MainForm::loadProject()
     LoadProjectDialog lpd(settings->getProjectDir(), this);
     lpd.exec();
     QString project = lpd.projectPath();
-    if (project != "") {
+    if (project != "")
+    {
         loadProjectInternal(project);
     }
     dirty = false;
@@ -1192,23 +1400,31 @@ void MainForm::loadProject()
 
 void MainForm::selectBlocks()
 {
-    if (!pages->hasPage()) {
+    if (!pages->hasPage())
+    {
         styledWarningMessage(this, trUtf8("No image loaded"));
         return;
     }
     QCursor oldCursor = cursor();
     setCursor(Qt::WaitCursor);
     if (!pages->splitPage(false))
-        styledWarningMessage(this, trUtf8("Failed to detect text areas on this page.\nThe page possibly lacks contrast. Try to select blocks manually."));
+    {
+        styledWarningMessage(this,
+                             trUtf8("Failed to detect text areas on this page.\nThe page possibly lacks contrast. Try to select blocks manually."));
+    }
     setCursor(oldCursor);
 }
 
 void MainForm::selectHTMLformat()
 {
     if (actionSelect_HTML_format->isChecked())
+    {
         settings->setOutputFormat("html");
+    }
     else
+    {
         settings->setOutputFormat("text");
+    }
 
 }
 
@@ -1217,7 +1433,9 @@ void MainForm::SelectRecognitionLanguages()
 {
     LangSelectDialog lsd;
     if (lsd.exec() == QDialog::Accepted)
+    {
         fillLangBox();
+    }
 }
 
 
@@ -1231,14 +1449,19 @@ void MainForm::selectLanguages()
 void MainForm::deskewByLine()
 {
     if (!pages->hasPage())
+    {
         styledWarningMessage(this, trUtf8("No image loaded"));
-    if (!graphicsInput->getDeskewMode()) {
+    }
+    if (!graphicsInput->getDeskewMode())
+    {
         pages->clearBlocks();
         graphicsInput->setDeskewMode(true);
         actPos = QCursor::pos();
         QPoint gp = graphicsView->mapToGlobal(QPoint(16, 16));
         QToolTip::showText(gp, trUtf8("Draw the line along a string of text with left mouse button"), graphicsView);
-    } else {
+    }
+    else
+    {
         QLineF l = graphicsInput->getDeskData();
         graphicsInput->clearDeskLine();
         pages->deskew(l.x1(), l.y1(), l.x2(), l.y2());
@@ -1246,16 +1469,19 @@ void MainForm::deskewByLine()
     }
 }
 
-void MainForm::timerEvent(QTimerEvent * e)
+void MainForm::timerEvent(QTimerEvent* e)
 {
-    if (!GlobalLock::instance()->lock()) {
+    if (!GlobalLock::instance()->lock())
+    {
         e->accept();
         QMainWindow::timerEvent(e);
         return;
     }
     GlobalLock::instance()->unlock();
     if (pages->hasPage())
+    {
         _asm->startAutoSave();
+    }
     connectTC(false);
 
     e->accept();
@@ -1271,7 +1497,8 @@ void MainForm::readOutput(QString text, QChar separator)
 {
     textEdit->append(text);
     //textEdit->append(QString(separator));
-    if (settings->getCheckSpelling()) {
+    if (settings->getCheckSpelling())
+    {
         actionCheck_spelling->setChecked(textEdit->spellCheck(settings->getLanguage()));
     }
 }
@@ -1284,16 +1511,20 @@ void MainForm::recognitionFinished()
     delete rw;
     rw = 0;
     if (rd)
-        delete(rd);
+    {
+        delete (rd);
+    }
     rd = 0;
     dirty = true;
 }
 
-void MainForm::recognitionError(const QString &text)
+void MainForm::recognitionError(const QString& text)
 {
     connectTC(true);
     if (rd)
-        delete(rd);
+    {
+        delete (rd);
+    }
     rd = 0;
     styledWarningMessage(this, text);
     delete rw;
@@ -1301,7 +1532,7 @@ void MainForm::recognitionError(const QString &text)
 
 }
 
-void MainForm::reportError(const QString &text)
+void MainForm::reportError(const QString& text)
 {
     connectTC(true);
     styledWarningMessage(this, text);
@@ -1309,19 +1540,24 @@ void MainForm::reportError(const QString &text)
 
 void MainForm::cancelRecognition()
 {
-   connectTC(true);
+    connectTC(true);
     if (rw)
+    {
         rw->cancel();
+    }
     delete rw;
     rw = 0;
     if (rd)
-        delete(rd);
+    {
+        delete (rd);
+    }
     rd = 0;
 }
 
 void MainForm::splitTable()
 {
-    if (!pages->hasPage()) {
+    if (!pages->hasPage())
+    {
         styledWarningMessage(this, trUtf8("No image loaded"));
         return;
     }
@@ -1333,7 +1569,7 @@ void MainForm::splitTable()
 void MainForm::showPDFprogress()
 {
     epd->hide();
-    pdfPD = new QProgressDialog(this, Qt::Dialog|Qt::WindowStaysOnTopHint);
+    pdfPD = new QProgressDialog(this, Qt::Dialog | Qt::WindowStaysOnTopHint);
     setupPDFPD();
     pdfPD->show();
     pdfPD->setMinimum(0);
@@ -1361,7 +1597,7 @@ void MainForm::djvuFinished()
     importPDF(dj2pf->pdfName());
 }
 
-void MainForm::menuTriggered(const QString &text)
+void MainForm::menuTriggered(const QString& text)
 {
     loadProjectInternal(text);
 }
@@ -1386,11 +1622,13 @@ void MainForm::startedAutoSave()
 
 void MainForm::autosaveFinished()
 {
-  // graphicsInput->clearBlocks();
+    // graphicsInput->clearBlocks();
     epd->hide();
     if (projectName != "")
+    {
         dirty = false;
-   connectTC(true);
+    }
+    connectTC(true);
 }
 
 void MainForm::testslot()
@@ -1401,27 +1639,34 @@ void MainForm::testslot()
 void MainForm::textChanged()
 {
     dirty = true;
-    if (pages->count() == 0) dirty = false;
+    if (pages->count() == 0)
+    { dirty = false; }
     pages->setText(textEdit->toPlainText());
 }
 
 void MainForm::afterConstructor()
 {
 
-    QString autosaveDir = settings->workingDir() +"autosave/";
+    QString autosaveDir = settings->workingDir() + "autosave/";
     QDir dir(autosaveDir);
     if (!dir.exists())
+    {
         dir.mkdir(autosaveDir);
+    }
     QFileInfo fi(autosaveDir + "yagf_project.xml");
-    if (fi.exists()) {
+    if (fi.exists())
+    {
         QPixmap icon;
         icon.load(":/images/question.png");
-        QMessageBox messageBox(QMessageBox::NoIcon, "YAGF", trUtf8("There is an unsaved data left from the previous  session. Do you want to open or discard it?"),
-                QMessageBox::Open | QMessageBox::Ignore, this);
+        QMessageBox messageBox(QMessageBox::NoIcon, "YAGF",
+                               trUtf8("There is an unsaved data left from the previous  session. Do you want to open or discard it?"),
+                               QMessageBox::Open | QMessageBox::Ignore, this);
         messageBox.setIconPixmap(icon);
         int result = messageBox.exec();
         if (result == QMessageBox::Open)
+        {
             loadAutoSaved();
+        }
         delAutoSaveFiles();
 
     }

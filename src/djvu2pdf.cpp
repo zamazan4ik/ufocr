@@ -25,13 +25,15 @@
 #include <QFileInfoList>
 #include <QStringList>
 
-Djvu2PDF::Djvu2PDF(QObject *parent) :
-    QObject(parent)
+Djvu2PDF::Djvu2PDF(QObject* parent) :
+        QObject(parent)
 {
-    pdfout = Settings::instance()->workingDir()+ QString("fromdjvu/");
+    pdfout = Settings::instance()->workingDir() + QString("fromdjvu/");
     QDir dir(pdfout);
     if (!dir.exists())
+    {
         dir.mkdir(pdfout);
+    }
     connect(&process, SIGNAL(error(QProcess::ProcessError)), this, SLOT(onError()));
     connect(&process, SIGNAL(started()), this, SIGNAL(started()), Qt::QueuedConnection);
     connect(&process, SIGNAL(finished(int)), this, SLOT(onFinished()), Qt::QueuedConnection);
@@ -42,10 +44,12 @@ Djvu2PDF::~Djvu2PDF()
     cancel();
 }
 
-void Djvu2PDF::convert(const QString &fileName)
+void Djvu2PDF::convert(const QString& fileName)
 {
-    if (!findProgram("ddjvu")) {
-        emit error(trUtf8("The ddjvu utility from the DjVuLibre package has not been found.\nPlease make sure the package is installed."));
+    if (!findProgram("ddjvu"))
+    {
+        emit error(
+                trUtf8("The ddjvu utility from the DjVuLibre package has not been found.\nPlease make sure the package is installed."));
         return;
     }
     QString output = pdfout + "out.pdf";
@@ -74,9 +78,11 @@ void Djvu2PDF::onFinished()
 {
     QFileInfo fi(pdfout, "out.pdf");
     if (!fi.exists())
+    {
         onError();
+    }
     else
-        emit finished();
+            emit { finished(); }
 }
 
 void Djvu2PDF::clearFiles()
@@ -85,7 +91,8 @@ void Djvu2PDF::clearFiles()
     dir.setPath(pdfout);
     QFileInfoList fil;
     fil = dir.entryInfoList();
-    foreach (QFileInfo fi, fil) {
-        dir.remove(fi.absoluteFilePath());
-    }
+            foreach (QFileInfo fi, fil)
+        {
+            dir.remove(fi.absoluteFilePath());
+        }
 }

@@ -31,28 +31,32 @@
 #include <mcheck.h>
 #endif
 
-void parseCmdLine(const QStringList &args)
+void parseCmdLine(const QStringList& args)
 {
-    foreach (const QString &arg, args) {
-        if (arg == "-h" || arg == "--help") {
-            printf("Using:\n"
-                   "  yagf\n"
-                   "  yagf <Key>\n"
-                   "  yagf <file name> [file name [file name]...]\n"
-                   "YAGF is a graphical interface for cuneiform and tesseract.\n"
-                   "\n"
-                   "Keys:\n"
-                   "  -h, --help\t Show this message and exit\n"
-                   "  -V, --version\t Show version string and exit\n");
-            exit(0);
-        } else if (arg == "-V" || arg == "--version") {
-            printf("YAGF version: %s\n", version.toUtf8().constData());
-            exit(0);
+            foreach (const QString& arg, args)
+        {
+            if (arg == "-h" || arg == "--help")
+            {
+                printf("Using:\n"
+                               "  yagf\n"
+                               "  yagf <Key>\n"
+                               "  yagf <file name> [file name [file name]...]\n"
+                               "YAGF is a graphical interface for cuneiform and tesseract.\n"
+                               "\n"
+                               "Keys:\n"
+                               "  -h, --help\t Show this message and exit\n"
+                               "  -V, --version\t Show version string and exit\n");
+                exit(0);
+            }
+            else if (arg == "-V" || arg == "--version")
+            {
+                printf("YAGF version: %s\n", version.toUtf8().constData());
+                exit(0);
+            }
         }
-    }
 }
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
 #ifdef MEM_DEBUG
     mtrace();
@@ -60,12 +64,13 @@ int main(int argc, char *argv[])
 
     QApplication app(argc, argv);
     parseCmdLine(app.arguments());
-    Settings *settings = Settings::instance();
+    Settings* settings = Settings::instance();
     settings->readSettings(settings->workingDir());
     settings->writeSettings();
     QTranslator translator;
     QString qmName = "yagf_" + QLocale::system().name();
-    if (!settings->useNoLocale()) {
+    if (!settings->useNoLocale())
+    {
         translator.load(qmName, QString(QML_INSTALL_PATH));
         app.installTranslator(&translator);
 
@@ -74,7 +79,9 @@ int main(int argc, char *argv[])
     QTranslator translator2;
     translator2.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
     if (!settings->useNoLocale())
+    {
         app.installTranslator(&translator2);
+    }
     MainForm window;
     window.show();
     int res = app.exec();

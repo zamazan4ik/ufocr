@@ -25,20 +25,32 @@
 
 class Djvu2PDF : public QObject
 {
-    Q_OBJECT
+Q_OBJECT
 public:
-    explicit Djvu2PDF(QObject *parent = 0);
+    explicit Djvu2PDF(QObject* parent = 0);
+
     ~Djvu2PDF();
-    void convert(const QString &fileName);
+
+    void convert(const QString& fileName);
+
     QString pdfName() const;
+
 signals:
+
     void started();
+
     void finished();
-    void error(const QString &text);
+
+    void error(const QString& text);
+
 public slots:
+
     void onError();
+
     void cancel();
+
     void onFinished();
+
 private:
     QProcess process;
     QString pdfout;

@@ -36,11 +36,13 @@ typedef QHash<quint32, Rect> ComponentParameters;
 typedef QList<qint32> Strings;
 typedef QList<Rect> StringsBoxes;
 typedef QMultiHash<quint32, Rect> GlyphField;
-typedef struct ginfo {
+typedef struct ginfo
+{
     ginfo(int a1, int a2, int a3);
-int h;
-int x;
-int y;
+
+    int h;
+    int x;
+    int y;
 } GlyphInfo;
 
 bool operator==(GlyphInfo g1, GlyphInfo g2);
@@ -55,53 +57,85 @@ const int BarRatio = 24;
 class CCAnalysis : public QObject
 {
 public:
-        CCAnalysis(CCBuilder * builder);
-	~CCAnalysis();
-        bool analize(bool extractBars = false);
-        void tableAnalise();
-        Bars addBars();
-        Bars getBars();
-        QList<Rect> getAllComponents(bool extractBars);
-        TextLine extractLine();
-        int getGlyphCount();
-        QList<Rect> getGlyphs();
-        int getMediumGlyphHeight();
-        int getMediumGlyphWidth();
-        int getMediumLetterSpace();
-        int getMediumWordSpace();
-        int getStringsCount();
-        int getGlyphBoxCount();
-        Rect getGlyphBox(int index);
-        QRect getStringBox(const int index) const;
-        Lines getLines();
-        qreal getK();
-        void rotateLines(qreal phi, const QPoint &c = QPoint(0,0));
+    CCAnalysis(CCBuilder* builder);
+
+    ~CCAnalysis();
+
+    bool analize(bool extractBars = false);
+
+    void tableAnalise();
+
+    Bars addBars();
+
+    Bars getBars();
+
+    QList<Rect> getAllComponents(bool extractBars);
+
+    TextLine extractLine();
+
+    int getGlyphCount();
+
+    QList<Rect> getGlyphs();
+
+    int getMediumGlyphHeight();
+
+    int getMediumGlyphWidth();
+
+    int getMediumLetterSpace();
+
+    int getMediumWordSpace();
+
+    int getStringsCount();
+
+    int getGlyphBoxCount();
+
+    Rect getGlyphBox(int index);
+
+    QRect getStringBox(const int index) const;
+
+    Lines getLines();
+
+    qreal getK();
+
+    void rotateLines(qreal phi, const QPoint& c = QPoint(0, 0));
+
 private:
-        void fillComponents();
-        bool getComponentParams();
-        void doExtractBars();
-        bool extractComponents(bool extractBars = false);
-        void classifyGlyphs();
-        int findAdjacent(Rect &r);
-        void normalizeLines();
-        void rotatePhi(qreal phi, const QPoint &c, QPoint &p);
-        void addBarsHorizontal(int hoffset = 0, int height = -1, int woffset = 0, int width = -1);
-        void addBarsHorisontalAfterVertical();
-        void addBarsVertical();
+    void fillComponents();
+
+    bool getComponentParams();
+
+    void doExtractBars();
+
+    bool extractComponents(bool extractBars = false);
+
+    void classifyGlyphs();
+
+    int findAdjacent(Rect& r);
+
+    void normalizeLines();
+
+    void rotatePhi(qreal phi, const QPoint& c, QPoint& p);
+
+    void addBarsHorizontal(int hoffset = 0, int height = -1, int woffset = 0, int width = -1);
+
+    void addBarsHorisontalAfterVertical();
+
+    void addBarsVertical();
+
 private:
-        CCBuilder * builder;
-        ComponentParameters components;
-        Strings strings;
-        StringsBoxes boxes;
-        GlyphField glyphField;
-        Lines lines;
-        int glyphCount;
-        int mediumGlyphHeight;
-        int mediumGlyphWidth;
-        int mediumLetterSpace;
-        int mediumWordSpace;
-        int stringsCount;
-        qreal k;
+    CCBuilder* builder;
+    ComponentParameters components;
+    Strings strings;
+    StringsBoxes boxes;
+    GlyphField glyphField;
+    Lines lines;
+    int glyphCount;
+    int mediumGlyphHeight;
+    int mediumGlyphWidth;
+    int mediumLetterSpace;
+    int mediumWordSpace;
+    int stringsCount;
+    qreal k;
     Bars bars;
     QVector<Rect> verts;
 };

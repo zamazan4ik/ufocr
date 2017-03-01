@@ -7,11 +7,12 @@ class ScanImage : public QObject
 {
     Q_OBJECT
 public:
-    explicit ScanImage(QObject *parent = 0);
+    explicit ScanImage(QObject* parent = 0);
 
-signals:
+    signals:
 
-public slots:
+public
+    slots:
 
 };
 

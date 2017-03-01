@@ -30,14 +30,15 @@
 #include <QMimeData>
 
 
-SideBar::SideBar(QWidget *parent) :
-    QListWidget(parent)
+SideBar::SideBar(QWidget* parent) :
+        QListWidget(parent)
 {
     //setDragDropOverwriteMode(true);
     current = 0;
     setMaximumWidth(120);
     setMinimumWidth(120);
-    connect(this, SIGNAL(currentItemChanged(QListWidgetItem *,QListWidgetItem *)), this, SLOT(itemActive(QListWidgetItem *,QListWidgetItem *)));
+    connect(this, SIGNAL(currentItemChanged(QListWidgetItem * , QListWidgetItem * )), this,
+            SLOT(itemActive(QListWidgetItem * , QListWidgetItem * )));
     setToolTip(trUtf8("Drop files here"));
     setAcceptDrops(true);
     setDropIndicatorShown(true);
@@ -45,15 +46,18 @@ SideBar::SideBar(QWidget *parent) :
     dragging = false;
 }
 
-void SideBar::addItem(QSnippet *item)
+void SideBar::addItem(QSnippet* item)
 {
     setAlternatingRowColors(false);
-    QSize size= item->sizeHint();
+    QSize size = item->sizeHint();
     size.setWidth(width());
     if (item->imageWidth() == 0)
+    {
         return;
-    int h = item->imageHeight()*100/item->imageWidth();
-    if (h > width()+2) h = width()+2;
+    }
+    int h = item->imageHeight() * 100 / item->imageWidth();
+    if (h > width() + 2)
+    { h = width() + 2; }
 
     size.setHeight(item->imageHeight() < width() ? item->imageHeight() + 2 : h + 2);
     item->setSizeHint(size);
@@ -62,14 +66,18 @@ void SideBar::addItem(QSnippet *item)
 }
 
 
-void SideBar::itemActive(QListWidgetItem *item, QListWidgetItem *item2)
+void SideBar::itemActive(QListWidgetItem* item, QListWidgetItem* item2)
 {
-    if (lock) return;
+    if (lock)
+    { return; }
     lock = true;
-    if (item) {
-        emit pageSelected(((QSnippet *)item)->pageID());
-        current = ((QSnippet *)item);
-    } else current = 0;
+    if (item)
+    {
+        emit pageSelected(((QSnippet*) item)->pageID());
+        current = ((QSnippet*) item);
+    }
+    else
+    { current = 0; }
     lock = false;
 }
 
@@ -97,21 +105,24 @@ QStringList SideBar::mimeTypes() const
 Qt::DropActions SideBar::supportedDropActions() const
 {
     if (dragging)
+    {
         return 0;
+    }
     return Qt::CopyAction | Qt::MoveAction;
 }
 
-bool SideBar::dropMimeData(int index, const QMimeData *data, Qt::DropAction action)
+bool SideBar::dropMimeData(int index, const QMimeData* data, Qt::DropAction action)
 {
 //   if (action == Qt::MoveAction)
 //       return false;
-    QList <QUrl> urlList;
+    QList<QUrl> urlList;
     urlList = data->urls(); // retrieve list of urls
     QStringList files;
-    foreach(QUrl url, urlList) { // iterate over list
-        files.append(url.toLocalFile());
-        ++index; // increment index to preserve drop order
-    }
+            foreach(QUrl url, urlList)
+        { // iterate over list
+            files.append(url.toLocalFile());
+            ++index; // increment index to preserve drop order
+        }
     emit filesDropped(files);
     return true;
 }
@@ -120,49 +131,58 @@ void SideBar::startDrag(Qt::DropActions supportedActions)
 {
     dragging = true;
     supportedActions |= Qt::MoveAction;
-    QDrag *drag = new QDrag(this);
-    QMimeData *mimeData = new QMimeData();
+    QDrag* drag = new QDrag(this);
+    QMimeData* mimeData = new QMimeData();
     QList<QUrl> urlList;
     QStringList sl;
-    foreach(QListWidgetItem * lwi, selectedItems()) {
-        QString s = QString::number(((QSnippet *)lwi)->pageID());
-        sl << s;
-    }
+            foreach(QListWidgetItem* lwi, selectedItems())
+        {
+            QString s = QString::number(((QSnippet*) lwi)->pageID());
+            sl << s;
+        }
     mimeData->setUrls(urlList);
     drag->setMimeData(mimeData);
-    if (drag->exec(supportedActions,Qt::CopyAction) == Qt::CopyAction) {
-        foreach(QListWidgetItem * lwi, selectedItems()) {
-            emit fileRemoved(((QSnippet *) lwi)->pageID());
-            model()->removeRow(row(lwi));
-        }
+    if (drag->exec(supportedActions, Qt::CopyAction) == Qt::CopyAction)
+    {
+                foreach(QListWidgetItem* lwi, selectedItems())
+            {
+                emit fileRemoved(((QSnippet*) lwi)->pageID());
+                model()->removeRow(row(lwi));
+            }
     }
     current = 0;
     dragging = false;
 }
 
-QSnippet *SideBar::getItemByName(const QString &name)
+QSnippet* SideBar::getItemByName(const QString& name)
 {
-    for (int i = 0; i < count(); i++) {
-        if (((QSnippet *)item(i))->getName() == name)
-            return ((QSnippet *)item(i));
+    for (int i = 0; i < count(); i++)
+    {
+        if (((QSnippet*) item(i))->getName() == name)
+        {
+            return ((QSnippet*) item(i));
+        }
     }
     return NULL;
 }
 
-void SideBar::select(const QString &name)
+void SideBar::select(const QString& name)
 {
     current = getItemByName(name);
     if (current)
+    {
         current->setSelected(true);
+    }
 }
 
 void SideBar::selectFirstFile()
 {
-    if (count() == 0) {
+    if (count() == 0)
+    {
         current = NULL;
         return;
     }
-    current = (QSnippet *) item(0);
+    current = (QSnippet*) item(0);
 }
 
 /*void SideBar::dragLeaveEvent(QDragLeaveEvent *event)

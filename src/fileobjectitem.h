@@ -18,18 +18,24 @@
 class FileObjectItem : public QListWidgetItem
 {
 public:
-    enum FileObjectItemType {
+    enum FileObjectItemType
+    {
         Directory,
         EmptyDirectory,
         Project
     };
     Q_DECLARE_FLAGS(FOItemType, FileObjectItemType)
-    explicit FileObjectItem(FileObjectItemType itemType, const QString &fullName, QListWidget *parent = 0);
+
+    explicit FileObjectItem(FileObjectItemType itemType, const QString& fullName, QListWidget* parent = 0);
+
     FileObjectItemType getItemType();
+
     QString getShortName();
+
     QString getPath();
+
 signals:
-    
+
 public slots:
 private:
     QString fName;

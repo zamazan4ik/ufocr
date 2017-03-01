@@ -31,22 +31,29 @@ class LangSelectDialog;
 
 class LangSelectDialog : public QDialog
 {
-    Q_OBJECT
+Q_OBJECT
 
 public:
-    explicit LangSelectDialog(QWidget *parent = 0);
+    explicit LangSelectDialog(QWidget* parent = 0);
+
     ~LangSelectDialog();
+
 protected:
     void accept();
+
 private slots:
-    void onItemClicked(QListWidgetItem *item);
+
+    void onItemClicked(QListWidgetItem* item);
+
 private:
     QStringList getRecognitionLanguages() const;
+
     void fillLangs();
+
 private:
 
-    Ui::LangSelectDialog *ui;
-    QList<QListWidgetItem *> items;
+    Ui::LangSelectDialog* ui;
+    QList<QListWidgetItem*> items;
 };
 
 #endif // LANGSELECTDIALOG_H

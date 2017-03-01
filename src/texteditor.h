@@ -27,34 +27,53 @@
 
 class TextEditor : public QTextEdit
 {
-    Q_OBJECT
+Q_OBJECT
 
 public:
-    explicit TextEditor(QWidget *parent = 0);
+    explicit TextEditor(QWidget* parent = 0);
+
     ~TextEditor();
-    bool spellCheck(const QString &lang);
+
+    bool spellCheck(const QString& lang);
+
     void unSpellCheck();
+
     void enumerateDicts();
-    bool hasDict(const QString &shname);
+
+    bool hasDict(const QString& shname);
+
 protected:
-    void keyPressEvent ( QKeyEvent *e );
-    void wheelEvent ( QWheelEvent *e );
+    void keyPressEvent(QKeyEvent* e);
+
+    void wheelEvent(QWheelEvent* e);
+
 private slots:
-    void contextMenuRequested(const QPoint &point);
+
+    void contextMenuRequested(const QPoint& point);
+
     void enlargeFont();
+
     void decreaseFont();
+
     void updateSP();
+
     void replaceWord();
+
     void copyAvailable(bool yes);
+
     void textChanged();
+
     void copyClipboard();
+
 private:
-    void saveHtml(QFile *file);
-    void globalReplace(const QString &what, const QString &with);
+    void saveHtml(QFile* file);
+
+    void globalReplace(const QString& what, const QString& with);
+
 private:
     SpellChecker spellChecker;
     bool hasCopy;
-   // bool mTextSaved;
+    // bool mTextSaved;
 };
 
 #endif // TEXTEDITOR_H

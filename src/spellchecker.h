@@ -27,38 +27,54 @@
 typedef QMap<QString, QString> StringMap;
 
 class QTextEdit;
+
 class QRegExp;
+
 class QTextCursor;
+
 class QStringList;
 
 class SpellChecker
 {
 public:
-    SpellChecker(QTextEdit *textEdit);
+    SpellChecker(QTextEdit* textEdit);
+
     ~SpellChecker();
+
     void unSpellCheck();
-    void setLanguage(const QString &lang);
+
+    void setLanguage(const QString& lang);
+
     bool spellCheck();  //Returns false only if the dictionary not found. Otherwise always true.
     void checkWord();
-    bool hasHyphen(QTextCursor *cursor);
-    bool hasLongHyphen(QTextCursor *cursor);
-    QString checkConcatenation(QTextCursor *cursor);
+
+    bool hasHyphen(QTextCursor* cursor);
+
+    bool hasLongHyphen(QTextCursor* cursor);
+
+    QString checkConcatenation(QTextCursor* cursor);
+
     void enumerateDicts();
-    bool hasDict(const QString &shname);
+
+    bool hasDict(const QString& shname);
+
     QStringList suggestions();
+
 private:
-    void _checkWord(QTextCursor *cursor);
-    bool checkWordSpelling(const QString &word);
-    QTextEdit *m_textEdit;
-    QRegExp *m_regExp;
+    void _checkWord(QTextCursor* cursor);
+
+    bool checkWordSpelling(const QString& word);
+
+    QTextEdit* m_textEdit;
+    QRegExp* m_regExp;
     QString m_lang1;
     QString m_lang2;
-    StringMap *m_map;
-    AspellConfig *spell_config1;
-    AspellConfig *spell_config2;
-    AspellSpeller *spell_checker1;
-    AspellSpeller *spell_checker2;
-    QStringList *dictList;
+    StringMap* m_map;
+    AspellConfig* spell_config1;
+    AspellConfig* spell_config2;
+    AspellSpeller* spell_checker1;
+    AspellSpeller* spell_checker2;
+    QStringList* dictList;
     QString bad_language;
 };
 

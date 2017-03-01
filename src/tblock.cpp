@@ -21,22 +21,21 @@
 #include <QPoint>
 
 Block::Block(int x, int y, int width, int height) :
-    QRect(x, y, width, height),
-    number(-1),
-    center(QRect::x()+QRect::width()/2, QRect::y()+QRect::height()/2),
-    tableCell(false),
-    rowEnd(false),
-    language("default")
+        QRect(x, y, width, height),
+        number(-1),
+        center(QRect::x() + QRect::width() / 2, QRect::y() + QRect::height() / 2),
+        tableCell(false),
+        rowEnd(false),
+        language("default")
 {
 }
 
-Block::Block(const QRect &r) :
-    QRect(r.x(), r.y(), r.width(), r.height()),
-    number(-1),
-    center(QRect::x()+QRect::width()/2, QRect::y()+QRect::height()/2),
-    tableCell(false),
-    language("default")
-
+Block::Block(const QRect& r) :
+        QRect(r.x(), r.y(), r.width(), r.height()),
+        number(-1),
+        center(QRect::x() + QRect::width() / 2, QRect::y() + QRect::height() / 2),
+        tableCell(false),
+        language("default")
 {
 }
 
@@ -54,7 +53,7 @@ void Block::setBlockNumber(const int value)
     number = value;
 }
 
-void Block::setLanguage(const QString &lang)
+void Block::setLanguage(const QString& lang)
 {
     language = lang;
 }
@@ -89,16 +88,20 @@ QPoint Block::getCenter()
     return center;
 }
 
-bool rectLessThan(const QRect &r1, const QRect &r2)
+bool rectLessThan(const QRect& r1, const QRect& r2)
 {
     if (r1.y() < r2.y())
+    {
         return true;
+    }
     if (r1.x() < r2.x())
+    {
         return true;
+    }
     return false;
 }
 
-void sortBlocks(Blocks &blocks)
+void sortBlocks(Blocks& blocks)
 {
     qSort(blocks.begin(), blocks.end(), rectLessThan);
 }
