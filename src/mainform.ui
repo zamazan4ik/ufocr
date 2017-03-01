@@ -1,0 +1,1610 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1920</width>
+    <height>1138</height>
+   </rect>
+  </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::CustomContextMenu</enum>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="yagf.qrc">
+    <normaloff>:/yagf.png</normaloff>:/yagf.png</iconset>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="spacing">
+     <number>2</number>
+    </property>
+    <property name="margin">
+     <number>2</number>
+    </property>
+    <item>
+     <widget class="QFrame" name="frame">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <property name="spacing">
+        <number>1</number>
+       </property>
+       <property name="margin">
+        <number>1</number>
+       </property>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <property name="spacing">
+          <number>1</number>
+         </property>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="SideBar" name="sideBar">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
+               <horstretch>0</horstretch>
+               <verstretch>1</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>120</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>120</width>
+               <height>2048</height>
+              </size>
+             </property>
+             <property name="palette">
+              <palette>
+               <active>
+                <colorrole role="Base">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>94</red>
+                   <green>94</green>
+                   <blue>94</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+               </active>
+               <inactive>
+                <colorrole role="Base">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>94</red>
+                   <green>94</green>
+                   <blue>94</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+               </inactive>
+               <disabled>
+                <colorrole role="Base">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>255</red>
+                   <green>255</green>
+                   <blue>255</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+               </disabled>
+              </palette>
+             </property>
+             <property name="midLineWidth">
+              <number>1</number>
+             </property>
+             <property name="horizontalScrollBarPolicy">
+              <enum>Qt::ScrollBarAlwaysOff</enum>
+             </property>
+             <property name="alternatingRowColors">
+              <bool>true</bool>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>100</width>
+               <height>128</height>
+              </size>
+             </property>
+             <property name="textElideMode">
+              <enum>Qt::ElideNone</enum>
+             </property>
+             <property name="flow">
+              <enum>QListView::LeftToRight</enum>
+             </property>
+             <property name="spacing">
+              <number>4</number>
+             </property>
+             <property name="viewMode">
+              <enum>QListView::IconMode</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="DropLabel" name="label">
+             <property name="minimumSize">
+              <size>
+               <width>120</width>
+               <height>60</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>120</width>
+               <height>60</height>
+              </size>
+             </property>
+             <property name="palette">
+              <palette>
+               <active>
+                <colorrole role="WindowText">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>76</red>
+                   <green>76</green>
+                   <blue>76</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="Button">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>94</red>
+                   <green>94</green>
+                   <blue>94</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="Dark">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>94</red>
+                   <green>94</green>
+                   <blue>94</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="Text">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>60</red>
+                   <green>60</green>
+                   <blue>60</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="BrightText">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>94</red>
+                   <green>94</green>
+                   <blue>94</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="ButtonText">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>76</red>
+                   <green>76</green>
+                   <blue>76</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="Base">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>94</red>
+                   <green>94</green>
+                   <blue>94</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="Window">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>94</red>
+                   <green>94</green>
+                   <blue>94</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="AlternateBase">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>94</red>
+                   <green>94</green>
+                   <blue>94</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="NoRole">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>94</red>
+                   <green>94</green>
+                   <blue>94</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+               </active>
+               <inactive>
+                <colorrole role="WindowText">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>76</red>
+                   <green>76</green>
+                   <blue>76</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="Button">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>94</red>
+                   <green>94</green>
+                   <blue>94</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="Dark">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>94</red>
+                   <green>94</green>
+                   <blue>94</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="Text">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>60</red>
+                   <green>60</green>
+                   <blue>60</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="BrightText">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>94</red>
+                   <green>94</green>
+                   <blue>94</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="ButtonText">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>76</red>
+                   <green>76</green>
+                   <blue>76</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="Base">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>94</red>
+                   <green>94</green>
+                   <blue>94</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="Window">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>94</red>
+                   <green>94</green>
+                   <blue>94</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="AlternateBase">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>94</red>
+                   <green>94</green>
+                   <blue>94</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="NoRole">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>94</red>
+                   <green>94</green>
+                   <blue>94</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+               </inactive>
+               <disabled>
+                <colorrole role="WindowText">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>94</red>
+                   <green>94</green>
+                   <blue>94</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="Button">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>94</red>
+                   <green>94</green>
+                   <blue>94</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="Dark">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>94</red>
+                   <green>94</green>
+                   <blue>94</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="Text">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>94</red>
+                   <green>94</green>
+                   <blue>94</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="BrightText">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>94</red>
+                   <green>94</green>
+                   <blue>94</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="ButtonText">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>94</red>
+                   <green>94</green>
+                   <blue>94</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="Base">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>94</red>
+                   <green>94</green>
+                   <blue>94</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="Window">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>94</red>
+                   <green>94</green>
+                   <blue>94</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="AlternateBase">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>94</red>
+                   <green>94</green>
+                   <blue>94</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="NoRole">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>94</red>
+                   <green>94</green>
+                   <blue>94</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+               </disabled>
+              </palette>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="pixmap">
+              <pixmap resource="yagf.qrc">:/images/Trashcan.png</pixmap>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QSplitter" name="splitter">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+             <horstretch>1</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="handleWidth">
+            <number>4</number>
+           </property>
+           <widget class="QXtGraphicsView" name="graphicsView">
+            <property name="contextMenuPolicy">
+             <enum>Qt::NoContextMenu</enum>
+            </property>
+           </widget>
+           <widget class="TextEditor" name="textEdit">
+            <property name="font">
+             <font>
+              <family>Times New Roman</family>
+             </font>
+            </property>
+            <property name="horizontalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOn</enum>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>    selectLangsBox-&gt;setStyleSheet(&quot;border: 1px solid blue; padding: 2px 2px 2px 18px; min-width: 6em; background-color: white; selection-background-color:blue; QComboBox::drop-down: { width: 0px; border-style: none}&quot;);
+</string>
+            </property>
+           </widget>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1920</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>&amp;File</string>
+    </property>
+    <addaction name="actionOpen"/>
+    <addaction name="actionScan"/>
+    <addaction name="actionPaste_Image"/>
+    <addaction name="separator"/>
+    <addaction name="actionRecognize"/>
+    <addaction name="action_Save"/>
+    <addaction name="actionSave_Text_on_the_Page"/>
+    <addaction name="actionSave_current_image"/>
+    <addaction name="separator"/>
+    <addaction name="actionClose_All"/>
+    <addaction name="actionRecent_Projects"/>
+    <addaction name="actionSave_Project"/>
+    <addaction name="actionSave_Project_As"/>
+    <addaction name="actionLoad_Project"/>
+    <addaction name="separator"/>
+    <addaction name="actionQuit"/>
+   </widget>
+   <widget class="QMenu" name="menu_Help">
+    <property name="title">
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="actionOnlineHelp"/>
+    <addaction name="actionAbout"/>
+   </widget>
+   <widget class="QMenu" name="menu_Settings">
+    <property name="title">
+     <string>&amp;Edit</string>
+    </property>
+    <addaction name="actionSelect_Text_Area"/>
+    <addaction name="separator"/>
+    <addaction name="actionSelect_All_Text"/>
+    <addaction name="actionCopyToClipboard"/>
+    <addaction name="separator"/>
+    <addaction name="actionAlign_Page_by_Guideline"/>
+    <addaction name="separator"/>
+    <addaction name="actionOCR_Settings"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menu_Settings"/>
+   <addaction name="menu_Help"/>
+  </widget>
+  <widget class="QToolBar" name="toolBar">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>0</height>
+    </size>
+   </property>
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="toolTip">
+    <string>Image acquisition</string>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(218, 218, 208);</string>
+   </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>32</width>
+     <height>32</height>
+    </size>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionOpen"/>
+   <addaction name="actionScan"/>
+   <addaction name="actionPaste_Image"/>
+   <addaction name="actionLoad_Project"/>
+   <addaction name="actionSave_Project"/>
+  </widget>
+  <widget class="QToolBar" name="toolBar_2">
+   <property name="windowTitle">
+    <string>toolBar_2</string>
+   </property>
+   <property name="toolTip">
+    <string>Image manpulation</string>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(208, 218, 208);</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionRotate_90_CCW"/>
+   <addaction name="actionRotate_180"/>
+   <addaction name="actionRotate_90_CW"/>
+   <addaction name="actionAlign_Page_by_Guideline"/>
+   <addaction name="actionUpscale"/>
+   <addaction name="actionTBLV"/>
+   <addaction name="actionSmaller_view"/>
+  </widget>
+  <widget class="QToolBar" name="toolBar_3">
+   <property name="windowTitle">
+    <string>toolBar_3</string>
+   </property>
+   <property name="toolTip">
+    <string>Recognition</string>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(218, 208, 208);
+QComboBox {
+     border: 1px solid gray;
+     border-radius: 3px;
+     padding: 1px 18px 1px 3px;
+     min-width: 6em;
+ }
+
+ QComboBox:editable {
+     background: white;
+ }
+
+ QComboBox:!editable, QComboBox::drop-down:editable {
+      background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                  stop: 0 #E1E1E1, stop: 0.4 #DDDDDD,
+                                  stop: 0.5 #D8D8D8, stop: 1.0 #D3D3D3);
+ }
+
+ /* QComboBox gets the &quot;on&quot; state when the popup is open */
+ QComboBox:!editable:on, QComboBox::drop-down:editable:on {
+     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                 stop: 0 #D3D3D3, stop: 0.4 #D8D8D8,
+                                 stop: 0.5 #DDDDDD, stop: 1.0 #E1E1E1);
+ }
+
+ QComboBox:on { /* shift the text when the popup opens */
+     padding-top: 3px;
+     padding-left: 4px;
+ }
+
+ QComboBox::drop-down {
+     subcontrol-origin: padding;
+     subcontrol-position: top right;
+     width: 15px;
+
+     border-left-width: 1px;
+     border-left-color: darkgray;
+     border-left-style: solid; /* just a single line */
+     border-top-right-radius: 3px; /* same radius as the QComboBox */
+     border-bottom-right-radius: 3px;
+ }
+
+ QComboBox::down-arrow {
+     image: url(/usr/share/icons/crystalsvg/16x16/actions/1downarrow.png);
+ }
+
+ QComboBox::down-arrow:on { /* shift the arrow when popup is open */
+     top: 1px;
+     left: 1px;
+ }</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionSelect_Text_Area"/>
+   <addaction name="actionSelect_multiple_blocks"/>
+   <addaction name="actionSelect_Table"/>
+   <addaction name="ActionClearAllBlocks"/>
+   <addaction name="actionRecognize"/>
+  </widget>
+  <widget class="QToolBar" name="toolBar_6">
+   <property name="windowTitle">
+    <string>toolBar_6</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QToolBar" name="toolBar_4">
+   <property name="windowTitle">
+    <string>toolBar_4</string>
+   </property>
+   <property name="toolTip">
+    <string>Text manipulation</string>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(218, 218, 208);</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="action_Save"/>
+   <addaction name="actionCopyToClipboard"/>
+   <addaction name="actionKeep_Lines"/>
+   <addaction name="actionCheck_spelling"/>
+  </widget>
+  <widget class="QToolBar" name="toolBar_5">
+   <property name="windowTitle">
+    <string>toolBar_5</string>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(208, 218, 218);</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionSelect_languages"/>
+   <addaction name="actionOCR_Settings"/>
+  </widget>
+  <action name="actionScan">
+   <property name="icon">
+    <iconset resource="yagf.qrc">
+     <normaloff>:/images/scanner.png</normaloff>:/images/scanner.png</iconset>
+   </property>
+   <property name="text">
+    <string>S&amp;can...</string>
+   </property>
+   <property name="statusTip">
+    <string>Scanning images using XSane...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="action_Save">
+   <property name="icon">
+    <iconset resource="yagf.qrc">
+     <normaloff>:/images/save.png</normaloff>:/images/save.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Save All Text...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
+   </property>
+  </action>
+  <action name="actionOpen">
+   <property name="icon">
+    <iconset resource="yagf.qrc">
+     <normaloff>:/images/disc.png</normaloff>:/images/disc.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Open Image...</string>
+   </property>
+   <property name="toolTip">
+    <string>Open Image</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionRecognize">
+   <property name="icon">
+    <iconset resource="yagf.qrc">
+     <normaloff>:/images/Recognize.png</normaloff>:/images/Recognize.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Recognize</string>
+   </property>
+   <property name="statusTip">
+    <string>Recognizing text...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+R</string>
+   </property>
+  </action>
+  <action name="actionChoose_Language">
+   <property name="text">
+    <string>Choose &amp;Language</string>
+   </property>
+  </action>
+  <action name="actionQuit">
+   <property name="text">
+    <string>Quit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="actionPreviousPage">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/images/back.png</normaloff>:/images/back.png</iconset>
+   </property>
+   <property name="text">
+    <string>Previous page</string>
+   </property>
+   <property name="toolTip">
+    <string>Move to previous image</string>
+   </property>
+  </action>
+  <action name="actionNextPage">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/images/forward.png</normaloff>:/images/forward.png</iconset>
+   </property>
+   <property name="text">
+    <string>Next page</string>
+   </property>
+   <property name="toolTip">
+    <string>Move to next image</string>
+   </property>
+  </action>
+  <action name="actionOnine_help">
+   <property name="text">
+    <string>Online Help</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About...</string>
+   </property>
+  </action>
+  <action name="actionOnlineHelp">
+   <property name="text">
+    <string>Online Help</string>
+   </property>
+  </action>
+  <action name="actionCopyToClipboard">
+   <property name="icon">
+    <iconset resource="yagf.qrc">
+     <normaloff>:/images/Copy.png</normaloff>:/images/Copy.png</iconset>
+   </property>
+   <property name="text">
+    <string>Copy Text to Clipboard</string>
+   </property>
+   <property name="toolTip">
+    <string>Copy recognized text to clipboard</string>
+   </property>
+  </action>
+  <action name="actionRecognize_All_Pages">
+   <property name="icon">
+    <iconset resource="yagf.qrc">
+     <normaloff>:/batch.png</normaloff>:/batch.png</iconset>
+   </property>
+   <property name="text">
+    <string>Recognize &amp;All Pages</string>
+   </property>
+   <property name="toolTip">
+    <string>Recognize All Pages</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+A</string>
+   </property>
+  </action>
+  <action name="ActionClearAllBlocks">
+   <property name="icon">
+    <iconset resource="yagf.qrc">
+     <normaloff>:/images/RemoveBlocks.png</normaloff>:/images/RemoveBlocks.png</iconset>
+   </property>
+   <property name="text">
+    <string>Clear all blocks</string>
+   </property>
+   <property name="toolTip">
+    <string>Clear all blocks</string>
+   </property>
+  </action>
+  <action name="ActionDeleteBlock">
+   <property name="icon">
+    <iconset resource="yagf.qrc">
+     <normaloff>:/images/RemoveBlock.png</normaloff>:/images/RemoveBlock.png</iconset>
+   </property>
+   <property name="text">
+    <string>Delete the current block</string>
+   </property>
+   <property name="toolTip">
+    <string>Delete the current block</string>
+   </property>
+  </action>
+  <action name="actionRecognize_block">
+   <property name="icon">
+    <iconset resource="yagf.qrc">
+     <normaloff>:/images/recblocks.png</normaloff>:/images/recblocks.png</iconset>
+   </property>
+   <property name="text">
+    <string>Recognize block</string>
+   </property>
+   <property name="toolTip">
+    <string>Recognize this block</string>
+   </property>
+  </action>
+  <action name="actionClear_numbers">
+   <property name="text">
+    <string>Clear numbers</string>
+   </property>
+   <property name="toolTip">
+    <string>Crear block numbering</string>
+   </property>
+  </action>
+  <action name="actionCheck_spelling">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="yagf.qrc">
+     <normaloff>:/images/Spellcheck.png</normaloff>:/images/Spellcheck.png</iconset>
+   </property>
+   <property name="text">
+    <string>Check spelling</string>
+   </property>
+  </action>
+  <action name="actionSave_current_image">
+   <property name="icon">
+    <iconset resource="yagf.qrc">
+     <normaloff>:/images/save.png</normaloff>:/images/save.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save current image...</string>
+   </property>
+   <property name="toolTip">
+    <string>Save currently opened image in its real size</string>
+   </property>
+  </action>
+  <action name="actionSave_block">
+   <property name="icon">
+    <iconset resource="yagf.qrc">
+     <normaloff>:/images/saveblock.png</normaloff>:/images/saveblock.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save block</string>
+   </property>
+   <property name="toolTip">
+    <string>Save the current block to the image file</string>
+   </property>
+  </action>
+  <action name="actionUpscale">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="yagf.qrc">
+     <normaloff>:/images/upscale.png</normaloff>:/images/upscale.png</iconset>
+   </property>
+   <property name="text">
+    <string>Enlarge Page Script</string>
+   </property>
+   <property name="toolTip">
+    <string>Enlarge Page Script</string>
+   </property>
+  </action>
+  <action name="actionSelect_HTML_format">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="yagf.qrc">
+     <normaloff>:/images/stock_new_html.png</normaloff>:/images/stock_new_html.png</iconset>
+   </property>
+   <property name="text">
+    <string>Select HTML format</string>
+   </property>
+   <property name="toolTip">
+    <string>Select HTML format as recognition output</string>
+   </property>
+  </action>
+  <action name="actionTBLV">
+   <property name="icon">
+    <iconset resource="yagf.qrc">
+     <normaloff>:/images/ZoomIn.png</normaloff>:/images/ZoomIn.png</iconset>
+   </property>
+   <property name="text">
+    <string>Larger view (Ctrl + Mouse Wheel)</string>
+   </property>
+   <property name="toolTip">
+    <string>Larger view (Ctrl + Mouse Wheel)</string>
+   </property>
+  </action>
+  <action name="actionSmaller_view">
+   <property name="icon">
+    <iconset resource="yagf.qrc">
+     <normaloff>:/images/ZoomOut.png</normaloff>:/images/ZoomOut.png</iconset>
+   </property>
+   <property name="text">
+    <string>Smaller view (Ctrl + Mouse Wheel)</string>
+   </property>
+   <property name="toolTip">
+    <string>Smaller view (Ctrl + Mouse Wheel)</string>
+   </property>
+  </action>
+  <action name="actionRotate_90_CCW">
+   <property name="icon">
+    <iconset resource="yagf.qrc">
+     <normaloff>:/images/Rotatem90.png</normaloff>:/images/Rotatem90.png</iconset>
+   </property>
+   <property name="text">
+    <string>Rotate 90 CCW</string>
+   </property>
+   <property name="toolTip">
+    <string>Rotate 90 CCW</string>
+   </property>
+  </action>
+  <action name="actionRotate_180">
+   <property name="icon">
+    <iconset resource="yagf.qrc">
+     <normaloff>:/images/Flip.png</normaloff>:/images/Flip.png</iconset>
+   </property>
+   <property name="text">
+    <string>Rotate 180</string>
+   </property>
+   <property name="toolTip">
+    <string>Rotate 180</string>
+   </property>
+  </action>
+  <action name="actionRotate_90_CW">
+   <property name="icon">
+    <iconset resource="yagf.qrc">
+     <normaloff>:/images/Rotateat90.png</normaloff>:/images/Rotateat90.png</iconset>
+   </property>
+   <property name="text">
+    <string>Rotate 90 CW</string>
+   </property>
+   <property name="toolTip">
+    <string>Rotate 90 CW</string>
+   </property>
+  </action>
+  <action name="actionAlign_Page_by_Guideline">
+   <property name="icon">
+    <iconset resource="yagf.qrc">
+     <normaloff>:/images/Align.png</normaloff>:/images/Align.png</iconset>
+   </property>
+   <property name="text">
+    <string>Align Page by Guideline</string>
+   </property>
+   <property name="toolTip">
+    <string>Align Page by Guideline</string>
+   </property>
+  </action>
+  <action name="actionOCR_Settings">
+   <property name="icon">
+    <iconset resource="yagf.qrc">
+     <normaloff>:/images/Settings.png</normaloff>:/images/Settings.png</iconset>
+   </property>
+   <property name="text">
+    <string>Settings</string>
+   </property>
+  </action>
+  <action name="actionPaste_Image">
+   <property name="icon">
+    <iconset resource="yagf.qrc">
+     <normaloff>:/images/Paste.png</normaloff>:/images/Paste.png</iconset>
+   </property>
+   <property name="text">
+    <string>Paste Image</string>
+   </property>
+   <property name="toolTip">
+    <string>Paste image from clipboard</string>
+   </property>
+  </action>
+  <action name="actionSelect_Text_Area">
+   <property name="icon">
+    <iconset resource="yagf.qrc">
+     <normaloff>:/images/SingleBlock.png</normaloff>:/images/SingleBlock.png</iconset>
+   </property>
+   <property name="text">
+    <string>Select Text Area</string>
+   </property>
+   <property name="toolTip">
+    <string>Select Text Area</string>
+   </property>
+  </action>
+  <action name="actionDeskew_by_Block">
+   <property name="text">
+    <string>Deskew  Block</string>
+   </property>
+   <property name="toolTip">
+    <string>Deskew the current block</string>
+   </property>
+  </action>
+  <action name="actionSelect_multiple_blocks">
+   <property name="icon">
+    <iconset resource="yagf.qrc">
+     <normaloff>:/images/split.png</normaloff>:/images/split.png</iconset>
+   </property>
+   <property name="text">
+    <string>Select multiple blocks</string>
+   </property>
+   <property name="toolTip">
+    <string>Splits text into several blocks</string>
+   </property>
+  </action>
+  <action name="actionToggle_Large_Small_Icons">
+   <property name="text">
+    <string>Toggle Large/Small Icons</string>
+   </property>
+  </action>
+  <action name="actionSelect_Recognition_Language">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/images/system_config_language.png</normaloff>:/images/system_config_language.png</iconset>
+   </property>
+   <property name="text">
+    <string>Select Recognition Language</string>
+   </property>
+   <property name="toolTip">
+    <string>Select Recognition Language</string>
+   </property>
+  </action>
+  <action name="actionSave_Project_As">
+   <property name="text">
+    <string>Save Project As...</string>
+   </property>
+  </action>
+  <action name="actionLoad_Project">
+   <property name="icon">
+    <iconset resource="yagf.qrc">
+     <normaloff>:/isrc/MAFY/open.svg</normaloff>:/isrc/MAFY/open.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Load Project...</string>
+   </property>
+  </action>
+  <action name="actionSelect_Recognition_Languages">
+   <property name="icon">
+    <iconset resource="yagf.qrc">
+     <normaloff>:/images/languages.png</normaloff>:/images/languages.png</iconset>
+   </property>
+   <property name="text">
+    <string>Select Recognition Languages...</string>
+   </property>
+   <property name="toolTip">
+    <string>Select Recognition Languages</string>
+   </property>
+  </action>
+  <action name="actionSelect_All_Text">
+   <property name="text">
+    <string>Select All Text</string>
+   </property>
+   <property name="toolTip">
+    <string>Select all the recognized text</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+A</string>
+   </property>
+  </action>
+  <action name="actionSelect_languages">
+   <property name="icon">
+    <iconset resource="yagf.qrc">
+     <normaloff>:/images/languages.png</normaloff>:/images/languages.png</iconset>
+   </property>
+   <property name="text">
+    <string>Select languages for recognition</string>
+   </property>
+   <property name="toolTip">
+    <string>Select languages for recognition</string>
+   </property>
+  </action>
+  <action name="actionKeep_Lines">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="yagf.qrc">
+     <normaloff>:/images/lines.png</normaloff>:/images/lines.png</iconset>
+   </property>
+   <property name="text">
+    <string>Keep Lines</string>
+   </property>
+   <property name="toolTip">
+    <string>Keep line-breaks in the scanned text</string>
+   </property>
+  </action>
+  <action name="actionSelect_Table">
+   <property name="icon">
+    <iconset resource="yagf.qrc">
+     <normaloff>:/images/table.png</normaloff>:/images/table.png</iconset>
+   </property>
+   <property name="text">
+    <string>Select Table</string>
+   </property>
+   <property name="toolTip">
+    <string>Select Table</string>
+   </property>
+  </action>
+  <action name="actionRecent_Projects">
+   <property name="text">
+    <string>Recent Projects</string>
+   </property>
+  </action>
+  <action name="actionClose_All">
+   <property name="text">
+    <string>Close All</string>
+   </property>
+  </action>
+  <action name="actionSave_Project">
+   <property name="icon">
+    <iconset resource="yagf.qrc">
+     <normaloff>:/isrc/MAFY/save.svg</normaloff>:/isrc/MAFY/save.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Save Project</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionTestAction">
+   <property name="icon">
+    <iconset resource="yagf.qrc">
+     <normaloff>:/images/recblocks.png</normaloff>:/images/recblocks.png</iconset>
+   </property>
+   <property name="text">
+    <string>TestAction</string>
+   </property>
+  </action>
+  <action name="actionSave_Text_on_the_Page">
+   <property name="text">
+    <string>Save Text on the Page...</string>
+   </property>
+  </action>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QXtGraphicsView</class>
+   <extends>QGraphicsView</extends>
+   <header location="global">qxtgraphicsview.h</header>
+  </customwidget>
+  <customwidget>
+   <class>SideBar</class>
+   <extends>QListWidget</extends>
+   <header location="global">sidebar.h</header>
+  </customwidget>
+  <customwidget>
+   <class>DropLabel</class>
+   <extends>QLabel</extends>
+   <header>droplabel.h</header>
+  </customwidget>
+  <customwidget>
+   <class>TextEditor</class>
+   <extends>QTextEdit</extends>
+   <header>texteditor.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="yagf.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>actionTBLV</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>enlargeButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>959</x>
+     <y>568</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSmaller_view</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>decreaseButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>959</x>
+     <y>568</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionRotate_90_CCW</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>rotateCCWButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>959</x>
+     <y>568</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionRotate_180</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>rotate180ButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>959</x>
+     <y>568</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionRotate_90_CW</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>rotateCWButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>959</x>
+     <y>568</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionAlign_Page_by_Guideline</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>deskewByLine()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>959</x>
+     <y>568</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionOCR_Settings</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>showConfigDlg()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>959</x>
+     <y>568</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionPaste_Image</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>pasteimage()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>959</x>
+     <y>568</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSelect_Text_Area</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>selectTextArea()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>959</x>
+     <y>568</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionDeskew_by_Block</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>deskewByBlock()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>959</x>
+     <y>568</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSelect_multiple_blocks</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>selectBlocks()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>959</x>
+     <y>568</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSave_Project_As</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>saveProjectAs()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>959</x>
+     <y>568</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionLoad_Project</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>loadProject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>959</x>
+     <y>568</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSelect_Recognition_Languages</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>SelectRecognitionLanguages()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>959</x>
+     <y>568</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionUpscale</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>upscale()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>959</x>
+     <y>568</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSelect_Table</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>splitTable()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>959</x>
+     <y>568</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSave_Project</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>saveProject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>959</x>
+     <y>568</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionClose_All</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>closeAll()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>959</x>
+     <y>568</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionTestAction</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>testslot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>959</x>
+     <y>568</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSave_Text_on_the_Page</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>saveCurrentText()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>959</x>
+     <y>568</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>rotateCWButtonClicked()</slot>
+  <slot>rotateCCWButtonClicked()</slot>
+  <slot>rotate180ButtonClicked()</slot>
+  <slot>enlargeButtonClicked()</slot>
+  <slot>decreaseButtonClicked()</slot>
+  <slot>showConfigDlg()</slot>
+  <slot>pasteimage()</slot>
+  <slot>blockAllText()</slot>
+  <slot>deskewByBlock()</slot>
+  <slot>showAdvancedSettings()</slot>
+  <slot>selectTextArea()</slot>
+  <slot>selectBlocks()</slot>
+  <slot>setSmallIcons()</slot>
+  <slot>preprocessPage()</slot>
+  <slot>saveProjectAs()</slot>
+  <slot>loadProject()</slot>
+  <slot>SelectRecognitionLanguages()</slot>
+  <slot>deskewByLine()</slot>
+  <slot>upscale()</slot>
+  <slot>splitTable()</slot>
+  <slot>saveProject()</slot>
+  <slot>closeAll()</slot>
+  <slot>testslot()</slot>
+  <slot>saveCurrentText()</slot>
+ </slots>
+</ui>

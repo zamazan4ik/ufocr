@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="64"
+   height="64"
+   id="svg6288"
+   version="1.1"
+   inkscape:version="0.48.3.1 r9886"
+   sodipodi:docname="Spellcheck.svg"
+   inkscape:export-filename="/home/parallels/Downloads/yagf-0.9.4/src/isrc/MAFY/Spellcheck.png"
+   inkscape:export-xdpi="66.175392"
+   inkscape:export-ydpi="66.175392">
+  <title
+     id="title3057">Spellcheck</title>
+  <defs
+     id="defs6290" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="7.919596"
+     inkscape:cx="54.976339"
+     inkscape:cy="44.431317"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1423"
+     inkscape:window-height="906"
+     inkscape:window-x="65"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata6293">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Spellcheck</dc:title>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Nastya Bekassova</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:rights>
+          <cc:Agent>
+            <dc:title>Nastya Bekassova</dc:title>
+          </cc:Agent>
+        </dc:rights>
+        <dc:description>More Air for YAGF icon set</dc:description>
+        <dc:source>symmetrica.net/~bekassova/</dc:source>
+        <cc:license
+           rdf:resource="http://www.gnu.org/copyleft/gpl.html" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-988.36218)">
+    <path
+       style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans"
+       d="M 19.125 15.34375 C 17.401551 15.29675 16.126825 16.8809 16.375 18.375 L 16.375 30.34375 L 19.65625 30.34375 C 19.65625 28.34375 19.71875 26.40625 19.71875 24.40625 C 20.810363 24.40625 21.970887 24.46875 23.0625 24.46875 L 23.0625 30.46875 C 24.154112 30.46875 25.595887 30.40625 26.6875 30.40625 C 26.6781 26.15505 26.72049 21.90705 26.6875 17.65625 C 26.565624 16.12905 24.83836 15.19765 23.28125 15.40625 C 22.050641 15.40625 20.355607 15.34375 19.125 15.34375 z M 34.65625 15.375 C 34.478773 15.371483 34.299474 15.386925 34.125 15.40625 L 27.78125 15.40625 L 27.78125 30.40625 C 30.327961 30.37625 32.896625 30.45775 35.4375 30.34375 C 36.981262 30.09545 37.821398 28.62035 37.625 27.28125 C 37.53484 25.93645 37.881937 24.5116 37.25 23.25 C 35.841632 22.8811 38.041986 22.43425 37.59375 21.34375 C 37.57295 19.95265 37.738835 18.53025 37.5 17.15625 C 37.146166 15.983662 35.898588 15.399619 34.65625 15.375 z M 41.4375 15.40625 C 39.71405 15.35925 38.470577 16.9434 38.71875 18.4375 C 38.72815 21.6789 38.68571 24.91545 38.71875 28.15625 C 38.840632 29.68345 40.536641 30.61495 42.09375 30.40625 C 44.234036 30.40625 46.797214 30.34375 48.9375 30.34375 L 48.9375 27.34375 C 46.754275 27.34375 44.589475 27.40625 42.40625 27.40625 C 42.40625 25.90635 41.96875 24.40625 41.96875 22.90625 C 41.96875 21.40625 42.40625 19.90625 42.40625 18.40625 L 48.875 18.40625 L 48.875 15.40625 L 41.4375 15.40625 z M 19.59375 16.40625 C 21.158627 16.42525 22.750397 16.3685 24.3125 16.4375 C 25.649855 16.6551 25.65564 17.98835 25.59375 18.96875 L 25.59375 29.40625 C 25.000268 29.40625 23.751994 29.45155 24.03125 28.65625 L 24.03125 23.28125 C 22.211895 23.28125 20.538104 23.34375 18.71875 23.34375 C 18.71875 25.34375 18.5625 27.34375 18.5625 29.34375 C 17.969016 29.34375 17.189492 29.51395 17.46875 28.71875 C 17.49075 24.99135 17.42254 21.25615 17.5 17.53125 C 17.640959 16.85015 18.836165 16.39405 19.59375 16.40625 z M 28.875 16.40625 C 30.985651 16.42625 33.110884 16.3675 35.21875 16.4375 C 36.556105 16.6551 36.593138 17.98835 36.53125 18.96875 C 36.44908 20.05075 36.770681 21.22925 36.1875 22.21875 C 35.179961 22.33595 35.434554 23.6207 36.28125 23.75 C 36.718836 25.0579 36.452993 26.4573 36.53125 27.8125 C 36.634694 29.1491 35.067581 29.54745 33.90625 29.40625 L 28.875 29.40625 L 28.875 16.40625 z M 41.4375 16.40625 L 47.78125 16.40625 C 47.78595 16.94995 47.961753 17.66205 47.09375 17.40625 L 41.3125 17.40625 C 41.3125 19.23955 41.09375 21.13545 41.09375 22.96875 C 41.09375 24.80205 41.3125 26.57295 41.3125 28.40625 C 43.495725 28.40625 45.660525 28.34375 47.84375 28.34375 C 47.84845 28.88745 48.055502 29.59965 47.1875 29.34375 C 45.301715 29.32475 42.976751 29.4441 41.09375 29.375 C 39.756393 29.1575 39.719363 27.82415 39.78125 26.84375 C 39.80315 23.76345 39.76643 20.67155 39.84375 17.59375 C 39.984709 16.91265 40.679915 16.39405 41.4375 16.40625 z M 22.125 17.3125 C 21.938414 17.308678 21.728518 17.336 21.53125 17.34375 C 20.742181 17.37475 19.6875 17.57215 19.6875 17.65625 C 19.044254 18.24555 19.0625 19.07295 19.0625 19.90625 L 19.0625 22.40625 C 20.881854 22.40625 22.211895 22.28125 24.03125 22.28125 L 24.03125 19.78125 C 24.03125 18.94795 24.307847 18.33175 23.625 17.78125 C 23.194264 17.434 22.684757 17.323966 22.125 17.3125 z M 29.96875 17.40625 L 29.96875 22.40625 L 35.4375 22.40625 C 35.4375 21.57295 35.625 20.7708 35.625 19.9375 C 35.625 19.1042 35.4375 18.23955 35.4375 17.40625 L 29.96875 17.40625 z M 21.59375 18.09375 C 22.018949 18.089775 22.430545 18.20045 23.0625 18.46875 L 23.0625 21.34375 C 21.970887 21.34375 21.247863 21.40625 20.15625 21.40625 L 20.15625 18.40625 C 20.753746 18.21685 21.168551 18.097725 21.59375 18.09375 z M 31.0625 18.40625 L 34.34375 18.40625 C 34.34375 18.90625 34.59375 19.46875 34.59375 19.96875 C 34.59375 20.46875 34.34375 20.90625 34.34375 21.40625 L 31.0625 21.40625 L 31.0625 18.40625 z M 29.96875 23.40625 L 29.96875 28.40625 L 35.4375 28.40625 C 35.4375 27.57295 35.625 26.73955 35.625 25.90625 C 35.625 25.07295 35.4375 24.23955 35.4375 23.40625 L 29.96875 23.40625 z M 31.0625 24.40625 L 34.34375 24.40625 C 34.34375 24.90625 34.65625 25.34375 34.65625 25.84375 C 34.65625 26.34365 34.34375 26.90635 34.34375 27.40625 L 31.0625 27.40625 L 31.0625 24.40625 z "
+       transform="translate(0,988.36218)"
+       id="path3014" />
+    <path
+       style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans"
+       d="m 19.448131,1025.0272 c 1.386976,1.6447 5.988397,7.6568 8.82234,10.7474 0.287944,0.314 0.742735,0.5858 1.190091,0.5702 0.478413,-0.017 0.878789,-0.3874 1.218667,-0.6963 5.139867,-4.6711 12.643277,-12.4388 14.997427,-14.9057 -0.962259,-0.8994 -3.275466,-0.2478 -4.209046,-1.1723 -3.972303,3.1655 -7.985541,6.2885 -11.973627,9.4375 -1.628168,-1.5397 -3.100487,-2.8431 -4.740307,-4.3724 -1.175118,0.957 -4.106503,-0.5403 -5.305545,0.3916"
+       id="path2990" />
+  </g>
+</svg>

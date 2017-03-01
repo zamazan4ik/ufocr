@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="64"
+   height="64"
+   id="svg6288"
+   version="1.1"
+   inkscape:version="0.48.5 r10040"
+   sodipodi:docname="save.svg">
+  <title
+     id="title3017">Save</title>
+  <defs
+     id="defs6290" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="2.8"
+     inkscape:cx="-127.278"
+     inkscape:cy="87.872667"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1018"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata6293">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Save</dc:title>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Nastya Bekassova</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:rights>
+          <cc:Agent>
+            <dc:title>Nastya Bekassova</dc:title>
+          </cc:Agent>
+        </dc:rights>
+        <dc:description>More Air for YAGF icon set</dc:description>
+        <dc:source>symmetrica.net/~bekassova/</dc:source>
+        <cc:license
+           rdf:resource="www.gnu.org/copyleft/gpl.html" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-988.36218)">
+    <path
+       style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#000092;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans"
+       d="m 32.56473,992.33279 c -2.344325,0 -4.366884,1.71958 -4.366884,3.97889 l 0,20.77872 -9.607143,0 -2.128856,0 1.52841,1.4919 13.974025,14.1472 0.600448,0.6632 0.600445,-0.6632 13.974027,-14.1472 1.528408,-1.4919 -2.128854,0 -9.607144,0 0,-20.77872 c 0,-2.25931 -2.022558,-3.97889 -4.366882,-3.97889 z m 0,1.7684 c 1.515999,0 2.620128,1.03911 2.620128,2.21049 l 0,21.66282 0,0.8842 0.873377,0 8.406251,0 -11.899756,12.0473 -11.899758,-12.0473 8.40625,0 0.873377,0 0,-0.8842 0,-21.66282 c 0,-1.17138 1.104131,-2.21049 2.620131,-2.21049 z M 8.1101837,1017.0904 c -2.4036054,0 -4.3668833,1.9913 -4.3668833,4.4209 l 0,24.7576 c 0,2.4311 1.9638033,4.421 4.3668833,4.421 l 48.9090923,0 c 2.401758,0 4.366881,-1.9895 4.366881,-4.421 l 0,-24.7576 c 0,-2.43 -1.964596,-4.4209 -4.366881,-4.4209 -2.402288,0 -4.366884,1.9909 -4.366884,4.4209 l 0,20.3367 -40.175325,0 0,-20.3367 c 0,-2.4296 -1.963278,-4.4209 -4.3668833,-4.4209 z m 0,1.7683 c 1.460212,0 2.6201293,1.1777 2.6201293,2.6526 l 0,21.2208 0,0.8842 0.873378,0 41.922077,0 0.873377,0 0,-0.8842 0,-21.2208 c 0,-1.4744 1.162092,-2.6526 2.620131,-2.6526 1.458037,0 2.620128,1.1782 2.620128,2.6526 l 0,24.7576 c 0,1.4767 -1.161565,2.6526 -2.620128,2.6526 l -48.9090923,0 c -1.4607388,0 -2.6201306,-1.1755 -2.6201306,-2.6526 l 0,-24.7576 c 0,-1.4749 1.1599186,-2.6526 2.6201306,-2.6526 z"
+       id="path5346"
+       inkscape:connector-curvature="0" />
+  </g>
+</svg>

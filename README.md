@@ -1,0 +1,1 @@
+UFOCR (User-Friendly OCR).

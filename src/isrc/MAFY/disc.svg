@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="128"
+   height="128"
+   id="svg3773"
+   version="1.1"
+   inkscape:version="0.48.3.1 r9886"
+   sodipodi:docname="disc.svg"
+   inkscape:export-filename="/home/parallels/Downloads/yagf-0.9.4/src/isrc/MAFY/disc.png"
+   inkscape:export-xdpi="31.509741"
+   inkscape:export-ydpi="31.509741">
+  <title
+     id="title4583">Disc</title>
+  <defs
+     id="defs3775" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="2"
+     inkscape:cx="119.73985"
+     inkscape:cy="17.477794"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1423"
+     inkscape:window-height="906"
+     inkscape:window-x="65"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4293"
+       empspacing="5"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata3778">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Disc</dc:title>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Nastya Bekassova</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <cc:license
+           rdf:resource="www.gnu.org/copyleft/gpl.html" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-924.36218)">
+    <path
+       id="path4291-7-3"
+       style="fill:#000092;fill-opacity:0;stroke:#000092;stroke-width:2.648;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 72.098125,987.8713 c 0.211,4.8025 -5.63269,8.24 -9.74182,5.7749 -4.28188,-2.0638 -4.60976,-8.754 -0.54393,-11.2209 4.17031,-2.9849 10.43067,0.2925 10.28575,5.446 z m 6.597189,0 c 0.22452,7.5445 -7.081899,14.0632 -14.543439,13.0673 -7.49613,-0.5345 -13.31992,-8.381 -11.57728,-15.7145 1.31588,-7.4162 9.73769,-12.3334 16.84992,-9.8975 5.39483,1.5996 9.353249,6.9017 9.270799,12.5447 z m 19.948661,0 c 0.18099,13.0652 -8.228761,25.6263 -20.242291,30.5455 -11.957199,5.2089 -26.815049,2.4334 -36.053609,-6.825 -9.23911,-8.7859 -12.49859,-23.173 -7.97908,-35.1188 4.39405,-12.4206 16.73854,-21.4065 29.85075,-21.7281 12.8777,-0.6717 25.664429,7.0301 31.155959,18.7542 2.155281,4.4603 3.274931,9.4146 3.268271,14.3722 z"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/parallels/Downloads/yagf-0.9.4/src/isrc/MAFY/path4489-3.png"
+       inkscape:export-xdpi="31.313267"
+       inkscape:export-ydpi="31.313267" />
+    <path
+       style="fill:#c4d55e;fill-opacity:0.40182651;stroke:#00d778;stroke-width:0.022164;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 96.322694,1002.5471 c 5.413956,-10.7548 4.282816,-24.5367 -3.1281,-34.0908 -5.59439,2.087 -11.04616,4.8083 -16.575649,7.1588 -1.42567,0.521 -3.17485,1.1257 -0.83251,2.1511 4.813609,3.9426 6.081839,11.2788 3.127949,16.6902 5.68083,2.9138 11.36067,5.8398 17.10283,8.6297 l 0.30548,-0.539 z"
+       id="path4391-7"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/parallels/Downloads/yagf-0.9.4/src/isrc/MAFY/path4489-3.png"
+       inkscape:export-xdpi="32.340683"
+       inkscape:export-ydpi="32.340683" />
+    <path
+       style="fill:#77d55e;fill-opacity:0.40182651;stroke:#00d778;stroke-width:0.022164;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 36.116045,1002.4752 c -5.41398,-10.7549 -4.28283,-24.5367 3.12807,-34.0908 5.59441,2.087 11.04617,4.8083 16.57567,7.1588 1.42567,0.521 3.17485,1.1257 0.83252,2.1511 -4.81361,3.9426 -6.08184,11.2788 -3.12796,16.6902 -5.68082,2.9138 -11.36067,5.8397 -17.10284,8.6297 l -0.30546,-0.539 0,0 z"
+       id="path4391"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/parallels/Downloads/yagf-0.9.4/src/isrc/MAFY/path4489-3.png"
+       inkscape:export-xdpi="32.340683"
+       inkscape:export-ydpi="32.340683" />
+    <path
+       id="path4489-3"
+       style="fill:none;stroke:#0000a0;stroke-width:0.428;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 49.119675,1011.1377 c 8.20356,5.969 19.71017,6.4361 28.803529,2.2772 1.55778,-0.7422 2.97776,-1.7087 4.27311,-2.8397 m -29.552219,-6.2707 c 6.55739,6.9413 18.36109,7.1217 24.980559,0.2187 l 0.42046,-0.5003 0.31264,-0.3168 M 56.110175,971.6563 c 5.03283,-5.5363 14.70237,-5.4384 19.41437,0.4596 m -22.98809,-4.2434 c 6.55741,-6.5251 18.36108,-6.6947 24.980569,-0.2057 l 0.42046,0.4704 0.31263,0.2977 m -29.408579,-4.8371 c 8.20357,-5.9691 19.71019,-6.4361 28.803539,-2.2772 1.55778,0.7421 2.97777,1.7087 4.27311,2.8396"
+       inkscape:connector-curvature="0"
+       inkscape:export-xdpi="32.340683"
+       inkscape:export-ydpi="32.340683" />
+    <path
+       style="fill:#00a800;fill-opacity:1;stroke:#00a900;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 82.806204,955.0258 14.64286,0 0.083,14.8125 z"
+       id="path3799"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccc" />
+  </g>
+</svg>

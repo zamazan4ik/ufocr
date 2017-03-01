@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="64"
+   height="64"
+   id="svg6288"
+   version="1.1"
+   inkscape:version="0.48.5 r10040"
+   sodipodi:docname="Paste.svg">
+  <title
+     id="title3138">Paste</title>
+  <defs
+     id="defs6290" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="-563.9545"
+     inkscape:cy="130.54731"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1138"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata6293">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Paste</dc:title>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Nastya Bekassova</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:rights>
+          <cc:Agent>
+            <dc:title>Nastya Bekassova</dc:title>
+          </cc:Agent>
+        </dc:rights>
+        <dc:description>More Air for YAGF icon set</dc:description>
+        <dc:source>symmetrica.net/~bekassova/</dc:source>
+        <cc:license
+           rdf:resource="http://www.gnu.org/copyleft/gpl.html" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-988.36218)">
+    <path
+       id="path3278"
+       d="m 36.315418,1009.3475 -4.357143,0 c 0,0 0.238095,-1.3333 0.357143,-2 0.09669,-0.5414 -0.190778,-0.9395 -0.608681,-1.2532 -0.417903,-0.3137 -0.934678,-0.4167 -1.359752,-0.6205 -0.618215,-0.2964 -1.319888,-0.1475 -1.981508,-0.1286 -0.617642,0.018 -1.249077,-0.06 -1.839921,0.2255 -0.424571,0.2048 -0.956138,0.4298 -1.349995,0.7411 -0.393857,0.3113 -0.695301,0.7125 -0.681572,1.2589 l 0.04464,1.7768 -4.223214,0 1.641498,1.8534 c 0.631345,0 12.65387,0 12.65387,0 z m -6,0 -4.491071,0 c 0,0 -0.265103,-1.3858 0,-1.996 0.122411,-0.2818 0.388546,-0.5146 0.673642,-0.629 1.110969,-0.446 2.428319,-0.329 3.591215,-0.045 0.247488,0.061 0.542795,0.1425 0.673643,0.3611 0.395193,0.6603 0,2.3085 0,2.3085 z m 10,6 0,-5 c 0,-0.55 -0.45,-1 -1,-1 l -2,0 -0.0013,1.4563 2,0 0.007,4.5351 -13.0057,0.01 0.06314,14.3788 -9.064478,0.078 0.126269,-18.9471 1.938208,-0.078 -0.06314,-1.4318 -2,0 c -0.55,0 -0.999962,0.45 -1,1 l -0.0013,19.4556 c -3.8e-5,0.55 0.45,1 1,1 l 9,0 2e-6,6 c 6.666667,0 13.333333,0 20,0 l 0.0013,-5.4564 0,-16 z m -1.001338,19.4564 0,-10 5,0 0,10 z m 6,-11 -7,0 0,12 -11,0 0,-19.5683 c 0,0 17.468093,0.059 17.848238,0.035 -0.07145,0.5335 0.151762,7.5335 0.151762,7.5335 z"
+       inkscape:connector-curvature="0"
+       style="fill:#000092;fill-opacity:1"
+       sodipodi:nodetypes="ccsssassscccccccaaaacccssccccccccccsssscccccccccccccccccc" />
+  </g>
+</svg>

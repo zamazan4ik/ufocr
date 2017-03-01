@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="64"
+   height="64"
+   id="svg6288"
+   version="1.1"
+   inkscape:version="0.48.3.1 r9886"
+   sodipodi:docname="Rotateatminus90.svg">
+  <title
+     id="title3223">Rotate at -90</title>
+  <defs
+     id="defs6290">
+    <linearGradient
+       id="linearGradient3783">
+      <stop
+         style="stop-color:#a3bed0;stop-opacity:1;"
+         offset="0"
+         id="stop3785" />
+      <stop
+         style="stop-color:#487092;stop-opacity:0;"
+         offset="1"
+         id="stop3787" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3783"
+       id="linearGradient3789"
+       x1="50"
+       y1="49"
+       x2="33.838833"
+       y2="33.54594"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="2.8284271"
+     inkscape:cx="-19.323053"
+     inkscape:cy="-29.248917"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1423"
+     inkscape:window-height="906"
+     inkscape:window-x="65"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid2986" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata6293">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Rotate at -90</dc:title>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Nastya Bekassova</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:rights>
+          <cc:Agent>
+            <dc:title>Nastya Bekassova</dc:title>
+          </cc:Agent>
+        </dc:rights>
+        <dc:description>More Air for YAGF icon set</dc:description>
+        <dc:source>symmetrica.net/~bekassova/</dc:source>
+        <cc:license
+           rdf:resource="http://www.gnu.org/copyleft/gpl.html" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-988.36218)">
+    <path
+       style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#000092;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans"
+       d="m 42.90569,1018.0607 -5.64384,0.087 0.31044,9.7813 3.29028,0.064 1.21875,2e-4 -0.84393,0.8748 -5.79196,7.9357 -0.37507,0.3437 -0.34368,-0.3439 -6.025336,-8.0944 -0.733084,-0.9082 1.1875,2e-4 3.306045,0.127 c 0,0 -0.132777,-8.4689 -0.199025,-12.7033 -0.0098,-0.6264 -0.04713,-1.0383 -0.0157,-1.7229 0.01877,-0.4088 0.747136,-0.4879 0.913573,-0.4876 3.301312,0.01 9.903942,0.015 9.903942,0.015 0.0105,0.096 1.52976,0.9903 1.69809,1.1202 l -9.462306,-0.088 -2.037684,0.088 0.06636,1.2628 0.243138,13.0185 0.0311,0.5 -0.53125,-1e-4 -2.69778,-0.1268 4.72761,6.9085 4.57295,-6.7172 -2.60278,-0.064 -0.46875,-10e-5 -0.0311,-0.4687 c 0,0 -0.188252,-7.1231 -0.31024,-10.7814 -0.0066,-0.1992 -0.01111,-0.1821 0.0443,-0.3545 0.05976,-0.1859 0.302837,-0.1715 0.455806,-0.1765 2.661837,-0.083 8,0 8,0 z"
+       id="path3192"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccccccccccccsssccccccccccccccssscc" />
+    <path
+       id="path2988"
+       transform="translate(0,988.36218)"
+       style="fill:none;stroke:#5d5a5f;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="M 55,54 19.83969,54 19.928078,19.30936 34.941942,19.132583 50,19 l 5,5 z"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccccc" />
+    <path
+       style="fill:none;stroke:#4b4848;stroke-width:0.50000000000000000;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 50,19 0,5 5,0 0,0"
+       id="path2990"
+       inkscape:connector-curvature="0"
+       transform="translate(0,988.36218)" />
+    <path
+       style="fill:url(#linearGradient3789);fill-opacity:1;stroke:#505050;stroke-width:0.16599998999999999;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:0.59360729000000001;stroke-dasharray:none"
+       d="m 20.193243,36 0,-16.337088 L 35,19.353553 50,19 l 0,3 0,2 2,0 3,0 0,15 0,15 -18,0 -17.116116,0 z m 15.149586,12.594828 c 0.105725,-0.111719 1.451433,-1.932813 2.990462,-4.046875 1.53903,-2.114063 3.018149,-4.086302 3.286933,-4.382755 l 0.488698,-0.539005 -2.24815,-0.04617 c -1.236483,-0.02539 -2.24925,-0.05003 -2.250595,-0.05475 -0.0066,-0.02318 -0.30708,-9.230966 -0.308459,-9.452483 l -0.0016,-0.256404 2.823787,-0.04573 2.823786,-0.04573 0.941839,-0.479114 0.941838,-0.479113 -3.96875,-0.01821 c -2.182813,-0.01002 -4.089772,-10e-4 -4.237687,0.01995 -0.200459,0.02845 -0.28595,0.07551 -0.33576,0.184828 -0.05991,0.13148 0.0784,6.259655 0.238767,10.57906 l 0.04003,1.078125 0.856354,0 c 0.470995,0 1.151187,0.01804 1.511538,0.04009 l 0.655184,0.04009 -2.223586,3.270917 c -1.222973,1.799004 -2.240526,3.27159 -2.26123,3.272412 -0.05484,0.0022 -4.751349,-6.728775 -4.717882,-6.762242 0.01552,-0.01552 0.828508,0.03865 1.658099,0.07992 0.829591,0.04124 1.522,0.06133 1.538687,0.04465 0.03679,-0.03679 -0.201668,-13.105335 -0.257018,-14.085937 l -0.03917,-0.693865 0.987817,-0.04518 c 0.5433,-0.02485 3.140346,-0.02685 5.771212,-0.0044 l 4.783395,0.04073 -0.625,-0.402215 C 43.862618,25.1842 43.460482,24.914218 43.312733,24.805457 l -0.268634,-0.197746 -5.137616,0.01703 c -4.872897,0.01615 -5.149727,0.02305 -5.372668,0.133848 -0.150973,0.07503 -0.250238,0.175635 -0.277506,0.28125 -0.02335,0.09044 0.0061,3.381353 0.06551,7.313146 0.05938,3.931792 0.09988,7.156745 0.09001,7.166561 -0.0099,0.0098 -0.566391,-0.0067 -1.236703,-0.03666 -0.663472,0.01107 -1.153769,-0.05432 -2.248436,-0.05719 l -0.963395,-0.0027 0.377571,0.453125 c 0.578969,0.694824 1.503699,2.039183 3.395056,4.515625 1.676266,2.194813 3.024071,4.139844 3.113142,4.234375 0.206719,0.21939 0.25975,0.216034 0.493769,-0.03125 z"
+       id="path2996"
+       inkscape:connector-curvature="0"
+       transform="translate(0,988.36218)"
+       sodipodi:nodetypes="ccccccccccccccsscscccccccsccscsscscsccscsccsscssssccscssscc"
+       inkscape:export-filename="/home/parallels/Downloads/yagf-0.9.4/src/isrc/MAFY/rotate90CCW.png"
+       inkscape:export-xdpi="61.217171"
+       inkscape:export-ydpi="61.217171" />
+    <path
+       style="fill:#4870a0;fill-opacity:0.63470321;stroke:#505050;stroke-width:0.1655;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:0.90867579;stroke-dasharray:none"
+       d="m 50,22 0,-3 3,3 c 0.859117,0.859117 1.254792,0.782812 2,2 0.324878,0.530641 -2.140625,0 -3,0 l -2,0 z"
+       id="path3770"
+       inkscape:connector-curvature="0"
+       transform="translate(0,988.36218)"
+       sodipodi:nodetypes="ccssscc" />
+  </g>
+</svg>
