@@ -81,7 +81,7 @@ signals:
     void error(QProcess::ProcessError);
     void error(const QString &text);
     void blockRecognized(int n);
-    void readOutput(QString text, QChar separator = QChar::fromAscii('\n'));
+    void readOutput(QString text, QChar separator = QChar::fromLatin1('\n'));
 public slots:
     void onFinished(int i)
     {
@@ -126,10 +126,10 @@ private: // functions
         }
         textFile.close();
         textData = textData.replace(" ,", ",");
-        QChar sep = QChar::fromAscii(']');
+        QChar sep = QChar::fromLatin1(']');
         if (pc->blockCount() > blockIndex) {
             if (pc->getBlock(blockIndex).isTableCell())
-                sep = QChar::fromAscii('|');
+                sep = QChar::fromLatin1('|');
         }
         emit readOutput(textData, sep);
     }

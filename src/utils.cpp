@@ -45,11 +45,11 @@ QString extractFilePath(const QString &path)
 
 QString extractDigits(const QString &fn)
 {
-    bool extracting = FALSE;
+    bool extracting = false;
     QString result = "";
     for (int i = 0; i < fn.size(); i++)
         if ((fn.at(i) >= '0') && (fn.at(i) <= '9')) {
-            extracting = TRUE;
+            extracting = true;
             result += fn.at(i);
         } else {
             if (extracting) break;

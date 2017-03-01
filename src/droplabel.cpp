@@ -26,6 +26,7 @@
 #include <QtDebug>
 #include <QListWidget>
 #include <QList>
+#include <QMimeData>
 
 DropLabel::DropLabel(QWidget *parent, Qt::WindowFlags f) : QLabel(parent, f)
 {

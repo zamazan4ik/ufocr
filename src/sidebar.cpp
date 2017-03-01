@@ -27,6 +27,7 @@
 #include <QFileInfo>
 #include <QDrag>
 #include <QSize>
+#include <QMimeData>
 
 
 SideBar::SideBar(QWidget *parent) :

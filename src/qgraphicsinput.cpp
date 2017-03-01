@@ -363,7 +363,7 @@ void QGraphicsInput::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 void QGraphicsInput::leftMouseRelease(qreal x, qreal y)
 {
-    QGraphicsItem *it = this->itemAt(x, y);
+    QGraphicsItem *it = this->itemAt(x, y, QTransform());
     if (it) {
         if (it->data(1).toString() == "block") {
             QGraphicsRectItem *r = (QGraphicsRectItem *) it;
@@ -403,7 +403,7 @@ void QGraphicsInput::leftMouseRelease(qreal x, qreal y)
 
 void QGraphicsInput::rightMouseRelease(qreal x, qreal y)
 {
-    QGraphicsItem *it = this->itemAt(x, y);
+    QGraphicsItem *it = this->itemAt(x, y, QTransform());
     if (it) {
         if (it->data(1).toString() == "block") {
             m_CurrentBlockRect = (QGraphicsRectItem *) it;

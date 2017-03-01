@@ -273,7 +273,7 @@ bool QIPGrayscaleImage::save(const QString &fileName, bool overwrite)
     bool res = f.open(QIODevice::WriteOnly);
     if (!res)
         return false;
-    f.write(fheader.toAscii(), 4);
+    f.write(fheader.toLatin1(), 4);
     f.write((char*) &hx, 2);
     f.write((char*) &wx, 2);
     f.write((char*)data.data(), wx*hx);
@@ -292,7 +292,7 @@ bool QIPGrayscaleImage::saveGrayscale(const QImage &image, const QString &fileNa
         return false;
     if(!f.open(QIODevice::WriteOnly))
         return false;
-    f.write(fheader.toAscii(), 4);
+    f.write(fheader.toLatin1(), 4);
     f.write((char*) &hx, 2);
     f.write((char*) &wx, 2);
     quint8 * d = new quint8[wx];
@@ -527,7 +527,7 @@ QPoint QIPGrayscaleImage::loadHeader(QFile *file)
     QPoint res(0,0);
     char header[5] = {0};
     file->read(header, 4);
-    if (QString::fromAscii(header) != fheader)
+    if (QString::fromLatin1(header) != fheader)
         return res;
     quint16 wx, hx;
     file->read((char*) &hx, 2);

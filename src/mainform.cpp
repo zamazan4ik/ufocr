@@ -69,7 +69,6 @@
 #include <QEvent>
 #include <QCursor>
 #include <QLineEdit>
-#include <QGtkStyle>
 #include <QToolTip>
 #include <QPoint>
 #include <QAction>
@@ -99,7 +98,7 @@ MainForm::MainForm(QWidget *parent): QMainWindow(parent)
     connect(label, SIGNAL(pageRemoved(int)), pages, SLOT(pageRemoved(int)));
 
     statusBar()->show();
-    useXSane = TRUE;
+    useXSane = true;
     scanner = NULL;
     //rotation = 0;
     m_menu = new QMenu(graphicsView);
@@ -1028,7 +1027,7 @@ QString MainForm::getFileNameToSaveImage(QString &format)
     filters << jpegFilter << pngFilter;
     QFileDialog dialog(this,
                        trUtf8("Save Image"), settings->getLastOutputDir());
-    dialog.setFilters(filters);
+    dialog.setNameFilters(filters);
     dialog.setAcceptMode(QFileDialog::AcceptSave);
     dialog.setDefaultSuffix("jpg");
     if (dialog.exec()) {

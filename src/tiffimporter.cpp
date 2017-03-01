@@ -61,7 +61,7 @@ void TiffImporter::exec()
         if (!ir.read().isNull())
             files.append(tiffName);
         else {
-            const QString ppmFile = QString::fromAscii("input.ppm");
+            const QString ppmFile = QString::fromLatin1("input.ppm");
             if (dir.exists(ppmFile)) {
                 dir.remove(ppmFile);
                 QProcess proc;

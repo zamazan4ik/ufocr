@@ -139,7 +139,7 @@ void TextEditor::saveHtml(QFile *file)
     text.replace(".bmp]", ".bmp>");
     QDir dir(workingDir+"output_files");
     dir.rename(workingDir+"output_files", newDir);*/
-    file->write(text.toAscii());
+    file->write(text.toLatin1());
 }
 
 void TextEditor::globalReplace(const QString &what, const QString &with)

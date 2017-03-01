@@ -9,23 +9,25 @@ endif()]]
 set(CMAKE_MODULE_PATH "/home/zamazan4ik/Soft/Qt5.6.2/5.6/gcc_64/lib/cmake/")
 set(Qt5_DIR "/home/zamazan4ik/Soft/Qt5.6.2/5.6")
 
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
 #set (LIB_PATH_SUFFIX )
 
-#if (CMAKE_SIZEOF_VOID_P EQUAL 8)
-#    if (EXISTS "${CMAKE_INSTALL_PREFIX}lib64")
-#        set(LIB_PATH_SUFFIX 64)
-#    endif (EXISTS "${CMAKE_INSTALL_PREFIX}lib64")
-#    set_property (GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS TRUE)
-#endif(CMAKE_SIZEOF_VOID_P EQUAL 8)
-#add_definitions( -DPRILIBRARY_PATH="${CMAKE_INSTALL_PREFIX}lib${LIB_PATH_SUFFIX}/yagf/")
+if (CMAKE_SIZEOF_VOID_P EQUAL 8)
+    if (EXISTS "${CMAKE_INSTALL_PREFIX}lib64")
+        set(LIB_PATH_SUFFIX 64)
+    endif (EXISTS "${CMAKE_INSTALL_PREFIX}lib64")
+    set_property (GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS TRUE)
+endif(CMAKE_SIZEOF_VOID_P EQUAL 8)
+add_definitions( -DPRILIBRARY_PATH="${CMAKE_INSTALL_PREFIX}lib${LIB_PATH_SUFFIX}/yagf/")
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 
 # following 2 lines define where interface translations will be installed
-#set(QML_DESTINATION share/yagf/translations/)
-#set(QML_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
-#add_definitions( -DQML_INSTALL_PATH="${QML_INSTALL_PREFIX}${QML_DESTINATION}")
+set(QML_DESTINATION share/yagf/translations/)
+set(QML_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
+add_definitions( -DQML_INSTALL_PATH="${QML_INSTALL_PREFIX}${QML_DESTINATION}")
 
 set(SOURCES src/main.cpp src/mainform.cpp src/qgraphicsinput.cpp src/utils.cpp src/qxtunixsignalcatcher.cpp src/spellchecker.cpp
     src/SkewAnalysis.cpp src/core/rotationcropper.cpp src/qxtgraphicsproxywidget.cpp src/popplerdialog.cpp src/pdfextractor.cpp src/pdf2ppt.cpp src/ghostscr.cpp
@@ -57,7 +59,7 @@ set(QM_FILES #[[${CMAKE_BINARY_DIR}/yagf_ru.qm ${CMAKE_BINARY_DIR}/yagf_fr.qm]])
 
 add_definitions(-Wall -g)
 
-find_package(Qt5 REQUIRED Core Gui Widgets)
+find_package(Qt5 REQUIRED Core Gui Widgets Concurrent)
 find_package(ASPELL REQUIRED)
 include_directories(${ASPELL_INCLUDE_DIR} ${Qt5_INCLUDE_DIR})
 
@@ -67,11 +69,11 @@ include_directories(${ASPELL_INCLUDE_DIR} ${Qt5_INCLUDE_DIR})
 #qt5_add_resources(yagf_RCC_SRCS ${yagf_RCCS})
 
 include_directories( ${CMAKE_BINARY_DIR} ${PROJECT_SOURCE_DIR}/src)
-add_executable(yagf ${SOURCES} ${UI_HEADERS} ${MOC_SRCS} ${yagf_RCC_SRCS} ${QM_FILES})
+add_executable(yagf ${SOURCES} ${MOC_HEADERS} ${UI_HEADERS} ${MOC_SRCS} ${yagf_RCC_SRCS} ${QM_FILES})
 add_library(xspreload SHARED ${INT_SOURCES})
 
 target_link_libraries(xspreload ${CMAKE_DL_LIBS})
-target_link_libraries(yagf ${QT_LIBRARIES} ${ASPELL_LIBRARIES})
+target_link_libraries(yagf Qt5::Widgets Qt5::Gui Qt5::Concurrent Qt5::Core ${ASPELL_LIBRARIES})
 
 add_custom_target(translations DEPENDS ${QM_FILES})
 #qt5_add_translation(${CMAKE_BINARY_DIR}/yagf_ru.qm ${PROJECT_SOURCE_DIR}/src/mainform.cpp ${PROJECT_SOURCE_DIR}/src/popplerdialog.cpp ${MOC_SRCS} ${UI_HEADERS} ${PROJECT_SOURCE_DIR}/src/translations/yagf_ru.ts)

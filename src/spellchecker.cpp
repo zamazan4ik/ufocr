@@ -33,8 +33,8 @@ SpellChecker::SpellChecker(QTextEdit *textEdit): m_textEdit(textEdit)
     //m_cursor= new QTextCursor(m_textEdit->document());
     spell_config1 = new_aspell_config();
     spell_config2 = new_aspell_config();
-    aspell_config_replace(spell_config1, "lang", m_lang1.toAscii());
-    aspell_config_replace(spell_config2, "lang", m_lang2.toAscii());
+    aspell_config_replace(spell_config1, "lang", m_lang1.toLatin1());
+    aspell_config_replace(spell_config2, "lang", m_lang2.toLatin1());
     aspell_config_replace(spell_config1, "encoding", "utf-8");
     aspell_config_replace(spell_config2, "encoding", "utf-8");
     m_map = new StringMap();
@@ -174,8 +174,8 @@ void SpellChecker::setLanguage(const QString &lang)
         m_lang2 = "en";
 
     }
-    aspell_config_replace(spell_config1, "lang", m_lang1.toAscii());
-    aspell_config_replace(spell_config2, "lang", m_lang2.toAscii());
+    aspell_config_replace(spell_config1, "lang", m_lang1.toLatin1());
+    aspell_config_replace(spell_config2, "lang", m_lang2.toLatin1());
     AspellCanHaveError *possible_err = new_aspell_speller(spell_config1);
     spell_checker1 = 0;
     if (aspell_error_number(possible_err) == 0)
