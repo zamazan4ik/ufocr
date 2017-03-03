@@ -1,19 +1,19 @@
 /*
-    UFOCR - User-Friendly OCR
-    Copyright (C) 2009-2013 Alexander Zaitsev <zamazan4ik@tut.by>
+   UFOCR - User-Friendly OCR
+   Copyright (C) 2017 Alexander Zaitsev <zamazan4ik@tut.by>
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
@@ -183,7 +183,7 @@ MainForm::MainForm(QWidget* parent) : QMainWindow(parent)
 
     this->sideBar->show();
 
-    connect(actionRecognize_All_Pages, SIGNAL(triggered()), this, SLOT(recognizeAll()));
+    connect(actionRecognize_All_Pages, SIGNAL(triggered()), this, SLOT(recognize()));
 
     QPixmap pm;
     pm.load(":/align.png");
@@ -509,6 +509,8 @@ void MainForm::finishedPDF()
     settings->setAutoDeskew(globalDeskew);
 }
 
+#include <QDebug>
+
 void MainForm::loadImage()
 {
     if (!GlobalLock::instance()->lock())
@@ -524,6 +526,7 @@ void MainForm::loadImage()
     {
         QStringList fileNames;
         fileNames = dialog.selectedFiles();
+        qDebug() << fileNames;
         settings->setLastDir(dialog.directory().path());
                 foreach(QString fn, fileNames)
             {
@@ -791,8 +794,8 @@ void MainForm::showAboutDlg()
 {
     QPixmap icon;
     icon.load(":/yagf.png");
-    QMessageBox aboutBox(QMessageBox::NoIcon, trUtf8("About YAGF"),
-                         trUtf8("<p align=\"center\"><b>YAGF - Yet Another Graphical Front-end for cuneiform and tesseract OCR engines</b></p><p align=\"center\">Version %1</p> <p align=\"center\">Ⓒ 2009-2014 Alexander Zaitsev</p> This is a free software distributed under GPL v3. Visit <a href=\"http://symmetrica.net/cuneiform-linux/yagf-en.html\">http://symmetrica.net/cuneiform-linux/yagf-en.html</a> for more details.").arg(
+    QMessageBox aboutBox(QMessageBox::NoIcon, trUtf8("About UFOCR"),
+                         trUtf8("<p align=\"center\"><b>UFOCR - User-Friendly OCR</b></p><p align=\"center\">Version %1</p> <p align=\"center\">Ⓒ 2017 Alexander Zaitsev</p> This is a free software distributed under GPL v3. Visit <a href=\"https://github.com/ZaMaZaN4iK/ufocr\">https://github.com/ZaMaZaN4iK/ufocr</a> for more details.").arg(
                                  version), QMessageBox::Ok);
     aboutBox.setIconPixmap(icon);
     QList<QLabel*> labels = aboutBox.findChildren<QLabel*>();
@@ -807,7 +810,7 @@ void MainForm::showAboutDlg()
 
 void MainForm::showHelp()
 {
-    QDesktopServices::openUrl(QUrl(trUtf8("http://symmetrica.net/cuneiform-linux/yagf-en.html")));
+    QDesktopServices::openUrl(QUrl(trUtf8("https://github.com/ZaMaZaN4iK/ufocr")));
 }
 
 void MainForm::readyRead(int sig)

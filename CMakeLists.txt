@@ -1,15 +1,24 @@
-project(ufocr C CXX)
 cmake_minimum_required(VERSION 2.6.0)
-#[[set(QT_QMAKE_EXECUTABLE /usr/bin/qmake)
-if (NOT DEFINED  ${CMAKE_INSTALL_PREFIX})
-set(CPACK_INSTALL_PREFIX /usr/)
-set (CMAKE_INSTALL_PREFIX /usr/)
-endif()]]
+project(ufocr C CXX)
+
+#set(QT_QMAKE_EXECUTABLE /usr/bin/qmake)
+#if (NOT DEFINED  ${CMAKE_INSTALL_PREFIX})
+#set(CPACK_INSTALL_PREFIX /usr/)
+#set (CMAKE_INSTALL_PREFIX /usr/)
+#endif()
 
 set(CMAKE_MODULE_PATH "/home/zamazan4ik/Soft/Qt5.6.2/5.6/gcc_64/lib/cmake/")
 set(Qt5_DIR "/home/zamazan4ik/Soft/Qt5.6.2/5.6")
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+set(CMAKE_CXX_STANDARD 14)
+
+set(TRANSLATIONS
+        translations/yagf_ru.ts
+        translations/yagf_fr.ts
+        translations/yagf_uk.ts
+        )
 
 #set (LIB_PATH_SUFFIX )
 
@@ -54,19 +63,27 @@ set(MOC_HEADERS src/mainform.h src/qxtunixsignalcatcher.h src/qxtunixscinternal.
 
 set(yagf_RCCS src/yagf.qrc)
 
-set(QM_FILES #[[${CMAKE_BINARY_DIR}/yagf_ru.qm ${CMAKE_BINARY_DIR}/yagf_fr.qm]])
+set(QM_FILES ${CMAKE_BINARY_DIR}/yagf_uk.qm ${CMAKE_BINARY_DIR}/yagf_ru.qm ${CMAKE_BINARY_DIR}/yagf_fr.qm)
+
+set(CMAKE_BUILD_TYPE Debug)
+
+#Test env variables
+message(STATUS ${CMAKE_BINARY_DIR})
+message(STATUS ${PROJECT_SOURCE_DIR})
 
 
 add_definitions(-Wall -g)
 
+find_package(Qt5LinguistTools)
 find_package(Qt5 REQUIRED Core Gui Widgets Concurrent)
 find_package(ASPELL REQUIRED)
+
 include_directories(${ASPELL_INCLUDE_DIR} ${Qt5_INCLUDE_DIR})
 
 #include(${QT_USE_FILE})
 #qt5_wrap_ui(UI_HEADERS ${UIS})
 #qt5_wrap_cpp(MOC_SRCS ${MOC_HEADERS})
-#qt5_add_resources(yagf_RCC_SRCS ${yagf_RCCS})
+qt5_add_resources(yagf_RCC_SRCS ${yagf_RCCS})
 
 include_directories( ${CMAKE_BINARY_DIR} ${PROJECT_SOURCE_DIR}/src)
 add_executable(yagf ${SOURCES} ${MOC_HEADERS} ${UI_HEADERS} ${MOC_SRCS} ${yagf_RCC_SRCS} ${QM_FILES})
@@ -76,9 +93,9 @@ target_link_libraries(xspreload ${CMAKE_DL_LIBS})
 target_link_libraries(yagf Qt5::Widgets Qt5::Gui Qt5::Concurrent Qt5::Core ${ASPELL_LIBRARIES})
 
 add_custom_target(translations DEPENDS ${QM_FILES})
-#qt5_add_translation(${CMAKE_BINARY_DIR}/yagf_ru.qm ${PROJECT_SOURCE_DIR}/src/mainform.cpp ${PROJECT_SOURCE_DIR}/src/popplerdialog.cpp ${MOC_SRCS} ${UI_HEADERS} ${PROJECT_SOURCE_DIR}/src/translations/yagf_ru.ts)
-#qt5_add_translation(${CMAKE_BINARY_DIR}/yagf_fr.qm ${PROJECT_SOURCE_DIR}/src/mainform.cpp ${PROJECT_SOURCE_DIR}/src/popplerdialog.cpp ${MOC_SRCS} ${UI_HEADERS} ${PROJECT_SOURCE_DIR}/src/translations/yagf_fr.ts)
-#QT4_CREATE_TRANSLATION(yagf_ru.qm src/mainform.cpp ${MOC_SRCS} ${UI_HEADERS} src/yagf_ru.ts)
+qt5_add_translation(${CMAKE_BINARY_DIR}/yagf_ru.qm ${PROJECT_SOURCE_DIR}/src/mainform.cpp ${PROJECT_SOURCE_DIR}/src/popplerdialog.cpp ${MOC_SRCS} ${UI_HEADERS} ${PROJECT_SOURCE_DIR}/src/translations/yagf_ru.ts)
+qt5_add_translation(${CMAKE_BINARY_DIR}/yagf_fr.qm ${PROJECT_SOURCE_DIR}/src/mainform.cpp ${PROJECT_SOURCE_DIR}/src/popplerdialog.cpp ${MOC_SRCS} ${UI_HEADERS} ${PROJECT_SOURCE_DIR}/src/translations/yagf_fr.ts)
+qt5_add_translation(${CMAKE_BINARY_DIR}/yagf_uk.qm ${PROJECT_SOURCE_DIR}/src/mainform.cpp ${PROJECT_SOURCE_DIR}/src/popplerdialog.cpp ${MOC_SRCS} ${UI_HEADERS} ${PROJECT_SOURCE_DIR}/src/translations/yagf_uk.ts)
 #set(CMAKE_INSTALL_PREFIX /usr/)
 
 #install(TARGETS yagf xspreload RUNTIME DESTINATION bin LIBRARY DESTINATION lib${LIB_PATH_SUFFIX}/yagf)

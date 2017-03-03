@@ -1,5 +1,6 @@
-/* UFOCR - User-Friendly OCR
-   Copyright (C) 2009-2015 Alexander Zaitsev <zamazan4ik@tut.by>
+/*
+   UFOCR - User-Friendly OCR
+   Copyright (C) 2017 Alexander Zaitsev <zamazan4ik@tut.by>
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by

@@ -1,19 +1,20 @@
 /*
-    UFOCR - User-Friendly OCRs
-    Copyright (C) 2009-2014 Alexander Zaitsev <zamazan4ik@tut.by>
+   UFOCR - User-Friendly OCR
+   Copyright (C) 2017 Alexander Zaitsev <zamazan4ik@tut.by>
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 */
 
 #include "settings.h"
@@ -122,6 +123,18 @@ QIPGrayscaleImage::QIPGrayscaleImage(const QIPGrayscaleImage& I) : data(I.data.d
 {
     w = I.w;
     h = I.h;
+}
+
+QIPGrayscaleImage& QIPGrayscaleImage::operator=(const QIPGrayscaleImage& I)// : data(I.data.data(), deallocator<quint8>)
+{
+    if(this == &I)
+    {
+        return *this;
+    }
+    w = I.w;
+    h = I.h;
+    data = I.data;
+    return *this;
 }
 
 QIPGrayscaleImage::QIPGrayscaleImage(const QString& ygfFileName)
@@ -286,6 +299,7 @@ void QIPGrayscaleImage::smoother()
 
 void QIPGrayscaleImage::quantisize()
 {
+    //TODO: REWRITE
     uint dataSize = w * h;
     quint8* d = (quint8*) data.data();
     for (uint i = 0; i < dataSize; i++)
@@ -300,7 +314,6 @@ void QIPGrayscaleImage::quantisize()
 
 bool QIPGrayscaleImage::save(const QString& fileName, bool overwrite)
 {
-
     quint16 hx = h;
     quint16 wx = w;
     QFile f(fileName);
