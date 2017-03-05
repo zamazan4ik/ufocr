@@ -1217,7 +1217,9 @@ QIPBlackAndWhiteImage QIPGrayscaleImage::otsuBinarizeMA() const
     quint32 sum;
     QIPBlackAndWhiteImage result(w, h);
     if (w * h < 4)
-    { return result; }
+    {
+        return result;
+    }
     quint8 threshold = otsuThreshold();
     memcpy((void*) result.data.get(), (void*) data.get(), w * h);
     quint8* d = result.data.get();
@@ -1233,9 +1235,13 @@ QIPBlackAndWhiteImage QIPGrayscaleImage::otsuBinarizeMA() const
         for (int x = 0; x < w; x++)
         {
             if (lineOut[x] > threshold)
-            { lineOut[x] = 1; }
+            {
+                lineOut[x] = 1;
+            }
             else
-            { lineOut[x] = 0; }
+            {
+                lineOut[x] = 0;
+            }
         }
     }
     return result;
@@ -1252,9 +1258,13 @@ QIPBlackAndWhiteImage QIPGrayscaleImage::gatosBinarize() const
         quint8* line = result.scanLine(y);
         for (int x = 0; x < w; x++)
             if (line[x] == 0)
-            { line[x] = 1; }
+            {
+                line[x] = 1;
+            }
             else
-            { line[x] = 0; }
+            {
+                line[x] = 0;
+            }
 
     }
 
@@ -1272,9 +1282,13 @@ QIPBlackAndWhiteImage QIPGrayscaleImage::maxEntropyBinarize() const
         for (int x = 0; x < w; x++)
         {
             if (line[x] >= threshold)
-            { lineOut[x] = 1; }
+            {
+                lineOut[x] = 1;
+            }
             else
-            { lineOut[x] = 0; }
+            {
+                lineOut[x] = 0;
+            }
         }
     }
     return result;
@@ -1319,7 +1333,9 @@ QIPBlackAndWhiteImage QIPGrayscaleImage::iterativeBinarize() const
         quint8* line = scanLine(y);
         quint8* lineOut = result.scanLine(y);
         for (int x = 0; x < w; x++)
+        {
             lineOut[x] = line[x] < threshold ? 0 : 1;
+        }
     }
     return result;
 }
@@ -1491,9 +1507,13 @@ inline quint8 maxOfThree(quint8 v1, quint8 v2, quint8 v3)
 {
     quint8 max = v1;
     if (v2 > max)
-    { max = v2; }
+    {
+        max = v2;
+    }
     if (v3 > max)
-    { max = v3; }
+    {
+        max = v3;
+    }
     return max;
 }
 
@@ -1501,9 +1521,13 @@ inline quint8 minOfThree(quint8 v1, quint8 v2, quint8 v3)
 {
     quint8 min = v1;
     if (v2 < min)
-    { min = v2; }
+    {
+        min = v2;
+    }
     if (v3 < min)
-    { min = v3; }
+    {
+        min = v3;
+    }
     return min;
 }
 
