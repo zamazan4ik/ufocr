@@ -274,8 +274,8 @@ private:
 CCBuilder::CCBuilder(const QImage& img, QObject* parent) :
         QObject(parent)
 {
-    labels = NULL; //new quint32 [image.height()*image.width()];
-    flags = NULL; //new bool[image.height()];
+    labels = nullptr; //new quint32 [image.height()*image.width()];
+    flags = nullptr; //new bool[image.height()];
     if (img.isNull())
     {
         w = h = 0;
@@ -286,8 +286,8 @@ CCBuilder::CCBuilder(const QImage& img, QObject* parent) :
     {
         image.convertToFormat(QImage::Format_ARGB32);
     }
-    labels = NULL; //new quint32 [image.height()*image.width()];
-    flags = NULL; //new bool[image.height()];
+    labels = nullptr; //new quint32 [image.height()*image.width()];
+    flags = nullptr; //new bool[image.height()];
     //memset(flags, 0, sizeof(bool)*image.height());
     skipNext = false;
     maxlabel = 1;

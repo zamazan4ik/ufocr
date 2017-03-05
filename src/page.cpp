@@ -37,7 +37,7 @@ Page::Page(const int pid, QObject* parent) :
 {
     imageLoaded = false;
     loadedBefore = false;
-    ccbuilder = NULL;
+    ccbuilder = nullptr;
     rotation = 0;
     deskewed = false;
     preprocessed = false;
@@ -95,8 +95,9 @@ bool Page::loadFile(QString fileName, int tiled, bool loadIntoView)
     if (ccbuilder)
     {
         delete ccbuilder;
-        ccbuilder = 0;
+        ccbuilder = nullptr;
     }
+    //START WTF
     ip.loadImage(img);
     settings = Settings::instance();
     if (settings->getCropLoaded())
@@ -112,12 +113,11 @@ bool Page::loadFile(QString fileName, int tiled, bool loadIntoView)
     if (settings->getPreprocessed() && (!preprocessed))
     {
         ip.loadImage(img);
-
         ip.binarize();
         img = ip.gsImage();
         preprocessed = true;
     }
-
+    //END WTF
     if (Settings::instance()->getAutoDeskew())
     {
         if (textHorizontal())

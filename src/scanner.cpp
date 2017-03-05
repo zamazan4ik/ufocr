@@ -130,7 +130,7 @@ ScannerBase* ScannerFactory::createScannerFE(const QString& name)
     {
         return new XSaneScannerFE(preloadPath);
     }
-    return NULL;
+    return nullptr;
 }
 
 

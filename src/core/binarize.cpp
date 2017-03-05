@@ -704,7 +704,7 @@ void qr_binarize(unsigned char* _img, int _width, int _height)
    surrounding it.*/
 unsigned char* qr_binarize1(const unsigned char* _img, int _width, int _height)
 {
-    unsigned char* mask = NULL;
+    unsigned char* mask = nullptr;
     if (_width > 0 && _height > 0)
     {
         unsigned* col_sums;

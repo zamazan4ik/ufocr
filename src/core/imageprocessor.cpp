@@ -34,8 +34,8 @@ const uint m_treshold = 0;
 ImageProcessor::ImageProcessor(QObject* parent) :
         QObject(parent)
 {
-    //img = NULL;
-    //bwimg = NULL;
+    //img = nullptr;
+    //bwimg = nullptr;
 }
 
 ImageProcessor::~ImageProcessor()

@@ -24,7 +24,7 @@
 #include <QLocale>
 #include <QVariant>
 
-Settings* Settings::m_instance = NULL;
+Settings* Settings::m_instance = nullptr;
 
 Settings::Settings()
 {

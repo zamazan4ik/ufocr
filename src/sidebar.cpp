@@ -163,7 +163,7 @@ QSnippet* SideBar::getItemByName(const QString& name)
             return ((QSnippet*) item(i));
         }
     }
-    return NULL;
+    return nullptr;
 }
 
 void SideBar::select(const QString& name)
@@ -179,7 +179,7 @@ void SideBar::selectFirstFile()
 {
     if (count() == 0)
     {
-        current = NULL;
+        current = nullptr;
         return;
     }
     current = (QSnippet*) item(0);

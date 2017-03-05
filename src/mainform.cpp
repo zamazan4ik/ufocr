@@ -90,16 +90,16 @@ MainForm::MainForm(QWidget* parent) : QMainWindow(parent)
     graphicsInput = new QGraphicsInput(QRectF(0, 0, 2000, 2000), graphicsView);
 
     label->setListWidget(sideBar);
-    pdfx = NULL;
-    epd = NULL;
-    dj2pf = NULL;
+    pdfx = nullptr;
+    epd = nullptr;
+    dj2pf = nullptr;
 
     connect(sideBar, SIGNAL(pageSelected(int)), pages, SLOT(pageSelected(int)));
     connect(label, SIGNAL(pageRemoved(int)), pages, SLOT(pageRemoved(int)));
 
     statusBar()->show();
     useXSane = true;
-    scanner = NULL;
+    scanner = nullptr;
     //rotation = 0;
     m_menu = new QMenu(graphicsView);
     ifCounter = 0;
@@ -560,7 +560,7 @@ void MainForm::closeEvent(QCloseEvent* event)
     if (scanner)
     {
         delete scanner;
-        scanner = NULL;
+        scanner = nullptr;
     }
     settings->setSize(size());
     settings->setPosition(pos());
@@ -699,7 +699,7 @@ void MainForm::scanImage()
         }
         ScannerFactory* sf = new ScannerFactory();
         scanner = sf->createScannerFE("xsane");
-        if (scanner == NULL)
+        if (scanner == nullptr)
         {
             styledWarningMessage(this,
                                  trUtf8("Scanning is impossible. No scanning front-end is found.\nPlease install XSane in order to perform scanning."));

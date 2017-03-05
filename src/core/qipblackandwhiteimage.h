@@ -27,6 +27,7 @@
 #include <QImage>
 #include <QPoint>
 #include <QSharedPointer>
+#include <memory>
 
 
 /*!
@@ -142,7 +143,8 @@ public:
 
 private:
     int w, h;
-    QSharedPointer<quint8> data;
+    //QSharedPointer<quint8> data;
+    std::shared_ptr<quint8> data;
 private:
     void toImageInternal(uchar* image, const IntRect& rect, int imageWidth) const;
 

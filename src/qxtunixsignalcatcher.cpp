@@ -24,9 +24,9 @@
 #include <QMutex>
 
 
-QXtUnixSignalCatcher* QXtUnixSignalCatcher::sc = NULL;
+QXtUnixSignalCatcher* QXtUnixSignalCatcher::sc = nullptr;
 
-QMutex* QXtUnixSignalCatcher::mutex = NULL;
+QMutex* QXtUnixSignalCatcher::mutex = nullptr;
 
 QXtUnixSignalCatcher::QXtUnixSignalCatcher(QObject* parent) :
         QObject(parent)
@@ -93,9 +93,9 @@ void QXtUnixSignalCatcher::disconnectUnixSugnals()
     sigaddset(&newset, SIGUSR2);
     sigprocmask(SIG_BLOCK, &newset, 0);
     delete sci;
-    sci = NULL;
+    sci = nullptr;
     delete mutex;
-    mutex = NULL;
+    mutex = nullptr;
 }
 
 void QXtUnixSignalCatcher::doEmit(int sig_num)

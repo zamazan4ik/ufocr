@@ -1,6 +1,12 @@
 cmake_minimum_required(VERSION 2.6.0)
 project(ufocr C CXX)
 
+#set(CMAKE_C_COMPILER /usr/bin/clang)
+#set(CMAKE_CXX_COMPILER /usr/bin/clang++)
+
+set( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} " )
+
+
 #set(QT_QMAKE_EXECUTABLE /usr/bin/qmake)
 #if (NOT DEFINED  ${CMAKE_INSTALL_PREFIX})
 #set(CPACK_INSTALL_PREFIX /usr/)

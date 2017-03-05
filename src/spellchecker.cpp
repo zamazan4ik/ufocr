@@ -355,7 +355,7 @@ bool SpellChecker::checkWordSpelling(const QString& word)
 
     QByteArray ba = tmp.toUtf8();
     return (aspell_speller_check(spell_checker1, ba.data(), ba.size()) != 0) ||
-           (aspell_speller_check((spell_checker2 != NULL ? spell_checker2 : spell_checker1), ba.data(), ba.size()) !=
+           (aspell_speller_check((spell_checker2 != nullptr ? spell_checker2 : spell_checker1), ba.data(), ba.size()) !=
             0);
 }
 

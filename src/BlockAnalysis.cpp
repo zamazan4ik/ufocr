@@ -32,7 +32,7 @@ BlockAnalysis::BlockAnalysis(QPixmap* pixmap)
     badImage = m_image->isNull();
 
     this->m_coords = new QRect(m_image->rect());
-    m_blockMap = NULL;
+    m_blockMap = nullptr;
 }
 
 BlockAnalysis::~BlockAnalysis()
@@ -61,12 +61,12 @@ void BlockAnalysis::newBlock()
 
 void BlockAnalysis::deleteBlock()
 {
-    if (m_blockMap != NULL)
+    if (m_blockMap != nullptr)
     {
         for (int i = 0; i < m_coords->height() - m_coords->top(); i++)
             delete m_blockMap[i];
         delete m_blockMap;
-        m_blockMap = NULL;
+        m_blockMap = nullptr;
     }
 }
 

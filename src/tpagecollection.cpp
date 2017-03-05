@@ -29,7 +29,7 @@
 
 static QMutex lsGate;
 
-PageCollection* PageCollection::m_instance = NULL;
+PageCollection* PageCollection::m_instance = nullptr;
 
 PageCollection::PageCollection(QObject* parent) :
         QObject(parent),
@@ -98,7 +98,7 @@ Page* PageCollection::newPage(const QString& fileName, qreal rotation, bool prep
         makePageCurrent(index);
         return p;
     }
-    return NULL;
+    return nullptr;
 }
 
 
@@ -188,7 +188,9 @@ bool PageCollection::textAtNextId(int& cid, QString& text)
 QSnippet* PageCollection::snippet()
 {
     if (!cp())
-    { return NULL; }
+    {
+        return nullptr;
+    }
     QSnippet* s = new QSnippet();
     s->setPage(cp()->pageID(), cp()->originalFileName(), cp()->thumbnail());
     return s;

@@ -21,7 +21,7 @@
 #include <QAtomicInt>
 #include <QApplication>
 
-GlobalLock* GlobalLock::m_instance = NULL;
+GlobalLock* GlobalLock::m_instance = nullptr;
 
 static QAtomicInt state;
 
