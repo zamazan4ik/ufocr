@@ -31,6 +31,7 @@
 #include <QFile>
 #include <QApplication>
 #include <cmath>
+#include <iostream>
 
 Page::Page(const int pid, QObject* parent) :
         QObject(parent), selectedBlock(0, 0, 0, 0)
@@ -56,11 +57,12 @@ Page::~Page()
 
 bool Page::loadFile(QString fileName, int tiled, bool loadIntoView)
 {
-
-    if (fileName == "")
+    if (fileName.isEmpty())
     {
         if (mFileName.isEmpty())
-        { return false; }
+        {
+            return false;
+        }
         fileName = mFileName;
     }
     if (!fileName.endsWith(".ygf", Qt::CaseInsensitive))
@@ -97,7 +99,6 @@ bool Page::loadFile(QString fileName, int tiled, bool loadIntoView)
         delete ccbuilder;
         ccbuilder = nullptr;
     }
-    //START WTF
     ip.loadImage(img);
     settings = Settings::instance();
     if (settings->getCropLoaded())
@@ -107,7 +108,6 @@ bool Page::loadFile(QString fileName, int tiled, bool loadIntoView)
             ip.crop();
             setCropped(true);
         }
-
     }
     img = ip.gsImage();
     if (settings->getPreprocessed() && (!preprocessed))
@@ -117,7 +117,6 @@ bool Page::loadFile(QString fileName, int tiled, bool loadIntoView)
         img = ip.gsImage();
         preprocessed = true;
     }
-    //END WTF
     if (Settings::instance()->getAutoDeskew())
     {
         if (textHorizontal())
@@ -288,7 +287,7 @@ void Page::unload()
     if (ccbuilder)
     {
         delete ccbuilder;
-        ccbuilder = 0;
+        ccbuilder = nullptr;
     }
     img = QImage(0, 0, QImage::Format_ARGB32);
     imageLoaded = false;
@@ -774,7 +773,8 @@ int Page::pageID()
 void Page::sortBlocksInternal()
 {
     bool allBlocksNumbered = true;
-            foreach(Block b, blocks)if (b.blockNumber() == 0)
+            foreach(Block b, blocks)
+            if (b.blockNumber() == 0)
             {
                 allBlocksNumbered = false;
             }

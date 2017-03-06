@@ -49,14 +49,11 @@ PageCollection::~PageCollection()
 
 bool PageCollection::appendPage(const QString& fileName)
 {
-
-
     unloadAll();
     Page* p = new Page(++pid);
     connect(p, SIGNAL(refreshView(bool)), this, SIGNAL(loadPage(bool)));
     if (p->loadFile(fileName, 1, false))
     {
-
         pages.append(p);
         index = pages.count() - 1;
         // if (Settings::instance()->getAutoDeskew()) {
@@ -429,10 +426,10 @@ void PageCollection::reloadPage()
 
 void PageCollection::unloadAll()
 {
-            foreach(Page* p, pages)
-        {
-            p->unload();
-        }
+    foreach(Page* p, pages)
+    {
+        p->unload();
+    }
 }
 
 void PageCollection::deskew(int x1, int y1, int x2, int y2)

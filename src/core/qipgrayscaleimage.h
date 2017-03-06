@@ -255,7 +255,8 @@ protected:
 private:
     int w, h;
     //QSharedPointer<quint8> data;
-    std::shared_ptr<quint8> data;
+    QByteArray data;
+    //std::shared_ptr<quint8> data;
     enum
     {
         SharpenFilter,

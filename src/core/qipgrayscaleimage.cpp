@@ -26,6 +26,7 @@
 #include <QFile>
 #include <QFuture>
 #include <QtConcurrentRun>
+#include <future>
 
 
 #define IPRIT_MULTITHREADING
@@ -49,7 +50,8 @@ QIPGrayscaleImage::QIPGrayscaleImage(const QImage& image, GrayscaleConversion co
         new quint8[image.width() * image.height()], deallocator<quint8>)*/
 {
     qDebug() << image.width() * image.height();
-    data = std::make_shared<quint8>(image.width() * image.height());
+    //data = std::make_shared<quint8>(image.width() * image.height());
+    data.resize(image.width() * image.height());
     h = image.height();
     w = image.width();
     //data = QSharedPointer<quint8>();
@@ -84,12 +86,13 @@ QIPGrayscaleImage::QIPGrayscaleImage(const QImage& image, GrayscaleConversion co
 QIPGrayscaleImage::QIPGrayscaleImage(QIPBlackAndWhiteImage& image1, QIPBlackAndWhiteImage& image2) /*: data(
         new quint8[image1.width() * image1.height()], deallocator<quint8>)*/
 {
-    data = std::make_shared<quint8>(image1.width() * image1.height());
-    quint8* d1 = image1.data.get();
-    quint8* d2 = image1.data.get();
-    quint8* d = data.get();
-    w = image1.width();
-    h = image1.height();
+    //data = std::make_shared<quint8>(image1.width() * image1.height());
+    w = std::min(image1.width(), image2.width());
+    h = std::min(image1.height(), image2.height());
+    data.resize(w * h);
+    quint8* d1 = (quint8*)image1.data.data();
+    quint8* d2 = (quint8*)image2.data.data();
+    quint8* d = (quint8*)data.data();
     for (int i = 0; i < w * h; i++)
     {
         quint8 s = d1[i] + d2[i];
@@ -106,7 +109,6 @@ QIPGrayscaleImage::QIPGrayscaleImage(QIPBlackAndWhiteImage& image1, QIPBlackAndW
                 break;
             default:
                 break;
-
         }
     }
 }
@@ -160,8 +162,9 @@ QIPGrayscaleImage::QIPGrayscaleImage(const QString& ygfFileName)
         f.close();
         return;
     }
-    data = std::make_shared<quint8>(w * h);
-    f.read((char*) data.get(), w * h);
+    //data = std::make_shared<quint8>(w * h);
+    data.resize(w * h);
+    f.read((char*) data.data(), w * h);
     f.flush();
     f.close();
 }
@@ -254,7 +257,7 @@ void QIPGrayscaleImage::copyInternal(const IntRect& r, uint* image) const
 void QIPGrayscaleImage::darken(quint8 factor)
 {
     uint dataSize = w * h;
-    quint8* d = (quint8*) data.get();
+    quint8* d = (quint8*) data.data();
     for (uint i = 0; i < dataSize; i++)
     {
         d[i] = d[i] >> factor;
@@ -267,7 +270,7 @@ void QIPGrayscaleImage::smoother()
     const int thr = 90;
     quint8 steps[256] = {0};
     uint dataSize = w * h;
-    quint8* d = (quint8*) data.get();
+    quint8* d = (quint8*) data.data();
     for (uint i = 1; i < dataSize; i++)
     {
         quint8 diff = abs(d[i - 1] - d[i]);
@@ -307,7 +310,7 @@ void QIPGrayscaleImage::quantisize()
 {
     //TODO: REWRITE
     uint dataSize = w * h;
-    quint8* d = (quint8*) data.get();
+    quint8* d = (quint8*) data.data();
     for (uint i = 0; i < dataSize; i++)
     {
         d[i] = d[i] >> 2;
@@ -335,7 +338,7 @@ bool QIPGrayscaleImage::save(const QString& fileName, bool overwrite)
     f.write(fheader.toLatin1(), 4);
     f.write((char*) &hx, 2);
     f.write((char*) &wx, 2);
-    f.write((char*) data.get(), wx * hx);
+    f.write((char*) data.data(), wx * hx);
     f.flush();
     f.close();
     return true;
@@ -398,8 +401,8 @@ QIPGrayscaleImage QIPGrayscaleImage::copy(int x1, int x2, int y1, int y2) const
     { y1 = 0; }
 
     QIPGrayscaleImage result(x2 - x1, y2 - y1);
-    quint8* s = data.get();
-    quint8* d = result.data.get();
+    quint8* s = (quint8*)data.data();
+    quint8* d = (quint8*)result.data.data();
 
     IntRect r1;
     r1.x1 = x1;
@@ -508,7 +511,7 @@ void QIPGrayscaleImage::invert()
 
 void QIPGrayscaleImage::wienerFilter()
 {
-    qr_wiener_filter(data.get(), w, h);
+    qr_wiener_filter((quint8*)data.data(), w, h);
 }
 
 void QIPGrayscaleImage::blendImage(const QIPBlackAndWhiteImage& image)
@@ -524,8 +527,8 @@ void QIPGrayscaleImage::blendImage(const QIPBlackAndWhiteImage& image)
     blendImageInternal(r, d1, d2);
 #endif
 #ifdef IPRIT_MULTITHREADING
-    quint8* d1 = data.get();
-    quint8* d2 = image.data.get();
+    quint8* d1 = (quint8*)data.data();
+    quint8* d2 = (quint8*)image.data.data();
     IntRect r1;
     r1.x1 = 0;
     r1.y1 = 0;
@@ -613,7 +616,8 @@ void QIPGrayscaleImage::blendImageInternal(const IntRect& r, quint8* p1, const q
 
 QIPGrayscaleImage::QIPGrayscaleImage(quint32 width, quint32 height) //: data(new quint8[width * height])
 {
-    data = std::make_shared<quint8>(width * height);
+    //data = std::make_shared<quint8>(width * height);
+    data.resize(width * height);
     w = width;
     h = height;
 }
@@ -937,7 +941,7 @@ qreal QIPGrayscaleImage::variance(quint32 x1, quint32 x2, quint32 y1, quint32 y2
 
 quint8* QIPGrayscaleImage::scanLine(quint32 y) const
 {
-    return &(data.get()[y * w]);
+    return &(reinterpret_cast<quint8*>(const_cast<char*>(data.data()))[y * w]);
 }
 
 
@@ -947,8 +951,8 @@ inline quint8 AVERAGE(quint8 a, quint8 b)
 QIPGrayscaleImage QIPGrayscaleImage::scaleX2()
 {
     QIPGrayscaleImage res(width() * 2, height() * 2);
-    quint8* source = data.get();
-    quint8* target = res.data.get();
+    quint8* source = (quint8*)data.data();
+    quint8* target = (quint8*)res.data.data();
     int srcWidth = width() * height();
     int targetWidth = srcWidth * 4;
     int numPixels = srcWidth;
@@ -978,24 +982,24 @@ QIPGrayscaleImage QIPGrayscaleImage::scaleX2()
 
 quint8 QIPGrayscaleImage::pixel(quint32 x, quint32 y) const
 {
-    return data.get()[x + y * w];
+    return data.data()[x + y * w];
 }
 
 void QIPGrayscaleImage::setPixel(quint32 x, quint32 y, quint8 value)
 {
-    data.get()[x + y * w] = value;
+    data.data()[x + y * w] = value;
 }
 
 quint8 QIPGrayscaleImage::nextInColumn(quint32 x, quint32& y)
 {
     y++;
-    return data.get()[x + y * w];
+    return data.data()[x + y * w];
 }
 
 quint8 QIPGrayscaleImage::prevInColumn(quint32 x, quint32& y)
 {
     y--;
-    return data.get()[x + y * w];
+    return data.data()[x + y * w];
 }
 
 qreal QIPGrayscaleImage::cdf(QIPHistogram hist, quint8 x)
@@ -1078,7 +1082,7 @@ QIPBlackAndWhiteImage QIPGrayscaleImage::niblackSauvolaBinarize(bool sauvola) co
     int yMin = halfWindowSize;
     int xMax = w - 1 - halfWindowSize;
     int yMax = h - 1 - halfWindowSize;
-    quint8* output = result.data.get();
+    quint8* output = (quint8*)result.data.data();
     qreal sumPixelsWindow = 0;
     qreal sum2PixelsWindow = 0;
     qreal localMean = 0;
@@ -1221,8 +1225,8 @@ QIPBlackAndWhiteImage QIPGrayscaleImage::otsuBinarizeMA() const
         return result;
     }
     quint8 threshold = otsuThreshold();
-    memcpy((void*) result.data.get(), (void*) data.get(), w * h);
-    quint8* d = result.data.get();
+    memcpy((void*) result.data.data(), (void*) data.data(), w * h);
+    quint8* d = (quint8*)result.data.data();
     sum = d[0] + d[1] + d[2] + d[3] + d[4] + d[5] + d[6];
     for (int i = 3; i < w * h - 4; i++)
     {
@@ -1250,8 +1254,8 @@ QIPBlackAndWhiteImage QIPGrayscaleImage::otsuBinarizeMA() const
 QIPBlackAndWhiteImage QIPGrayscaleImage::gatosBinarize() const
 {
     QIPBlackAndWhiteImage result(w, h);
-    memcpy(result.data.get(), data.get(), w * h);
-    quint8* d = result.data.get();
+    memcpy(result.data.data(), data.data(), w * h);
+    quint8* d = (quint8*)result.data.data();
     qr_binarize(d, w, h);
     for (int y = 0; y < h; y++)
     {
@@ -1300,8 +1304,8 @@ QIPBlackAndWhiteImage QIPGrayscaleImage::bradleyBinarize() const
     const uint windowSize = 41;
     const qreal pixelBrightnessDifferenceLimit = 0.15;
     QIPBlackAndWhiteImage result(w, h);
-    quint8* resultData = result.data.get();
-    memcpy(resultData, data.get(), w * h);
+    quint8* resultData = (quint8*)result.data.data();
+    memcpy(resultData, data.data(), w * h);
 
     uint* intImage = new uint[w * h];
     integralImage(w, h, intImage);
@@ -1558,10 +1562,18 @@ void QIPGrayscaleImage::toGrayscaleMinOrMax(const QImage& input, bool min)
 #ifdef IPRIT_MULTITHREADING
     IntRect r1 = {0, 0, input.width(), input.height() / 2};
     IntRect r2 = {0, input.height() / 2, input.width(), input.height()};
-    QFuture<void> future1 = QtConcurrent::run(this, &QIPGrayscaleImage::toGrayscaleMinOrMaxInternal, input, r1, min);
+
+    IntRect r = {0,0,input.width(),input.height()};
+    toGrayscaleMinOrMaxInternal(input,r, min);
+
+    /*QFuture<void> future1 = QtConcurrent::run(this, &QIPGrayscaleImage::toGrayscaleMinOrMaxInternal, input, r1, min);
     QFuture<void> future2 = QtConcurrent::run(this, &QIPGrayscaleImage::toGrayscaleMinOrMaxInternal, input, r2, min);
     future1.waitForFinished();
-    future2.waitForFinished();
+    future2.waitForFinished();*/
+    //auto future1 = std::async(std::launch::async, &QIPGrayscaleImage::toGrayscaleMinOrMaxInternal, this, input, r1, min);
+    //auto future2 = std::async(std::launch::async, &QIPGrayscaleImage::toGrayscaleMinOrMaxInternal, this, input, r2, min);
+    //future1.get();
+    //future2.get();
 #endif
 
 }

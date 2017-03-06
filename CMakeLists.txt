@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 2.6.0)
 project(ufocr C CXX)
 
-#set(CMAKE_C_COMPILER /usr/bin/clang)
-#set(CMAKE_CXX_COMPILER /usr/bin/clang++)
+set(CMAKE_C_COMPILER /usr/bin/clang)
+set(CMAKE_CXX_COMPILER /usr/bin/clang++)
 
-set( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} " )
+set( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -Wall -Wextra -g" )
 
 
 #set(QT_QMAKE_EXECUTABLE /usr/bin/qmake)
@@ -13,12 +13,12 @@ set( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} " )
 #set (CMAKE_INSTALL_PREFIX /usr/)
 #endif()
 
-set(CMAKE_MODULE_PATH "/home/zamazan4ik/Soft/Qt5.6.2/5.6/gcc_64/lib/cmake/")
-set(Qt5_DIR "/home/zamazan4ik/Soft/Qt5.6.2/5.6")
+#set(CMAKE_MODULE_PATH "/home/zamazan4ik/Soft/Qt5.6.2/5.6/gcc_64/lib/cmake/")
+#set(Qt5_DIR "/home/zamazan4ik/Soft/Qt5.6.2/5.6")
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 11)
 
 set(TRANSLATIONS
         translations/yagf_ru.ts
@@ -96,7 +96,7 @@ add_executable(yagf ${SOURCES} ${MOC_HEADERS} ${UI_HEADERS} ${MOC_SRCS} ${yagf_R
 add_library(xspreload SHARED ${INT_SOURCES})
 
 target_link_libraries(xspreload ${CMAKE_DL_LIBS})
-target_link_libraries(yagf Qt5::Widgets Qt5::Gui Qt5::Concurrent Qt5::Core ${ASPELL_LIBRARIES})
+target_link_libraries(yagf Qt5::Widgets Qt5::Gui Qt5::Concurrent Qt5::Core ${ASPELL_LIBRARIES} -lpthread)
 
 add_custom_target(translations DEPENDS ${QM_FILES})
 qt5_add_translation(${CMAKE_BINARY_DIR}/yagf_ru.qm ${PROJECT_SOURCE_DIR}/src/mainform.cpp ${PROJECT_SOURCE_DIR}/src/popplerdialog.cpp ${MOC_SRCS} ${UI_HEADERS} ${PROJECT_SOURCE_DIR}/src/translations/yagf_ru.ts)

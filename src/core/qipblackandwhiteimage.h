@@ -144,7 +144,8 @@ public:
 private:
     int w, h;
     //QSharedPointer<quint8> data;
-    std::shared_ptr<quint8> data;
+    //std::shared_ptr<quint8> data;
+    QByteArray data;
 private:
     void toImageInternal(uchar* image, const IntRect& rect, int imageWidth) const;
 

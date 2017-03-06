@@ -34,7 +34,8 @@ QIPBlackAndWhiteImage::QIPBlackAndWhiteImage() : data(0)
 QIPBlackAndWhiteImage::QIPBlackAndWhiteImage(quint32 width, quint32 height)/* : data(new quint8[width * height],
                                                                                    deallocator<quint8>)*/
 {
-    data = std::make_shared<quint8>(width * height);
+    //data = std::make_shared<quint8>(width * height);
+    data.resize(width * height);
     w = width;
     h = height;
 //     quint8 * ptr = new quint8[w*h];
@@ -55,7 +56,7 @@ QIPBlackAndWhiteImage::~QIPBlackAndWhiteImage()
 
 quint8* QIPBlackAndWhiteImage::scanLine(quint32 y) const
 {
-    return &(data.get()[y * w]);
+    return &(reinterpret_cast<quint8*>(const_cast<char*>(data.data()))[y * w]);
 }
 
 quint8 QIPBlackAndWhiteImage::pixel(int x, int y)
@@ -68,12 +69,12 @@ quint8 QIPBlackAndWhiteImage::pixel(int x, int y)
     {
         return 1;
     }
-    return data.get()[x + y * w];
+    return data.data()[x + y * w];
 }
 
 void QIPBlackAndWhiteImage::setPixel(quint32 x, quint32 y, quint8 value)
 {
-    data.get()[x + y * w] = value;
+    data.data()[x + y * w] = value;
 }
 
 bool QIPBlackAndWhiteImage::compareElements(quint8** se, quint8** w, int dimensions) const
@@ -203,7 +204,7 @@ QIPBlackAndWhiteImage QIPBlackAndWhiteImage::copy(quint32 x1, quint32 x2, quint3
 {
     QIPBlackAndWhiteImage result(x2 - x1, y2 - y1);
 #ifndef IPRIT_MULTITHREADING
-    copyInternal(result.data.get(), x1, x2, y1, y2);
+    copyInternal((quint8*)result.data.data(), x1, x2, y1, y2);
 #endif
 #ifdef IPRIT_MULTITHREADING
     copyInternal(result.data.data(), x1, x2, y1, y2);
@@ -229,7 +230,7 @@ quint32 QIPBlackAndWhiteImage::height()
 QIPBlackAndWhiteImage QIPBlackAndWhiteImage::dilate(quint8* structuringElement, int dimensions) const
 {
     QIPBlackAndWhiteImage res(w, h);
-    memset((void*) res.data.get(), 1, w * h);
+    memset((void*) res.data.data(), 1, w * h);
     if ((dimensions >= w) || (dimensions >= h))
     {
         return res;
@@ -271,7 +272,7 @@ QIPBlackAndWhiteImage QIPBlackAndWhiteImage::dilate(quint8* structuringElement, 
 QIPBlackAndWhiteImage QIPBlackAndWhiteImage::erode(quint8* structuringElement, int dimensions) const
 {
     QIPBlackAndWhiteImage res(w, h);
-    memset((void*) res.data.get(), 1, w * h);
+    memset((void*) res.data.data(), 1, w * h);
     if ((dimensions >= w) || (dimensions >= h))
     {
         return res;
