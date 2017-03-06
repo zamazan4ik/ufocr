@@ -177,8 +177,6 @@ QIPGrayscaleImage::~QIPGrayscaleImage()
 QImage QIPGrayscaleImage::toImage() const
 {
     qDebug() << w << h;
-    int *a = new int[573 * 327];
-    *a = 5;
     QImage image(w, h, QImage::Format_ARGB32);
 #ifndef IPRIT_MULTITHREADING
     IntRect r = {0,0,image.width(),image.height()};
@@ -1228,7 +1226,8 @@ QIPBlackAndWhiteImage QIPGrayscaleImage::otsuBinarizeMA() const
         return result;
     }
     quint8 threshold = otsuThreshold();
-    memcpy((void*) result.data.data(), (void*) data.data(), w * h);
+    //memcpy((void*) result.data.data(), (void*) data.data(), w * h);
+    result.data = data;
     quint8* d = (quint8*)result.data.data();
     sum = d[0] + d[1] + d[2] + d[3] + d[4] + d[5] + d[6];
     for (int i = 3; i < w * h - 4; i++)
@@ -1257,7 +1256,8 @@ QIPBlackAndWhiteImage QIPGrayscaleImage::otsuBinarizeMA() const
 QIPBlackAndWhiteImage QIPGrayscaleImage::gatosBinarize() const
 {
     QIPBlackAndWhiteImage result(w, h);
-    memcpy(result.data.data(), data.data(), w * h);
+    result.data = data;
+    //memcpy(result.data.data(), data.data(), w * h);
     quint8* d = (quint8*)result.data.data();
     qr_binarize(d, w, h);
     for (int y = 0; y < h; y++)
@@ -1307,9 +1307,10 @@ QIPBlackAndWhiteImage QIPGrayscaleImage::bradleyBinarize() const
     const uint windowSize = 41;
     const qreal pixelBrightnessDifferenceLimit = 0.15;
     QIPBlackAndWhiteImage result(w, h);
+    //quint8* resultData = (quint8*)result.data.data();
+    //memcpy(resultData, data.data(), w * h);
+    result.data = data;
     quint8* resultData = (quint8*)result.data.data();
-    memcpy(resultData, data.data(), w * h);
-
     uint* intImage = new uint[w * h];
     integralImage(w, h, intImage);
     int halfWindowSize = windowSize / 2;
