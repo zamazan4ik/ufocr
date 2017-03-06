@@ -428,11 +428,13 @@ QIPGrayscaleImage QIPGrayscaleImage::copy(int x1, int x2, int y1, int y2) const
     blendImageInternal(r, d1, d2);
 #endif
 #ifdef IPRIT_MULTITHREADING
-    QFuture<void> future1 = QtConcurrent::run(this, &QIPGrayscaleImage::copyInternal2, r1, s, d);
+    /*QFuture<void> future1 = QtConcurrent::run(this, &QIPGrayscaleImage::copyInternal2, r1, s, d);
     QFuture<void> future2 = QtConcurrent::run(this, &QIPGrayscaleImage::copyInternal2, r2, s, d);
     future1.waitForFinished();
-    future2.waitForFinished();
+    future2.waitForFinished();*/
 #endif
+    copyInternal2(r1, s, d);
+    copyInternal2(r2, s, d);
 
     return result;
 }
