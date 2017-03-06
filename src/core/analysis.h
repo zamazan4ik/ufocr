@@ -31,7 +31,7 @@
 #include <QPoint>
 
 
-bool operator==(Rect r1, Rect r2);
+bool operator==(const Rect& r1, const Rect& r2);
 
 typedef QHash<quint32, Rect> ComponentParameters;
 typedef QList<qint32> Strings;
@@ -44,9 +44,10 @@ typedef struct ginfo
     int h;
     int x;
     int y;
+
 } GlyphInfo;
 
-bool operator==(GlyphInfo g1, GlyphInfo g2);
+bool operator==(const GlyphInfo& g1, const GlyphInfo& g2);
 
 typedef QList<GlyphInfo> TextLine;
 typedef QMultiHash<quint32, TextLine> LineField;
@@ -68,7 +69,7 @@ public:
 
     Bars addBars();
 
-    Bars getBars();
+    Bars getBars() const;
 
     QList<Rect> getAllComponents(bool extractBars);
 
@@ -82,21 +83,21 @@ public:
 
     int getMediumGlyphWidth();
 
-    int getMediumLetterSpace();
+    int getMediumLetterSpace() const;
 
-    int getMediumWordSpace();
+    int getMediumWordSpace() const;
 
-    int getStringsCount();
+    int getStringsCount() const;
 
-    int getGlyphBoxCount();
+    int getGlyphBoxCount() const;
 
-    Rect getGlyphBox(int index);
+    Rect getGlyphBox(const int index) const;
 
     QRect getStringBox(const int index) const;
 
-    Lines getLines();
+    Lines getLines() const;
 
-    qreal getK();
+    qreal getK() const;
 
     void rotateLines(qreal phi, const QPoint& c = QPoint(0, 0));
 
@@ -115,7 +116,7 @@ private:
 
     void normalizeLines();
 
-    void rotatePhi(qreal phi, const QPoint& c, QPoint& p);
+    void rotatePhi(qreal phi, const QPoint& c, QPoint& p) const;
 
     void addBarsHorizontal(int hoffset = 0, int height = -1, int woffset = 0, int width = -1);
 

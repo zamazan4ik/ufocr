@@ -36,7 +36,7 @@ RecognitionDialog::~RecognitionDialog()
     delete ui;
 }
 
-void RecognitionDialog::blockRecognized(int n)
+void RecognitionDialog::blockRecognized(const int n)
 {
     ui->label_2->setText(trUtf8("block # %1").arg(n));
 }

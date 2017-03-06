@@ -20,7 +20,7 @@
 #include "tblock.h"
 #include <QPoint>
 
-Block::Block(int x, int y, int width, int height) :
+Block::Block(const int x, const int y, const int width, const int height) :
         QRect(x, y, width, height),
         number(-1),
         center(QRect::x() + QRect::width() / 2, QRect::y() + QRect::height() / 2),
@@ -103,5 +103,5 @@ bool rectLessThan(const QRect& r1, const QRect& r2)
 
 void sortBlocks(Blocks& blocks)
 {
-    qSort(blocks.begin(), blocks.end(), rectLessThan);
+    std::sort(blocks.begin(), blocks.end(), rectLessThan);
 }

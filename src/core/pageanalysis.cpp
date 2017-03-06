@@ -285,7 +285,9 @@ bool BlockSplitter::isBlockRecogniseable(const Rect& block)
             { maxl = l.count(); }
         }
     if ((maxl > 3))
-    { return true; }
+    {
+        return true;
+    }
     return false;
 }
 

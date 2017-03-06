@@ -27,7 +27,7 @@
 class Block : public QRect
 {
 public:
-    explicit Block(int x, int y, int width, int height);
+    explicit Block(const int x, const int y, const int width, const int height);
 
     Block(const QRect& r);
 

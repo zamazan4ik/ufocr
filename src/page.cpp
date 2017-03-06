@@ -173,7 +173,9 @@ bool Page::makeLarger()
 {
     clearIntersected();
     if (scale >= 2.0)
-    { return false; }
+    {
+        return false;
+    }
     if (scale < 0.2)
     {
         scale = 0.2;
@@ -316,15 +318,17 @@ inline bool qrects_equal(QRect& r1, QRect& r2)
 
 Block Page::includes(const QRect& rect)
 {
-            foreach (Block b, blocks)
+    for (const Block& b : blocks)
+    {
+        QRect r = b;
+        if (rect != r)
         {
-            QRect r = b;
-            if (rect != r)
+            if (rect.intersected(r).width() * rect.intersected(r).height() > 64)
             {
-                if (rect.intersected(r).width() * rect.intersected(r).height() > 64)
-                { return r; }
+                return r;
             }
         }
+    }
     return QRect(0, 0, 0, 0);
 }
 
@@ -334,20 +338,20 @@ void Page::addBlock(Block block, int blocknum, int inTable)
     //normalizeRect(r);
     scaleRect(r);
     bool add = true;
-            foreach (Block b, blocks)
+    for (const Block& b : blocks)
+    {
+        QRect r1 = b;
+        if (r == r1)
         {
-            QRect r1 = b;
-            if (r == r1)
-            {
-                add = false;
-                break;
-            }
-            QRect ir = includes(r);
-            if (ir.width() != 0)
-            {
-                deleteBlock(r);
-            }
+            add = false;
+            break;
         }
+        QRect ir = includes(r);
+        if (ir.width() != 0)
+        {
+            deleteBlock(r);
+        }
+    }
     if (blocknum != 0)
     {
         block.setBlockNumber(blocknum);
@@ -379,15 +383,15 @@ void Page::deleteBlock(const QRect& r)
 {
     QRect rx = r;
     scaleRect(rx);
-            foreach (Block b, blocks)
+    for (const Block& b : blocks)
+    {
+        QRect r1 = b;
+        if (qrects_equal(rx, r1))
         {
-            QRect r1 = b;
-            if (qrects_equal(rx, r1))
-            {
-                blocks.removeAll(b);
-                break;
-            }
+            blocks.removeAll(b);
+            break;
         }
+    }
     sortBlocksInternal();
     renumberBlocks();
 }
@@ -397,19 +401,19 @@ Block Page::getBlock(const QRect& r)
     QRect rn = r;
     scaleRectToScale(rn);
     //normalizeRect(rn);
-            foreach (Block b, blocks)
+    for (Block b : blocks)
+    {
+        QRect r1 = b;
+        if (qrects_equal(rn, r1))
         {
-            QRect r1 = b;
-            if (qrects_equal(rn, r1))
-            {
-                scaleRect(b);
-                return b;
-            }
+            scaleRect(b);
+            return b;
         }
+    }
     return Block(0, 0, 0, 0);
 }
 
-Block Page::getBlock(int index)
+Block Page::getBlock(const int index)
 {
     Block b = blocks.at(index);
     scaleRectToScale(b);
@@ -448,7 +452,6 @@ bool Page::savePageAsImage(const QString& fileName, const QString& format)
 
 void Page::saveRawBlockForRecognition(QRect r, const QString& fileName)
 {
-
     saveBlockForRecognition(r, fileName, "BMP");
 }
 
@@ -483,14 +486,14 @@ void Page::saveBlockForRecognition(QRect r, const QString& fileName, const QStri
 
 void Page::saveBlockForRecognition(int index, const QString& fileName)
 {
-            foreach(Block b, blocks)
+    for (Block b : blocks)
+    {
+        if (b.blockNumber() == index + 1)
         {
-            if (b.blockNumber() == index + 1)
-            {
-                saveBlockForRecognition(b, fileName, "BMP");
-                return;
-            }
+            saveBlockForRecognition(b, fileName, "BMP");
+            return;
         }
+    }
     saveBlockForRecognition(blocks.at(index), fileName, "BMP");
 }
 
@@ -498,15 +501,15 @@ void Page::selectBlock(const QRect& r)
 {
     QRect rn = r;
     //normalizeRect(rn);
-            foreach (Block b, blocks)
+    for (const Block& b : blocks)
+    {
+        QRect r1 = b;
+        if (rn == r1)
         {
-            QRect r1 = b;
-            if (rn == r1)
-            {
-                selectedBlock = b;
-                break;
-            }
+            selectedBlock = b;
+            break;
         }
+    }
 }
 
 Block Page::getSelectedBlock()
@@ -517,7 +520,9 @@ Block Page::getSelectedBlock()
 bool Page::deskew(bool recreateCB)
 {
     if (deskewed)
-    { return false; }
+    {
+        return false;
+    }
     if (imageLoaded)
     {
         prepareCCBuilder();
@@ -544,7 +549,9 @@ bool Page::deskew(bool recreateCB)
                         int maxdim1 = abs(bars[i].x2 - bars[i].x1) > abs(bars[i].y2 - bars[i].y1) ? abs(
                                 bars[i].x2 - bars[i].x1) : abs(bars[i].y2 - bars[i].y1);
                         if (maxdim1 > maxdim)
-                        { bar = bars[i]; }
+                        {
+                            bar = bars[i];
+                        }
                     }
                     if ((bar.x2 - bar.x1 != 0) && (bar.y2 - bar.y1 != 0))
                     {
@@ -623,7 +630,9 @@ void Page::deskew(int x1, int y1, int x2, int y2)
 {
     float dx = x2 - x1;
     if (dx == 0)
-    { return; }
+    {
+        return;
+    }
     float dy = y2 - y1;
 
     float angle = -atan(dy / dx) * 360 / 6.283;
@@ -642,7 +651,6 @@ void Page::deskew(int x1, int y1, int x2, int y2)
     QString fn = saveTmpPage("YGF");
     deskewed = true;
     loadFile(fn, 1);
-
 }
 
 void Page::rotate90CW()
@@ -773,8 +781,7 @@ int Page::pageID()
 void Page::sortBlocksInternal()
 {
     bool allBlocksNumbered = true;
-            foreach(Block b, blocks)
-            if (b.blockNumber() == 0)
+            foreach(Block b, blocks)if (b.blockNumber() == 0)
             {
                 allBlocksNumbered = false;
             }
@@ -905,7 +912,7 @@ int findLine(QVector<Block> table, int startFrom)
 
 void sortBlocks2(QVector<Block>& blocks)
 {
-    qSort(blocks.begin(), blocks.end(), blocksLessThan);
+    std::sort(blocks.begin(), blocks.end(), blocksLessThan);
 }
 
 

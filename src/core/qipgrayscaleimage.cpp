@@ -176,6 +176,9 @@ QIPGrayscaleImage::~QIPGrayscaleImage()
 
 QImage QIPGrayscaleImage::toImage() const
 {
+    qDebug() << w << h;
+    int *a = new int[573 * 327];
+    *a = 5;
     QImage image(w, h, QImage::Format_ARGB32);
 #ifndef IPRIT_MULTITHREADING
     IntRect r = {0,0,image.width(),image.height()};

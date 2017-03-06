@@ -20,40 +20,20 @@
 
 #include "analysis.h"
 #include "utils.h"
-#include <math.h>
+#include <cmath>
 
-bool operator==(Rect r1, Rect r2)
+bool operator==(const Rect& r1, const Rect& r2)
 {
-    if (r1.x1 != r2.x1)
-    {
-        return false;
-    }
-    if (r1.y1 != r2.y1)
-    {
-        return false;
-    }
-    if (r1.x2 != r2.x2)
-    {
-        return false;
-    }
-    if (r1.y2 != r2.y2)
+    if (r1.x1 != r2.x1 || r1.y1 != r2.y1 || r1.x2 != r2.x2 || r1.y2 != r2.y2)
     {
         return false;
     }
     return true;
 }
 
-bool operator==(GlyphInfo g1, GlyphInfo g2)
+bool operator==(const GlyphInfo& g1, const GlyphInfo& g2)
 {
-    if (g1.x != g2.x)
-    {
-        return false;
-    }
-    if (g1.y != g2.y)
-    {
-        return false;
-    }
-    if (g1.h != g2.h)
+    if (g1.x != g2.x || g1.y != g2.y || g1.h != g2.h)
     {
         return false;
     }
@@ -77,7 +57,7 @@ CCAnalysis::~CCAnalysis()
 
 }
 
-bool CCAnalysis::analize(bool extractBars)
+bool CCAnalysis::analize(const bool extractBars)
 {
     if (extractComponents(extractBars))
     {
@@ -105,7 +85,7 @@ Bars CCAnalysis::addBars()
     return bars;
 }
 
-Bars CCAnalysis::getBars()
+Bars CCAnalysis::getBars() const
 {
     return bars;
 }
@@ -166,7 +146,9 @@ bool CCAnalysis::extractComponents(bool extractBars)
                 else
                 {
                     if (s == 0)
-                    { components.remove(k); }
+                    {
+                        components.remove(k);
+                    }
                     else if (((double) r.dotCount / (double) s) < 0.1)
                     {
                         components.remove(k);
@@ -177,12 +159,12 @@ bool CCAnalysis::extractComponents(bool extractBars)
     return getComponentParams();
 }
 
-int CCAnalysis::getGlyphBoxCount()
+int CCAnalysis::getGlyphBoxCount() const
 {
     return components.count();
 }
 
-Rect CCAnalysis::getGlyphBox(int index)
+Rect CCAnalysis::getGlyphBox(const int index) const
 {
     return components.values().at(index);
 }
@@ -285,21 +267,21 @@ void CCAnalysis::normalizeLines()
     }
     if (count)
     {
-        k = k / count;
+        k /= count;
     }
 }
 
-Lines CCAnalysis::getLines()
+Lines CCAnalysis::getLines() const
 {
     return lines;
 }
 
-qreal CCAnalysis::getK()
+qreal CCAnalysis::getK() const
 {
     return k;
 }
 
-void CCAnalysis::rotatePhi(qreal phi, const QPoint& c, QPoint& p)
+void CCAnalysis::rotatePhi(const qreal phi, const QPoint& c, QPoint& p) const
 {
     int x = p.x() - c.x();
     int y = p.y() - c.y();
@@ -313,15 +295,21 @@ void CCAnalysis::addBarsHorizontal(int hoffset, int height, int woffset, int wid
 {
     bool* li = new bool[builder->height()];
     if (height < 0)
-    { height = builder->height(); }
+    {
+        height = builder->height();
+    }
     if (width < 0)
-    { width = builder->width(); }
+    {
+        width = builder->width();
+    }
     for (int i = hoffset; i < height; i++)
         li[i] = false;
             foreach (TextLine tl, lines)
         {
             if (tl.count() == 1)
-            { continue; }
+            {
+                continue;
+            }
                     foreach(GlyphInfo gi, tl)  // OPTIMIZE
                     if (_contains(woffset, width, gi.x))
                     {
