@@ -118,44 +118,46 @@ bool CCAnalysis::extractComponents(bool extractBars)
     int wacc = 0;
     int hacc = 0;
     int count = 0;
-            foreach(Rect r, components.values())
-        {
-            wacc += (r.x2 - r.x1);
-            hacc += (r.y2 - r.y1);
-            count++;
-        }
+    for (const Rect& r : components.values())
+    {
+        wacc += (r.x2 - r.x1);
+        hacc += (r.y2 - r.y1);
+        count++;
+    }
     if (count == 0)
-    { return false; }
+    {
+        return false;
+    }
     int wmed = wacc / count;
     int hmed = hacc / count;
 
-            foreach(quint32 k, components.keys())
+    for (const quint32 k : components.keys())
+    {
+        Rect r = components.value(k);
+        if ((r.x2 - r.x1) > 6 * wmed)
         {
-            Rect r = components.value(k);
-            if ((r.x2 - r.x1) > 6 * wmed)
+            components.remove(k);
+        }
+        else
+        {
+            int s = (r.y2 - r.y1) * (r.x2 - r.x1);
+            if ((s < 30) || ((r.y2 - r.y1) > 4 * hmed))
             {
                 components.remove(k);
             }
             else
             {
-                int s = (r.y2 - r.y1) * (r.x2 - r.x1);
-                if ((s < 30) || ((r.y2 - r.y1) > 4 * hmed))
+                if (s == 0)
                 {
                     components.remove(k);
                 }
-                else
+                else if (((double) r.dotCount / (double) s) < 0.1)
                 {
-                    if (s == 0)
-                    {
-                        components.remove(k);
-                    }
-                    else if (((double) r.dotCount / (double) s) < 0.1)
-                    {
-                        components.remove(k);
-                    }
+                    components.remove(k);
                 }
             }
         }
+    }
     return getComponentParams();
 }
 
@@ -171,10 +173,10 @@ Rect CCAnalysis::getGlyphBox(const int index) const
 
 void CCAnalysis::classifyGlyphs()
 {
-            foreach (Rect r, components)
-        {
-            glyphField.insert(r.x1, r);
-        }
+    for (const Rect& r : components)
+    {
+        glyphField.insert(r.x1, r);
+    }
 }
 
 TextLine CCAnalysis::extractLine()
@@ -211,15 +213,15 @@ int CCAnalysis::findAdjacent(Rect& r)
     int endx = startx + xspan;
     for (int x = startx; x < endx; x++)
     {
-                foreach(Rect r1, glyphField.values(x))
+        for (const Rect& r1 : glyphField.values(x))
+        {
+            if ((ymid >= r1.y1) && (ymid <= r1.y2))
             {
-                if ((ymid >= r1.y1) && (ymid <= r1.y2))
-                {
-                    r = r1;
-                    glyphField.remove(x, r1);
-                    return x;
-                }
+                r = r1;
+                glyphField.remove(x, r1);
+                return x;
             }
+        }
     }
     return -1;
 }
@@ -565,7 +567,9 @@ bool CCAnalysis::getComponentParams()
             count++;
         }
     if (count == 0)
-    { return false; }
+    {
+        return false;
+    }
     int wmed = wacc / count;
     int hmed = hacc / count;
     mediumGlyphWidth = wmed;
@@ -576,52 +580,54 @@ bool CCAnalysis::getComponentParams()
 
 void CCAnalysis::doExtractBars()
 {
-            foreach(quint32 k, components.keys())
+    for (const quint32 k : components.keys())
+    {
+        Rect r = components.value(k);
+        int deltaX = abs(r.x2 - r.x1); // TODO: remove abs() if not needed
+        int deltaY = abs(r.y2 - r.y1); // TODO: remove abs() if not needed
+        if ((deltaX > 10) && (deltaY > 10))
         {
-            Rect r = components.value(k);
-            int deltaX = abs(r.x2 - r.x1); // TODO: remove abs() if not needed
-            int deltaY = abs(r.y2 - r.y1); // TODO: remove abs() if not needed
-            if ((deltaX > 10) && (deltaY > 10))
-            { continue; }
-            if (deltaX != 0)
+            continue;
+        }
+        if (deltaX != 0)
+        {
+            if (deltaY / deltaX >= BarRatio)
             {
-                if (deltaY / deltaX >= BarRatio)
-                {
-                    components.remove(k);
-                    bars.append(r);
-                    continue;
-                }
+                components.remove(k);
+                bars.append(r);
+                continue;
+            }
 
-            }
-            else
+        }
+        else
+        {
+            if (deltaY >= BarRatio)
             {
-                if (deltaY >= BarRatio)
-                {
-                    components.remove(k);
-                    bars.append(r);
-                    continue;
-                }
-            }
-            if (deltaY != 0)
-            {
-                if (deltaX / deltaY >= BarRatio)
-                {
-                    components.remove(k);
-                    bars.append(r);
-                    continue;
-                }
-
-            }
-            else
-            {
-                if (deltaX >= BarRatio)
-                {
-                    components.remove(k);
-                    bars.append(r);
-                    continue;
-                }
+                components.remove(k);
+                bars.append(r);
+                continue;
             }
         }
+        if (deltaY != 0)
+        {
+            if (deltaX / deltaY >= BarRatio)
+            {
+                components.remove(k);
+                bars.append(r);
+                continue;
+            }
+
+        }
+        else
+        {
+            if (deltaX >= BarRatio)
+            {
+                components.remove(k);
+                bars.append(r);
+                continue;
+            }
+        }
+    }
 }
 
 QList<Rect> CCAnalysis::getAllComponents(bool extractBars)

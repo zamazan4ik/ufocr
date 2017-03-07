@@ -69,7 +69,10 @@ void PDFExtractor::setOutputDir()
     {
         dir.setFilter(QDir::Files);
         QStringList sl = dir.entryList();
-                foreach (QString s, sl)dir.remove(pdfout + s);
+        for(const QString& s : sl)
+        {
+            dir.remove(pdfout + s);
+        }
     }
 }
 

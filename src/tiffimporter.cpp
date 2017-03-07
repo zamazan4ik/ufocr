@@ -53,13 +53,13 @@ void TiffImporter::exec()
     }
     nf = dir.entryList(sl);
 
-            foreach(QString s, nf)
+    for (const QString& s : nf)
+    {
+        if (!pf.contains(s))
         {
-            if (!pf.contains(s))
-            {
-                files.append(wd + s);
-            }
+            files.append(wd + s);
         }
+    }
     if (files.count())
             emit { finished(files); }
     else

@@ -209,16 +209,16 @@ void ProjectSaver::deleteGarbageFiles()
     QDir dir;
     dir.setPath(directory);
     QFileInfoList fil = dir.entryInfoList();
-            foreach (QFileInfo fi, fil)
+    for (const QFileInfo& fi : fil)
+    {
+        if (!imagesSaved.contains(fi.fileName()))
         {
-            if (!imagesSaved.contains(fi.fileName()))
+            if ((!fi.fileName().endsWith(".xml")) && (!fi.fileName().endsWith(".old")))
             {
-                if ((!fi.fileName().endsWith(".xml")) && (!fi.fileName().endsWith(".old")))
-                {
-                    dir.remove(fi.filePath());
-                }
+                dir.remove(fi.filePath());
             }
         }
+    }
 }
 
 ProjectLoader::ProjectLoader(QObject* parent) : QObject(parent)
@@ -280,11 +280,13 @@ int versionToInt(const QString& version)
 {
     int res = 0;
     for (int i = 0; i < version.count(); i++)
+    {
         if (version.at(i).isDigit())
         {
             res *= 10;
             res += version.at(i).digitValue();
         }
+    }
     return res;
 }
 
@@ -350,7 +352,6 @@ bool ProjectLoader::readPages()
     while (stream->name() == "page")
     {
         loadPage();
-
         if (!readBlocks())
         {
             break;
