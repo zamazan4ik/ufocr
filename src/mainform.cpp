@@ -526,7 +526,6 @@ void MainForm::loadImage()
     {
         QStringList fileNames;
         fileNames = dialog.selectedFiles();
-        qDebug() << fileNames;
         settings->setLastDir(dialog.directory().path());
                 foreach(QString fn, fileNames)
             {

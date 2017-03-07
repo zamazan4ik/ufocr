@@ -49,7 +49,6 @@ static const int wkEdges = 1;
 QIPGrayscaleImage::QIPGrayscaleImage(const QImage& image, GrayscaleConversion conversionMethod)/* : data(
         new quint8[image.width() * image.height()], deallocator<quint8>)*/
 {
-    qDebug() << image.width() * image.height();
     //data = std::make_shared<quint8>(image.width() * image.height());
     data.resize(image.width() * image.height());
     h = image.height();
@@ -176,7 +175,6 @@ QIPGrayscaleImage::~QIPGrayscaleImage()
 
 QImage QIPGrayscaleImage::toImage() const
 {
-    qDebug() << w << h;
     QImage image(w, h, QImage::Format_ARGB32);
 #ifndef IPRIT_MULTITHREADING
     IntRect r = {0,0,image.width(),image.height()};
