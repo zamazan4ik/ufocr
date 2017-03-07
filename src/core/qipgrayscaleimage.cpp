@@ -409,13 +409,13 @@ QIPGrayscaleImage QIPGrayscaleImage::copy(int x1, int x2, int y1, int y2) const
     r1.x1 = x1;
     r1.x2 = x2;
     r1.y1 = y1;
-    r1.y2 = (y2 - y1) / 2;
-    //r1.y2 = y2;
-    IntRect r2;
+    //r1.y2 = (y2 - y1) / 2;
+    r1.y2 = y2;
+    /*IntRect r2;
     r2.x1 = x1;
     r2.x2 = x2;
     r2.y2 = y2;
-    r1.y1 = (y2 - y1) / 2;
+    r1.y1 = (y2 - y1) / 2;*/
 
 #ifndef IPRIT_MULTITHREADING
     IntRect r;
@@ -428,11 +428,13 @@ QIPGrayscaleImage QIPGrayscaleImage::copy(int x1, int x2, int y1, int y2) const
     blendImageInternal(r, d1, d2);
 #endif
 #ifdef IPRIT_MULTITHREADING
-    QFuture<void> future1 = QtConcurrent::run(this, &QIPGrayscaleImage::copyInternal2, r1, s, d);
+    /*QFuture<void> future1 = QtConcurrent::run(this, &QIPGrayscaleImage::copyInternal2, r1, s, d);
     QFuture<void> future2 = QtConcurrent::run(this, &QIPGrayscaleImage::copyInternal2, r2, s, d);
     future1.waitForFinished();
-    future2.waitForFinished();
+    future2.waitForFinished();*/
 #endif
+    copyInternal2(r1, s, d);
+    //copyInternal2(r2, s, d);
 
     return result;
 }
@@ -1746,5 +1748,5 @@ QIPGrayscaleImage::QIPGrayscaleImage() : data(0)
 
 quint8* QIPGrayscaleImage::scanLinePtr(quint8* ptr, int y, int wth)
 {
-    return &(ptr[y * wth]);
+    return ptr + y * wth;
 }

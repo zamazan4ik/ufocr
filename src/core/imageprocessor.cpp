@@ -50,7 +50,7 @@ QRect ImageProcessor::crop()
         QIPBlackAndWhiteImage bwimg1(img.binarize(QIPGrayscaleImage::OtsuMABinarization));
         r = bwimg1.cropGrayScaleImage(img);
         //bwimg1.free();
-        img = img.copy(r.x(), r.x() + r.width(), r.y(), r.y() + r.height());
+        //img = img.copy(r.x(), r.x() + r.width(), r.y(), r.y() + r.height());
     }
     catch (...)
     {

@@ -32,3 +32,5 @@
 Будет удалено cmake-build-debug/
 
 \.idea/
+
+CMakeLists\.txt
