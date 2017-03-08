@@ -892,7 +892,6 @@ void MainForm::fillLangBox()
 
 void MainForm::createRW()
 {
-
     rw = new RecognizerWrapper(this);
     connect(rw, SIGNAL(finished(int)), this, SLOT(recognitionFinished()), Qt::QueuedConnection);
     connect(rw, SIGNAL(error(QString)), this, SLOT(recognitionError(QString)), Qt::QueuedConnection);

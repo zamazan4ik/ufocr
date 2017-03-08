@@ -30,6 +30,8 @@
 #include "globallock.h"
 #include <QTextCodec>
 
+#include <QDebug>
+
 class RWHelper
 {
 public:
@@ -130,6 +132,7 @@ private: // variables
 private: // functions
     void sendOutput()
     {
+        //TODO: Add normal text processing
         bool res = GlobalLock::instance()->lock();
         if (!res)
         {
@@ -159,7 +162,8 @@ private: // functions
         textFile.close();
         textData = textData.replace(" ,", ",");
         QChar sep = QChar::fromLatin1(']');
-        if (pc->blockCount() > blockIndex)
+        //TODO: temporary fix. BUG: sometimes blockIndex == -1
+        if (blockIndex >= 0 && pc->blockCount() > blockIndex)
         {
             if (pc->getBlock(blockIndex).isTableCell())
             {
