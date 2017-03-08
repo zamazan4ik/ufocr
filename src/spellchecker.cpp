@@ -228,7 +228,7 @@ bool SpellChecker::spellCheck()
     {
         QPixmap icon;
         icon.load(":/warning.png");
-        QMessageBox messageBox(QMessageBox::NoIcon, "YAGF", QObject::trUtf8(
+        QMessageBox messageBox(QMessageBox::NoIcon, "UFOCR", QObject::trUtf8(
                 "Required spelling dictionary (%1) is not found.\nSpell-checking is disabled.\nTry to install an appropriate aspell dictionary.").arg(
                 bad_language),
                                QMessageBox::Ok, 0);

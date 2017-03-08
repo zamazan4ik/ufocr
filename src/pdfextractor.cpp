@@ -234,9 +234,7 @@ void PDFExtractor::removeRemaining()
             {
                 doDelete = true;
             }
-
         }
-
     }
     lastFile = "";
 }

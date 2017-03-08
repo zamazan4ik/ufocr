@@ -87,8 +87,7 @@ QImage ImageProcessor::loadFromFile(const QString& fn)
     }
     else
     {
-        ImageProcessor ipx;
-        return ipx.loadYGF(fn);
+        return QIPGrayscaleImage(fn).toImage();
     }
 }
 
@@ -102,7 +101,6 @@ void ImageProcessor::binarize()
     img.smoother();
     QIPBlackAndWhiteImage bwimg = img.binarize(QIPGrayscaleImage::GatosBinarization);
     img.blendImage(bwimg);
-    bwimg.width();
     //img->darken(235);
 }
 

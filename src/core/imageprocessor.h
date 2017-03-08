@@ -21,6 +21,7 @@
 #define IMAGEPROCESSOR_H
 
 #include "qipgrayscaleimage.h"
+#include "GeneralImage.hpp"
 #include "utils.h"
 #include <QObject>
 #include <QImage>
@@ -82,6 +83,7 @@ public slots:
 
 private:
     QIPGrayscaleImage img;
+    GeneralImage img_;
 private:
     void normalizeBounds(QRect& bounds, int w, int h);
 };

@@ -80,7 +80,7 @@ MainForm::MainForm(QWidget* parent) : QMainWindow(parent)
 
     pages = PageCollection::instance();
 
-    setWindowTitle("YAGF");
+    setWindowTitle("UFOCR");
     //spellChecker = new SpellChecker(textEdit);
     textEdit->enumerateDicts();
 
@@ -299,7 +299,7 @@ void MainForm::loadFiles(const QStringList& files)
         return;
     }
     QProgressDialog pd(this);
-    pd.setWindowTitle("YAGF");
+    pd.setWindowTitle("UFOCR");
     pd.setLabelText(trUtf8("Loading files..."));
     pd.setRange(1, files.count());
     pd.setValue(1);
@@ -567,7 +567,7 @@ void MainForm::closeEvent(QCloseEvent* event)
     {
         QPixmap icon;
         icon.load(":/images/question.png");
-        QMessageBox messageBox(QMessageBox::NoIcon, "YAGF",
+        QMessageBox messageBox(QMessageBox::NoIcon, "UFOCR",
                                trUtf8("There is an unsaved data. Do you want to save or to discard it?"),
                                QMessageBox::Save | QMessageBox::Ignore, this);
         messageBox.setIconPixmap(icon);
@@ -739,7 +739,7 @@ void MainForm::loadTIFF(const QString& fn, bool loadIntoView)
     if (!files.count())
     {
         QMessageBox mb;
-        mb.setWindowTitle("YAGF");
+        mb.setWindowTitle("UFOCR");
         mb.setIconPixmap(QPixmap(":/critical.png"));
         mb.setText(trUtf8("Cannot open file %1. Make sure imagemagick and tifftopnm are installed.").arg(fn));
         mb.addButton(QMessageBox::Close);
@@ -1043,7 +1043,7 @@ void MainForm::loadPage(bool show)
             graphicsInput->addBlockColliding(pages->getBlock(i));
     }
     QFileInfo fi(pages->originalFileName());
-    setWindowTitle(QString("YAGF - %1").arg(fi.fileName()));
+    setWindowTitle(QString("UFOCR - %1").arg(fi.fileName()));
     dirty = wasDirty;
 }
 
@@ -1111,7 +1111,7 @@ void MainForm::rightMouseClicked(int x, int y, bool inTheBlock)
 
 void MainForm::setupPDFPD()
 {
-    pdfPD->setWindowTitle("YAGF");
+    pdfPD->setWindowTitle("UFOCR");
     pdfPD->setLabelText(trUtf8("Importing pages from the PDF document..."));
     pdfPD->setCancelButton(0);
     // pdfPD->setCancelButton(new QPushButton());
@@ -1605,7 +1605,7 @@ void MainForm::menuTriggered(const QString& text)
 void MainForm::closeAll()
 {
     dirty = false;
-    setWindowTitle("YAGF");
+    setWindowTitle("UFOCR");
     pages->clear();
     sideBar->clear();
     graphicsInput->clear();
@@ -1658,7 +1658,7 @@ void MainForm::afterConstructor()
     {
         QPixmap icon;
         icon.load(":/images/question.png");
-        QMessageBox messageBox(QMessageBox::NoIcon, "YAGF",
+        QMessageBox messageBox(QMessageBox::NoIcon, "UFOCR",
                                trUtf8("There is an unsaved data left from the previous  session. Do you want to open or discard it?"),
                                QMessageBox::Open | QMessageBox::Ignore, this);
         messageBox.setIconPixmap(icon);

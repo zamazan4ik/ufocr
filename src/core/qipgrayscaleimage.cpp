@@ -27,9 +27,8 @@
 #include <QFuture>
 #include <QtConcurrentRun>
 #include <future>
+#include <opencv2/imgproc.hpp>
 
-
-#define IPRIT_MULTITHREADING
 
 const QString fheader = QString::fromUtf8("YGF1");
 
@@ -144,10 +143,8 @@ QIPGrayscaleImage& QIPGrayscaleImage::operator=(const QIPGrayscaleImage& I)// : 
     return *this;
 }
 
-QIPGrayscaleImage::QIPGrayscaleImage(const QString& ygfFileName)
+QIPGrayscaleImage::QIPGrayscaleImage(const QString& ygfFileName) : w(0), h(0)
 {
-    w = 0;
-    h = 0;
     QFile f(ygfFileName);
     if (!f.open(QIODevice::ReadOnly))
     {
@@ -176,21 +173,8 @@ QIPGrayscaleImage::~QIPGrayscaleImage()
 QImage QIPGrayscaleImage::toImage() const
 {
     QImage image(w, h, QImage::Format_ARGB32);
-#ifndef IPRIT_MULTITHREADING
     IntRect r = {0,0,image.width(),image.height()};
-        toImageInternal(image.scanLine(0),r, image.width());
-#endif
-#ifdef IPRIT_MULTITHREADING
-    IntRect r1 = {0, 0, image.width(), image.height() / 2};
-    IntRect r2 = {0, image.height() / 2, image.width(), image.height()};
-    QFuture<void> future1 = QtConcurrent::run(this, &QIPGrayscaleImage::toImageInternal, image.scanLine(0), r1,
-                                              image.width());
-    QFuture<void> future2 = QtConcurrent::run(this, &QIPGrayscaleImage::toImageInternal, image.scanLine(0), r2,
-                                              image.width());
-    future1.waitForFinished();
-    future2.waitForFinished();
-#endif
-
+    toImageInternal(image.scanLine(0),r, image.width());
     return image;
 }
 
@@ -200,23 +184,8 @@ void QIPGrayscaleImage::histogram(QIPHistogram& result, quint32 x1, quint32 x2, 
     { x2 = w; }
     if (y2 == 0)
     { y2 = h; }
-#ifndef IPRIT_MULTITHREADING
-    IntRect r = {x1,y1,x2,y2};
+    IntRect r = {(int)x1, (int)y1, (int)x2, (int)y2};
     histogramInternal(&result[0], r);
-#endif
-#ifdef IPRIT_MULTITHREADING
-    IntRect r1 = {(int)x1, (int)y1, (int)x2, (int)(y1 + y2) / 2};
-    IntRect r2 = {(int)x1, (int)(y1 + y2) / 2, (int)x2, (int)y2};
-    qreal h1[256] = {0.0};
-    qreal h2[256] = {0.0};
-    QFuture<void> future1 = QtConcurrent::run(this, &QIPGrayscaleImage::histogramInternal, &h1[0], r1);
-    QFuture<void> future2 = QtConcurrent::run(this, &QIPGrayscaleImage::histogramInternal, &h2[0], r2);
-    future1.waitForFinished();
-    future2.waitForFinished();
-    for (int i = 0; i < 256; i++)
-        result[i] = (h1[i] + h2[i]) / 2.;
-#endif
-
 }
 
 void QIPGrayscaleImage::histogramInternal(qreal* result, const IntRect& r) const
@@ -409,28 +378,6 @@ QIPGrayscaleImage QIPGrayscaleImage::copy(int x1, int x2, int y1, int y2) const
     r1.y1 = y1;
     //r1.y2 = (y2 - y1) / 2;
     r1.y2 = y2;
-    /*IntRect r2;
-    r2.x1 = x1;
-    r2.x2 = x2;
-    r2.y2 = y2;
-    r1.y1 = (y2 - y1) / 2;*/
-
-#ifndef IPRIT_MULTITHREADING
-    IntRect r;
-    r.x1 = 0;
-    r.y1 = 0;
-    r.x2 = width();
-    r.y2 = height();
-    quint8 * d1 = data.data();
-    quint8 * d2 = image.data.data();
-    blendImageInternal(r, d1, d2);
-#endif
-#ifdef IPRIT_MULTITHREADING
-    /*QFuture<void> future1 = QtConcurrent::run(this, &QIPGrayscaleImage::copyInternal2, r1, s, d);
-    QFuture<void> future2 = QtConcurrent::run(this, &QIPGrayscaleImage::copyInternal2, r2, s, d);
-    future1.waitForFinished();
-    future2.waitForFinished();*/
-#endif
     copyInternal2(r1, s, d);
     //copyInternal2(r2, s, d);
 
@@ -517,35 +464,14 @@ void QIPGrayscaleImage::wienerFilter()
 
 void QIPGrayscaleImage::blendImage(const QIPBlackAndWhiteImage& image)
 {
-#ifndef IPRIT_MULTITHREADING
     IntRect r;
     r.x1 = 0;
     r.y1 = 0;
     r.x2 = width();
     r.y2 = height();
-    quint8 * d1 = data.data();
-    quint8 * d2 = image.data.data();
+    quint8 * d1 = (quint8*)data.data();
+    quint8 * d2 = (quint8*)image.data.data();
     blendImageInternal(r, d1, d2);
-#endif
-#ifdef IPRIT_MULTITHREADING
-    quint8* d1 = (quint8*)data.data();
-    quint8* d2 = (quint8*)image.data.data();
-    IntRect r1;
-    r1.x1 = 0;
-    r1.y1 = 0;
-    r1.x2 = width();
-    r1.y2 = height() / 2;
-
-    QFuture<void> future1 = QtConcurrent::run(this, &QIPGrayscaleImage::blendImageInternal, r1, d1, d2);
-    IntRect r2;
-    r2.x1 = 0;
-    r2.y1 = height() / 2;
-    r2.x2 = width();
-    r2.y2 = height();
-    QFuture<void> future2 = QtConcurrent::run(this, &QIPGrayscaleImage::blendImageInternal, r2, d1, d2);
-    future1.waitForFinished();
-    future2.waitForFinished();
-#endif
 }
 
 void QIPGrayscaleImage::blendImageInternal(const IntRect& r, quint8* p1, const quint8* p2)
@@ -689,18 +615,7 @@ void QIPGrayscaleImage::toImageInternal(uchar* image, const IntRect& rect, int i
 
 void QIPGrayscaleImage::toGrayScale(const QImage& input)
 {
-#ifndef IPRIT_MULTITHREADING
     toGSRGDBBy3(input,0,0,input.height(),input.width());
-#endif
-#ifdef IPRIT_MULTITHREADING
-    QFuture<void> future1 = QtConcurrent::run(this, &QIPGrayscaleImage::toGSRGDBBy3, input, 0, 0, input.height() / 2,
-                                              input.width());
-    QFuture<void> future2 = QtConcurrent::run(this, &QIPGrayscaleImage::toGSRGDBBy3, input, input.height() / 2, 0,
-                                              input.height(), input.width());
-    future1.waitForFinished();
-    future2.waitForFinished();
-#endif
-
 }
 
 quint8 QIPGrayscaleImage::otsuThreshold(quint32 x1, quint32 x2, quint32 y1, quint32 y2) const
@@ -1226,7 +1141,6 @@ QIPBlackAndWhiteImage QIPGrayscaleImage::otsuBinarizeMA() const
         return result;
     }
     quint8 threshold = otsuThreshold();
-    //memcpy((void*) result.data.data(), (void*) data.data(), w * h);
     result.data = data;
     quint8* d = (quint8*)result.data.data();
     sum = d[0] + d[1] + d[2] + d[3] + d[4] + d[5] + d[6];
@@ -1257,7 +1171,6 @@ QIPBlackAndWhiteImage QIPGrayscaleImage::gatosBinarize() const
 {
     QIPBlackAndWhiteImage result(w, h);
     result.data = data;
-    //memcpy(result.data.data(), data.data(), w * h);
     quint8* d = (quint8*)result.data.data();
     qr_binarize(d, w, h);
     for (int y = 0; y < h; y++)
@@ -1272,9 +1185,7 @@ QIPBlackAndWhiteImage QIPGrayscaleImage::gatosBinarize() const
             {
                 line[x] = 0;
             }
-
     }
-
     return result;
 }
 
@@ -1473,19 +1384,8 @@ quint8 QIPGrayscaleImage::CalculateIterativeThreshold() const
 
 void QIPGrayscaleImage::integralImage(uint w, uint h, uint* image) const
 {
-#ifndef IPRIT_MULTITHREADING
-    IntRect r1 = {0,0,w,h};
+    IntRect r1 = {0,0,(int)w, (int)h};
     copyInternal(r1, image);
-#endif
-#ifdef IPRIT_MULTITHREADING
-    IntRect r1 = {(int)0, (int)0, (int)w, (int)h / 2};
-    IntRect r2 = {(int)0, (int)(h - h / 2), (int)w, (int)h};
-    QFuture<void> future1 = QtConcurrent::run(this, &QIPGrayscaleImage::copyInternal, r1, image);
-    QFuture<void> future2 = QtConcurrent::run(this, &QIPGrayscaleImage::copyInternal, r2, image);
-    future1.waitForFinished();
-    future2.waitForFinished();
-#endif
-
     for (uint x = 1; x < w; x++)
         image[x] += image[x - 1];
     for (uint y = 1; y < h; y++)
@@ -1542,44 +1442,14 @@ inline quint8 minOfThree(quint8 v1, quint8 v2, quint8 v3)
 
 void QIPGrayscaleImage::toGrayscaleMinMax(const QImage& input)
 {
-#ifndef IPRIT_MULTITHREADING
     IntRect r = {0,0,input.width(),input.height()};
     toGrayscaleMinMaxInternal(input,r);
-#endif
-#ifdef IPRIT_MULTITHREADING
-    IntRect r1 = {0, 0, input.width(), input.height() / 2};
-    IntRect r2 = {0, input.height() / 2, input.width(), input.height()};
-    QFuture<void> future1 = QtConcurrent::run(this, &QIPGrayscaleImage::toGrayscaleMinMaxInternal, input, r1);
-    QFuture<void> future2 = QtConcurrent::run(this, &QIPGrayscaleImage::toGrayscaleMinMaxInternal, input, r2);
-    future1.waitForFinished();
-    future2.waitForFinished();
-#endif
-
 }
 
 void QIPGrayscaleImage::toGrayscaleMinOrMax(const QImage& input, bool min)
 {
-#ifndef IPRIT_MULTITHREADING
     IntRect r = {0,0,input.width(),input.height()};
     toGrayscaleMinOrMaxInternal(input,r, min);
-#endif
-#ifdef IPRIT_MULTITHREADING
-    IntRect r1 = {0, 0, input.width(), input.height() / 2};
-    IntRect r2 = {0, input.height() / 2, input.width(), input.height()};
-
-    IntRect r = {0,0,input.width(),input.height()};
-    toGrayscaleMinOrMaxInternal(input,r, min);
-
-    /*QFuture<void> future1 = QtConcurrent::run(this, &QIPGrayscaleImage::toGrayscaleMinOrMaxInternal, input, r1, min);
-    QFuture<void> future2 = QtConcurrent::run(this, &QIPGrayscaleImage::toGrayscaleMinOrMaxInternal, input, r2, min);
-    future1.waitForFinished();
-    future2.waitForFinished();*/
-    //auto future1 = std::async(std::launch::async, &QIPGrayscaleImage::toGrayscaleMinOrMaxInternal, this, input, r1, min);
-    //auto future2 = std::async(std::launch::async, &QIPGrayscaleImage::toGrayscaleMinOrMaxInternal, this, input, r2, min);
-    //future1.get();
-    //future2.get();
-#endif
-
 }
 
 void QIPGrayscaleImage::toGrayscaleMinOrMaxInternal(const QImage& input, const IntRect& rect, bool min)

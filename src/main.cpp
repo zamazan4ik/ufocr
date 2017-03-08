@@ -34,10 +34,10 @@ void parseCmdLine(const QStringList& args)
             if (arg == "-h" || arg == "--help")
             {
                 printf("Using:\n"
-                               "  yagf\n"
-                               "  yagf <Key>\n"
-                               "  yagf <file name> [file name [file name]...]\n"
-                               "YAGF is a graphical interface for cuneiform and tesseract.\n"
+                               "  ufocr\n"
+                               "  ufocr <Key>\n"
+                               "  ufocr <file name> [file name [file name]...]\n"
+                               "UFOCR is a program for OCR.\n"
                                "\n"
                                "Keys:\n"
                                "  -h, --help\t Show this message and exit\n"
@@ -46,7 +46,7 @@ void parseCmdLine(const QStringList& args)
             }
             else if (arg == "-V" || arg == "--version")
             {
-                printf("YAGF version: %s\n", version.toUtf8().constData());
+                printf("UFOCR version: %s\n", version.toUtf8().constData());
                 exit(0);
             }
         }

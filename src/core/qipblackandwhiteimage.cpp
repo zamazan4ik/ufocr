@@ -185,35 +185,15 @@ void QIPBlackAndWhiteImage::copyInternal(quint8* data, int x1, int x2, int y1, i
 QImage QIPBlackAndWhiteImage::toImage() const
 {
     QImage image(w, h, QImage::Format_ARGB32);
-#ifndef IPRIT_MULTITHREADING
     IntRect r = {0, 0, image.width(), image.height()};
     toImageInternal(image.scanLine(0), r, image.width());
-#endif
-#ifdef IPRIT_MULTITHREADING
-    IntRect r1 = {0,0,image.width(),image.height()/2};
-    IntRect r2 = {0,image.height()/2,image.width(),image.height()};
-    QFuture<void> future1 = QtConcurrent::run(this, &QIPBlackAndWhiteImage::toImageInternal,image.scanLine(0),r1, image.width());
-    QFuture<void> future2 = QtConcurrent::run(this, &QIPBlackAndWhiteImage::toImageInternal,image.scanLine(0),r2, image.width());
-    future1.waitForFinished();
-    future2.waitForFinished();
-#endif
     return image;
 }
 
 QIPBlackAndWhiteImage QIPBlackAndWhiteImage::copy(quint32 x1, quint32 x2, quint32 y1, quint32 y2) const
 {
     QIPBlackAndWhiteImage result(x2 - x1, y2 - y1);
-#ifndef IPRIT_MULTITHREADING
     copyInternal((quint8*)result.data.data(), x1, x2, y1, y2);
-#endif
-#ifdef IPRIT_MULTITHREADING
-    copyInternal(result.data.data(), x1, x2, y1, y2);
-    QFuture<void> future1 = QtConcurrent::run(this, &QIPBlackAndWhiteImage::copyInternal, result.data.data(), x1, x2, y1, (y1+y2)/2);
-    QFuture<void> future2 = QtConcurrent::run(this, &QIPBlackAndWhiteImage::copyInternal, result.data.data(), x1, x2, (y1+y2)/2, y2 - (y1+y2)/2);
-    future1.waitForFinished();
-    future2.waitForFinished();
-#endif
-
     return result;
 }
 
@@ -382,43 +362,20 @@ QIPBlackAndWhiteImage QIPBlackAndWhiteImage::inverse() const
 QIPBlackAndWhiteImage QIPBlackAndWhiteImage::crop() const
 {
     IntRect r1, r2;
-#ifndef IPRIT_MULTITHREADING
     r1 = cropInternal(true);
     r2 = cropInternal(false);
-#endif
-#ifdef IPRIT_MULTITHREADING
-    QFuture<IntRect> future1 = QtConcurrent::run(this, &QIPBlackAndWhiteImage::cropInternal, true);
-    QFuture<IntRect> future2 = QtConcurrent::run(this, &QIPBlackAndWhiteImage::cropInternal, false);
-    future1.waitForFinished();
-    future2.waitForFinished();
-    r1 = future1.result();
-    r2 = future2.result();
-#endif
     return copy(r1.x1, r2.x2, r1.y1, r2.y2);
 }
 
 QRect QIPBlackAndWhiteImage::cropGrayScaleImage(const QIPGrayscaleImage& image)
 {
     IntRect r1, r2;
-#ifndef IPRIT_MULTITHREADING
     r1 = cropInternal(true);
     r2 = cropInternal(false);
-#endif
-#ifdef IPRIT_MULTITHREADING
-    QFuture<IntRect> future1 = QtConcurrent::run(this, &QIPBlackAndWhiteImage::cropInternal, true);
-    QFuture<IntRect> future2 = QtConcurrent::run(this, &QIPBlackAndWhiteImage::cropInternal, false);
-    future1.waitForFinished();
-    future2.waitForFinished();
-    r1 = future1.result();
-    r2 = future2.result();
-#endif
     if ((r2.x2 - r1.x1 < 32) && (r2.y2 - r1.y1 < 32))
     {
         return QRect(0, 0, 0, 0);
     }
-    // QIPGrayscaleImage tmp = image->copy(r1.x1, r2.x2, r1.y1, r2.y2);
-    // delete *image;
-    // (*image) = tmp;
     return QRect(r1.x1, r1.y1, r2.x2 - r1.x1, r2.y2 - r2.y1);
 }
 

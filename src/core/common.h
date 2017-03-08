@@ -35,12 +35,4 @@ typedef struct IntRect
 } _IntRect;
 
 
-//#define IPRIT_MULTITHREADING
-
-#ifdef IPRIT_MULTITHREADING
-#include <QtConcurrentRun>
-#include <QFuture>
-#endif
-
-
 #endif // COMMON_H

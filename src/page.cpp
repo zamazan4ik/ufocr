@@ -86,8 +86,7 @@ bool Page::loadFile(QString fileName, int tiled, bool loadIntoView)
         return false;
     }
 
-    imageLoaded = !img.isNull();
-    if (!imageLoaded)
+    if (img.isNull())
     {
         return false;
     }
@@ -141,8 +140,6 @@ bool Page::loadFile(QString fileName, int tiled, bool loadIntoView)
             }
         }
     }
-
-
     rotateImageInternal(img, rotation);
     mFileName = saveTmpPage("YGF");
 
