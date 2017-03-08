@@ -1,6 +1,6 @@
 UFOCR (User-Friendly OCR). It is YAGF fork: https://github.com/andrei-b/YAGF
 
-
+Supported input format: PDF, TIFF, JPEG, PNG, BMP, PBM, PGM, PPM, XBM, XPM.
 
 *Dependencies:*
 *  Qt5

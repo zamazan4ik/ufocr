@@ -287,7 +287,9 @@ void PageCollection::saveBlockForRecognition(int index, const QString& fileName)
 int PageCollection::blockCount()
 {
     if (!cp())
-    { return 0; }
+    {
+        return 0;
+    }
     return cp()->blockCount();
 }
 
@@ -295,7 +297,9 @@ Block PageCollection::getBlock(const QRect& r)
 {
     Block block(0, 0, 0, 0);
     if (!cp())
-    { return block; }
+    {
+        return block;
+    }
     return cp()->getBlock(r);
 }
 
@@ -303,14 +307,18 @@ Block PageCollection::getBlock(int index)
 {
     Block block(0, 0, 0, 0);
     if (!cp())
-    { return block; }
+    {
+        return block;
+    }
     return cp()->getBlock(index);
 }
 
 void PageCollection::selectBlock(const QRect& r)
 {
     if (!cp())
-    { return; }
+    {
+        return;
+    }
     cp()->selectBlock(r);
 }
 
@@ -318,7 +326,9 @@ Block PageCollection::getSelectedBlock()
 {
     Block block(0, 0, 0, 0);
     if (!cp())
-    { return block; }
+    {
+        return block;
+    }
     return cp()->getSelectedBlock();
 }
 

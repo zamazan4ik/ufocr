@@ -1504,7 +1504,6 @@ void MainForm::readOutput(QString text, QChar separator)
 
 void MainForm::recognitionFinished()
 {
-
     pages->setText(textEdit->toPlainText());
     connectTC(true);
     delete rw;
