@@ -27,11 +27,6 @@
 #include "settings.h"
 #include "langselectdialog.h"
 
-//#define MEM_DEBUG
-#ifdef MEM_DEBUG
-#include <mcheck.h>
-#endif
-
 void parseCmdLine(const QStringList& args)
 {
             foreach (const QString& arg, args)
@@ -59,10 +54,6 @@ void parseCmdLine(const QStringList& args)
 
 int main(int argc, char* argv[])
 {
-#ifdef MEM_DEBUG
-    mtrace();
-#endif
-
     QApplication app(argc, argv);
     parseCmdLine(app.arguments());
     Settings* settings = Settings::instance();
@@ -74,7 +65,6 @@ int main(int argc, char* argv[])
     {
         translator.load(qmName, QString(QML_INSTALL_PATH));
         app.installTranslator(&translator);
-
     }
     settings->makeLanguageMaps();
     QTranslator translator2;
@@ -86,8 +76,5 @@ int main(int argc, char* argv[])
     MainForm window;
     window.show();
     int res = app.exec();
-#ifdef MEM_DEBUG
-    muntrace();
-#endif
     return res;
 }

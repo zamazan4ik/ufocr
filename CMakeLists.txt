@@ -89,7 +89,7 @@ find_package(Qt5 REQUIRED Core Gui Widgets Concurrent)
 find_package(ASPELL REQUIRED)
 find_package(OpenCV REQUIRED)
 
-include_directories(${ASPELL_INCLUDE_DIR} ${Qt5_INCLUDE_DIR})
+include_directories(${ASPELL_INCLUDE_DIR} ${Qt5_INCLUDE_DIR} include/spdlog)
 
 #include(${QT_USE_FILE})
 #qt5_wrap_ui(UI_HEADERS ${UIS})
