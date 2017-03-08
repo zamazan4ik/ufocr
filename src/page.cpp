@@ -32,6 +32,7 @@
 #include <QApplication>
 #include <cmath>
 #include <iostream>
+#include <vector>
 
 Page::Page(const int pid, QObject* parent) :
         QObject(parent), selectedBlock(0, 0, 0, 0)
@@ -875,7 +876,7 @@ QRect Page::scaleTo(QRect& rect, qreal newScale)
     return rect;
 }
 
-bool blocksLessThan(Block& b1, Block& b2)
+bool blocksLessThan(const Block& b1, const Block& b2)
 {
     if ((b1.top() / 8) < (b2.top() / 8))
     {
@@ -885,21 +886,21 @@ bool blocksLessThan(Block& b1, Block& b2)
     {
         return false;
     }
-    if ((b1.left()) < (b2.left()))
+    if (b1.left() < b2.left())
     {
         return true;
     }
     return false;
 }
 
-int findLine(QVector<Block> table, int startFrom)
+size_t findLine(const std::vector<Block>& table, const int startFrom)
 {
-    if (startFrom > table.count())
+    if (startFrom > table.size())
     {
         return 0;
     }
     int baseY = table.at(startFrom - 1).y() / 8;
-    for (int i = startFrom; i < table.count(); i++)
+    for (int i = startFrom; i < table.size(); ++i)
     {
         int curY = table.at(i).y() / 8;
         if (curY != baseY)
@@ -907,14 +908,8 @@ int findLine(QVector<Block> table, int startFrom)
             return i;
         }
     }
-    return table.count();
+    return table.size();
 }
-
-void sortBlocks2(QVector<Block>& blocks)
-{
-    std::sort(blocks.begin(), blocks.end(), blocksLessThan);
-}
-
 
 void Page::splitTable()
 {
@@ -943,7 +938,7 @@ void Page::splitTable()
     }
     if (blockCount() == 1)
     {
-
+        //TODO: Something missed here
     }
 
     ImageProcessor ip0;
@@ -964,22 +959,25 @@ void Page::splitTable()
         b = ip1.splitTableForce(bblock);
     }
     Blocks bs;
-    for (int i = 0; i < b.count(); i++)
+    for (size_t i = 0; i < b.count(); i++)
     {
         Rect r = b.at(i);
         Block block(r.x1, r.y1, r.x2 - r.x1, r.y2 - r.y1);
         scaleRectToScale(block);
         bs.append(block);
     }
-    QVector<Block> vb;
-    for (int i = 0; i < bs.count(); i++)
-        vb.append(bs.at(i));
-    sortBlocks2(vb);
-    for (int i = 0; i < vb.count(); i++)
+    std::vector<Block> vb;
+    vb.reserve(bs.count());
+    for (size_t i = 0; i < bs.count(); ++i)
+    {
+        vb.push_back(bs.at(i));
+    }
+    std::sort(vb.begin(), vb.end(), blocksLessThan);
+    for (size_t i = 0; i < vb.size(); ++i)
     {
         addBlock(vb.at(i), i + 1, 1);
     }
-    vb.last().setRowEnd(true);
+    vb.back().setRowEnd(true);
     emit refreshView(true);
 }
 

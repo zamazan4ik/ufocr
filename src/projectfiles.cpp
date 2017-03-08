@@ -20,7 +20,7 @@
 #include "projectfiles.h"
 #include "settings.h"
 #include <QDir>
-#include<QFile>
+#include <QFile>
 #include <QFileInfoList>
 #include <QStringList>
 
@@ -41,12 +41,9 @@ QStringList ProjectFiles::directories()
 void ProjectFiles::cd(const QString& newRoot)
 {
     QString newRoot1 = newRoot;
-    if (newRoot1 != "")
+    if (!newRoot1.isEmpty() && !newRoot.startsWith("/"))
     {
-        if (!newRoot.startsWith("/"))
-        {
-            newRoot1 = root + newRoot1;
-        }
+        newRoot1 = root + newRoot1;
     }
     QFileInfo fi(newRoot1);
     if (!fi.isDir())
@@ -135,7 +132,6 @@ bool ProjectFiles::canCdToUpper(const QString& path)
 {
     QString lPath = upDir(path);
     return canCdTo(lPath);
-    return false;
 }
 
 QString ProjectFiles::upDir(const QString& path)
