@@ -52,9 +52,10 @@ set(SOURCES src/main.cpp src/mainform.cpp src/qgraphicsinput.cpp src/utils.cpp s
     src/configdialog.cpp src/core/ccbuilder.cpp src/core/analysis.cpp src/qsnippet.cpp src/sidebar.cpp src/droplabel.cpp src/projectmanager.cpp src/settings.cpp
     src/texteditor.cpp src/tblock.cpp src/page.cpp src/tpagecollection.cpp src/scanner.cpp src/core/imageprocessor.cpp src/recognitiondialog.cpp
     src/langselectdialog.cpp src/busyform.cpp src/tiffimporter.cpp src/QBusyIndicator.cpp src/recognizerwrapper.cpp
-    src/core/binarize.cpp src/core/util.cpp src/core/qipblackandwhiteimage.cpp src/core/qipgrayscaleimage.cpp src/core/subimagepp.cpp
+    src/core/binarize.cpp src/core/qipblackandwhiteimage.cpp src/core/qipgrayscaleimage.cpp src/core/subimagepp.cpp
     src/core/tableanalizer.cpp src/core/pageanalysis.cpp src/core/pixelwindow.cpp src/extprocessdialog.cpp src/djvu2pdf.cpp
-    src/projectfiles.cpp src/saveprojectdialog.cpp src/fileobjectitem.cpp src/loadprojectdialog.cpp src/autosaver.cpp src/waitwindow.cpp src/globallock.cpp)
+    src/projectfiles.cpp src/saveprojectdialog.cpp src/fileobjectitem.cpp src/loadprojectdialog.cpp src/autosaver.cpp src/waitwindow.cpp src/globallock.cpp
+    src/core/GeneralImage.cpp src/core/GeneralImage.hpp)
 
 set(HEADERS src/settings.h)
 

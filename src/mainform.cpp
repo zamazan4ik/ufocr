@@ -509,8 +509,6 @@ void MainForm::finishedPDF()
     settings->setAutoDeskew(globalDeskew);
 }
 
-#include <QDebug>
-
 void MainForm::loadImage()
 {
     if (!GlobalLock::instance()->lock())
