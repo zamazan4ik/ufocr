@@ -941,6 +941,9 @@ QComboBox {
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="yagf.qrc">
      <normaloff>:/images/Spellcheck.png</normaloff>:/images/Spellcheck.png</iconset>
@@ -1196,6 +1199,9 @@ QComboBox {
   </action>
   <action name="actionKeep_Lines">
    <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
     <bool>true</bool>
    </property>
    <property name="icon">
