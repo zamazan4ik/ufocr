@@ -40,7 +40,7 @@ QGraphicsInput::QGraphicsInput(const QRectF& sceneRect, QGraphicsView* view) :
 {
     setView(view);
     m_image = 0;
-    selecting = NoSelect;
+    selecting = SelectStates::NoSelect;
     hasImage = false;
     m_LastSelected = 0;
     buttonPressed = Qt::NoButton;
@@ -154,18 +154,18 @@ void QGraphicsInput::mousePressEvent(QGraphicsSceneMouseEvent* event)
             }
         }
         buttonPressed = Qt::LeftButton;
-        if (selecting == NoSelect)
+        if (selecting == SelectStates::NoSelect)
         {
             if ((near_res = nearActiveBorder(event->scenePos().x(), event->scenePos().y())) != 0)
             {
                 m_CurrentBlockRect = m_LastSelected;
-                selecting = Selecting;
+                selecting = SelectStates::Selecting;
                 blockRect = m_CurrentBlockRect->rect();
                 emit deleteBlock(QRectF2Rect(blockRect));
             }
             else
             {
-                selecting = StartSelect;
+                selecting = SelectStates::StartSelect;
                 blockRect.setLeft(event->lastScenePos().x());
                 blockRect.setTop(event->lastScenePos().y());
                 blockRect.setWidth(10);
@@ -243,9 +243,9 @@ void QGraphicsInput::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent)
     {
         if (deskewing)
                 emit { clickMeAgain(); }
-        if (selecting == Selecting)
+        if (selecting == SelectStates::Selecting)
         {
-            selecting = NoSelect;
+            selecting = SelectStates::NoSelect;
             if ((blockRect.width() < 12) || (blockRect.height() < 12))
             {
                 if (m_CurrentBlockRect == m_LastSelected)
@@ -262,9 +262,9 @@ void QGraphicsInput::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent)
             xred = false;
             m_CurrentBlockRect = 0;
         }
-        if (selecting == StartSelect)
+        if (selecting == SelectStates::StartSelect)
         {
-            selecting = NoSelect;
+            selecting = SelectStates::NoSelect;
             m_CurrentBlockRect = 0;
             leftMouseRelease(mouseEvent->scenePos().x(), mouseEvent->scenePos().y());
         }
@@ -342,9 +342,9 @@ void QGraphicsInput::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
     {
         setDeskLine(mouseEvent->scenePos().x(), mouseEvent->scenePos().y());
     }
-    if (selecting == StartSelect)
+    if (selecting == SelectStates::StartSelect)
     {
-        selecting = Selecting;
+        selecting = SelectStates::Selecting;
         m_CurrentBlockRect = newBlock(blockRect);
     }
 
@@ -413,7 +413,7 @@ void QGraphicsInput::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
         selBlockRect = newRect;
         return;
     }
-    if (selecting == Selecting)
+    if (selecting == SelectStates::Selecting)
     {
         newRect = blockRect;
         if (newRect.left() < mouseEvent->lastScenePos().x())

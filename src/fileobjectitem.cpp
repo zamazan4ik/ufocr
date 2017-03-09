@@ -62,13 +62,13 @@ void FileObjectItem::extractShortName()
     QString path;
     switch (_type)
     {
-        case EmptyDirectory:
+        case FileObjectItemType::EmptyDirectory:
             path = ":/images/folder.png";
             break;
-        case Directory:
+        case FileObjectItemType::Directory:
             path = ":/images/folder_nempty.png";
             break;
-        case Project:
+        case FileObjectItemType::Project:
             path = ":/images/project.png";
             break;
         default:

@@ -25,7 +25,7 @@
 class FileObjectItem : public QListWidgetItem
 {
 public:
-    enum FileObjectItemType
+    enum class FileObjectItemType
     {
         Directory,
         EmptyDirectory,

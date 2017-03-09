@@ -48,7 +48,7 @@ class QToolBar;
 
 class QActions;
 
-enum SelectStates
+enum class SelectStates
 {
     NoSelect = 0,
     StartSelect,

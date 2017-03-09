@@ -82,13 +82,13 @@ void SaveProjectDialog::onDoubleClicked(const QModelIndex& index)
     FileObjectItem* item = (FileObjectItem*) ui->listWidget->item(index.row());
     if (item)
     {
-        if (item->getItemType() == FileObjectItem::Project)
+        if (item->getItemType() == FileObjectItem::FileObjectItemType::Project)
         {
             emit projectClicked(item->getPath(), item->getShortName());
             return;
         }
-        if ((item->getItemType() == FileObjectItem::EmptyDirectory) |
-            (item->getItemType() == FileObjectItem::Directory))
+        if ((item->getItemType() == FileObjectItem::FileObjectItemType::EmptyDirectory) |
+            (item->getItemType() == FileObjectItem::FileObjectItemType::Directory))
         {
             delete fsw;
         }
@@ -113,7 +113,7 @@ void SaveProjectDialog::onClicked(const QModelIndex& index)
     {
         return;
     }
-    if (item->getItemType() == FileObjectItem::Project)
+    if (item->getItemType() == FileObjectItem::FileObjectItemType::Project)
     {
         emit projectClicked(item->getPath(), item->getShortName());
         return;
@@ -251,12 +251,13 @@ void SaveProjectDialog::fillList()
             foreach (QString s, directories)
         {
             FileObjectItem* item = new FileObjectItem(
-                    pf->isDirEmpty(s) ? FileObjectItem::EmptyDirectory : FileObjectItem::Directory, s, ui->listWidget);
+                    pf->isDirEmpty(s) ? FileObjectItem::FileObjectItemType::EmptyDirectory :
+                    FileObjectItem::FileObjectItemType::Directory, s, ui->listWidget);
             ui->listWidget->addItem(item);
         }
             foreach (QString s, projects)
         {
-            FileObjectItem* item = new FileObjectItem(FileObjectItem::Project, s);
+            FileObjectItem* item = new FileObjectItem(FileObjectItem::FileObjectItemType::Project, s);
             ui->listWidget->addItem(item);
         }
 }
