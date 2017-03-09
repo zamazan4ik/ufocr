@@ -82,7 +82,7 @@ void Djvu2PDF::onFinished()
         onError();
     }
     else
-            emit { finished(); }
+        emit { finished(); }
 }
 
 void Djvu2PDF::clearFiles()

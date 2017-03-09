@@ -277,23 +277,17 @@ void MainForm::loadFiles(const QStringList& files)
             {
                 loadTIFF(files.at(0));
             }
+            else if (files.at(0).endsWith(".pdf", Qt::CaseInsensitive))
+            {
+                importPDF(files.at(0));
+            }
+            else if (files.at(0).endsWith(".djvu", Qt::CaseInsensitive))
+            {
+                importDjVu(files.at(0));
+            }
             else
             {
-                if (files.at(0).endsWith(".pdf", Qt::CaseInsensitive))
-                {
-                    importPDF(files.at(0));
-                }
-                else
-                {
-                    if (files.at(0).endsWith(".djvu", Qt::CaseInsensitive))
-                    {
-                        importDjVu(files.at(0));
-                    }
-                    else
-                    {
-                        loadFile(files.at(0));
-                    }
-                }
+                loadFile(files.at(0));
             }
         }
         return;
