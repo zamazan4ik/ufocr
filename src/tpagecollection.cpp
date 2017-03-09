@@ -26,6 +26,8 @@
 #include <QImage>
 #include <QMutex>
 #include <QFile>
+#include <QPrinter>
+#include <QTextDocument>
 
 static QMutex lsGate;
 
@@ -255,6 +257,39 @@ void PageCollection::saveAllText(const QString& fileName, bool truncate)
         textFile.write(txt.toUtf8());
     }
     textFile.close();
+    makePageCurrentByID(cid);
+    mTextSaved = true;
+}
+
+void PageCollection::saveAsPdf(const QString& fileName, bool allPages /*= true*/)
+{
+    if (!cp())
+    {
+        return;
+    }
+    int cid = currentId;
+    QPrinter printer(QPrinter::PrinterResolution);
+    printer.setOutputFormat(QPrinter::PdfFormat);
+    printer.setPaperSize(QPrinter::A4);
+    printer.setOutputFileName(fileName);
+
+    QTextDocument doc;
+    int _pid = -1;
+    QString txt, outTxt;
+    if(allPages)
+    {
+        while (textAtNextId(_pid, txt))
+        {
+            outTxt += txt;
+        }
+    }
+    else
+    {
+        outTxt = currentText();
+    }
+    doc.setPlainText(outTxt);
+    doc.setPageSize(printer.pageRect().size());
+    doc.print(&printer);
     makePageCurrentByID(cid);
     mTextSaved = true;
 }

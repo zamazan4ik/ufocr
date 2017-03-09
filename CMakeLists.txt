@@ -85,7 +85,7 @@ message(STATUS ${PROJECT_SOURCE_DIR})
 add_definitions(-Wall -g)
 
 find_package(Qt5LinguistTools)
-find_package(Qt5 REQUIRED Core Gui Widgets Concurrent)
+find_package(Qt5 REQUIRED Core Gui Widgets Concurrent PrintSupport)
 find_package(ASPELL REQUIRED)
 find_package(OpenCV REQUIRED)
 
@@ -102,7 +102,7 @@ add_library(xspreload SHARED ${INT_SOURCES})
 
 target_link_libraries(xspreload ${CMAKE_DL_LIBS})
 #target_link_libraries(yagf Qt5::Widgets Qt5::Gui Qt5::Concurrent Qt5::Core ${ASPELL_LIBRARIES} -fsanitize=address -shared-libasan -lpthread)
-target_link_libraries(yagf Qt5::Widgets Qt5::Gui Qt5::Concurrent Qt5::Core ${ASPELL_LIBRARIES} ${OpenCV_LIBRARIES} -lpthread)
+target_link_libraries(yagf Qt5::Widgets Qt5::Gui Qt5::Concurrent Qt5::Core Qt5::PrintSupport ${ASPELL_LIBRARIES} ${OpenCV_LIBRARIES} -lpthread)
 
 add_custom_target(translations DEPENDS ${QM_FILES})
 qt5_add_translation(${CMAKE_BINARY_DIR}/yagf_ru.qm ${PROJECT_SOURCE_DIR}/src/mainform.cpp ${PROJECT_SOURCE_DIR}/src/popplerdialog.cpp ${MOC_SRCS} ${UI_HEADERS} ${PROJECT_SOURCE_DIR}/src/translations/yagf_ru.ts)

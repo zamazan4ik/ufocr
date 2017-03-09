@@ -976,13 +976,20 @@ void MainForm::saveTextInternal(bool allText)
         fileNames = dialog.selectedFiles();
         settings->setLastOutputDir(dialog.directory().path());
         //if (settings->getOutputFormat() == "text") {
+        //TODO: rewrite this terrible code
         if (allText)
         {
-            PageCollection::instance()->saveAllText(fileNames.at(0), true);
+            if(fileNames.at(0).endsWith(".txt"))
+                PageCollection::instance()->saveAllText(fileNames.at(0), true);
+            else if(fileNames.at(0).endsWith(".pdf"))
+                PageCollection::instance()->saveAsPdf(fileNames.at(0), true);
         }
         else
         {
-            PageCollection::instance()->SaveCurrentPageText(fileNames.at(0), true);
+            if(fileNames.at(0).endsWith(".txt"))
+                PageCollection::instance()->SaveCurrentPageText(fileNames.at(0), true);
+            else if(fileNames.at(0).endsWith(".pdf"))
+                PageCollection::instance()->saveAsPdf(fileNames.at(0), false);
         }
         //}
         // else

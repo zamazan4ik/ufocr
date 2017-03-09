@@ -65,6 +65,8 @@ public:
 
     void saveAllText(const QString& fileName, bool truncate);
 
+    void saveAsPdf(const QString& fileName, bool allPages = true);
+
     void saveRawBlockForRecognition(QRect r, const QString& fileName);
 
     void saveBlockForRecognition(QRect r, const QString& fileName, const QString& format = "BMP");
