@@ -55,25 +55,25 @@ QIPGrayscaleImage::QIPGrayscaleImage(const QImage& image, GrayscaleConversion co
     //data = QSharedPointer<quint8>();
     switch (conversionMethod)
     {
-        case RGBDevideByThree:
+        case GrayscaleConversion::RGBDevideByThree:
             toGrayScale(image);
             break;
-        case MinMaxValue:
+        case GrayscaleConversion::MinMaxValue:
             toGrayscaleMinMax(image);
             break;
-        case MinValue:
+        case GrayscaleConversion::MinValue:
             toGrayscaleMinOrMax(image, true);
             break;
-        case MaxValue:
+        case GrayscaleConversion::MaxValue:
             toGrayscaleMinOrMax(image, false);
             break;
-        case MaxEntropyChannel:
+        case GrayscaleConversion::MaxEntropyChannel:
             toGrayScaleByEntropyChannel(image, true);
             break;
-        case MinEntropyChannel:
+        case GrayscaleConversion::MinEntropyChannel:
             toGrayScaleByEntropyChannel(image, false);
             break;
-        case FastConversion:
+        case GrayscaleConversion::FastConversion:
             toGrayscaleFast(image);
         default:
             toGrayScale(image);
@@ -398,31 +398,31 @@ QIPBlackAndWhiteImage QIPGrayscaleImage::binarize(QIPGrayscaleImage::Binarizatio
 {
     switch (method)
     {
-        case OtsuBinarization :
+        case BinarizationMethod::OtsuBinarization :
             return otsuBinarize();
             break;
-        case OtsuMABinarization:
+        case BinarizationMethod::OtsuMABinarization:
             return otsuBinarizeMA();
             break;
-        case NiblackBinarization :
+        case BinarizationMethod::NiblackBinarization :
             return niblackSauvolaBinarize(false);
             break;
-        case SauvolaBinarization :
+        case BinarizationMethod::SauvolaBinarization :
             return niblackSauvolaBinarize(true);
             break;
-        case MaxEntropyBinarization :
+        case BinarizationMethod::MaxEntropyBinarization :
             return maxEntropyBinarize();
             break;
-        case BradleyBinarization :
+        case BinarizationMethod::BradleyBinarization :
             return bradleyBinarize();
             break;
-        case IterativeBinarization:
+        case BinarizationMethod::IterativeBinarization:
             return iterativeBinarize();
             break;
-        case BernsenBinarization:
+        case BinarizationMethod::BernsenBinarization:
             return bernsenBinarize();
             break;
-        case GatosBinarization:
+        case BinarizationMethod::GatosBinarization:
             return gatosBinarize();
             break;
 

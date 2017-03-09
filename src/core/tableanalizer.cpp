@@ -25,7 +25,7 @@
 #include "pixelwindow.h"
 #include <math.h>
 
-enum State
+enum class State
 {
     Start,
     InLine,

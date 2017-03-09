@@ -77,11 +77,11 @@ void Settings::readSettings(const QString& path)
     QString engine = settings->value("ocr/engine", QVariant(defEngine)).toString();
     if (engine == "cuneiform")
     {
-        selectedEngine = UseCuneiform;
+        selectedEngine = SelectedEngine::UseCuneiform;
     }
     else
     {
-        selectedEngine = UseTesseract;
+        selectedEngine = SelectedEngine::UseTesseract;
     }
     language = settings->value("ocr/language", selectDefaultLanguageName()).toString();
     //selectLangsBox->setCurrentIndex(selectLangsBox->findData(QVariant(language)));
@@ -160,7 +160,7 @@ void Settings::writeSettings()
 
     //settings->setValue("ocr/singleColumn", singleColumn);
     settings->setValue("ocr/outputFormat", outputFormat);
-    QString engine = selectedEngine == UseCuneiform ? QString("cuneiform") : QString("tesseract");
+    QString engine = selectedEngine == SelectedEngine::UseCuneiform ? QString("cuneiform") : QString("tesseract");
     settings->setValue("ocr/engine", engine);
     settings->setValue("ocr/tessData", tessdataPath);
     settings->setValue("processing/crop1", cropLoaded);
@@ -269,11 +269,11 @@ void Settings::setMaxRecentProjects(const int value)
 QString Settings::getFullLanguageName(const QString& abbr)
 {
     QMap<QString, QString>* map;
-    if (selectedEngine == UseCuneiform)
+    if (selectedEngine == SelectedEngine::UseCuneiform)
     {
         map = &cuMap;
     }
-    if (selectedEngine == UseTesseract)
+    if (selectedEngine == SelectedEngine::UseTesseract)
     {
         map = &tesMap;
     }
@@ -302,11 +302,11 @@ QString Settings::getFullLanguageName(const QString& abbr, const QString& engine
 QString Settings::getShortLanguageName(const QString& lang)
 {
     QMap<QString, QString>* map;
-    if (selectedEngine == UseCuneiform)
+    if (selectedEngine == SelectedEngine::UseCuneiform)
     {
         map = &cuMap;
     }
-    if (selectedEngine == UseTesseract)
+    if (selectedEngine == SelectedEngine::UseTesseract)
     {
         map = &tesMap;
     }
@@ -670,11 +670,11 @@ void Settings::startLangPair()
 bool Settings::getLangPair(QString& full, QString& abbr, bool forceTesseract)
 {
     QMap<QString, QString>* map;
-    if (selectedEngine == UseCuneiform)
+    if (selectedEngine == SelectedEngine::UseCuneiform)
     {
         map = &cuMap;
     }
-    if (selectedEngine == UseTesseract)
+    if (selectedEngine == SelectedEngine::UseTesseract)
     {
         map = &tesMap;
     }
@@ -943,11 +943,11 @@ QString Settings::selectDefaultLanguageName()
     QLocale loc = QLocale::system();
     QString name = "";
     QMap<QString, QString>* map;
-    if (selectedEngine == UseCuneiform)
+    if (selectedEngine == SelectedEngine::UseCuneiform)
     {
         map = &cuMap;
     }
-    if (selectedEngine == UseTesseract)
+    if (selectedEngine == SelectedEngine::UseTesseract)
     {
         map = &tesMap;
     }

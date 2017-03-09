@@ -48,11 +48,11 @@ void ConfigDialog::accept()
     Settings* settings = Settings::instance();
     if (ui->radioButtonCuneiform->isChecked())
     {
-        settings->setSelectedEngine(UseCuneiform);
+        settings->setSelectedEngine(SelectedEngine::UseCuneiform);
     }
     else
     {
-        settings->setSelectedEngine(UseTesseract);
+        settings->setSelectedEngine(SelectedEngine::UseTesseract);
     }
     settings->setTessdataPath(ui->lineEditTessData->text());
     if (ui->checkBoxSingleLang->isChecked())
@@ -91,8 +91,8 @@ void ConfigDialog::accept()
 void ConfigDialog::init()
 {
     Settings* settings = Settings::instance();
-    ui->radioButtonCuneiform->setChecked(settings->getSelectedEngine() == UseCuneiform);
-    ui->radioButtonTesseract->setChecked(settings->getSelectedEngine() == UseTesseract);
+    ui->radioButtonCuneiform->setChecked(settings->getSelectedEngine() == SelectedEngine::UseCuneiform);
+    ui->radioButtonTesseract->setChecked(settings->getSelectedEngine() == SelectedEngine::UseTesseract);
     ui->lineEditTessData->setText(settings->getTessdataPath());
     QStringList sl = settings->getSelectedLanguages();
     ui->checkBoxSingleLang->setChecked(sl.count() == 1);

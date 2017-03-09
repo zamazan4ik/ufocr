@@ -148,11 +148,11 @@ void ProjectSaver::writeSettings()
     stream->writeStartElement(URI, "settings");
     Settings* settings = Settings::instance();
     QString engine;
-    if (settings->getSelectedEngine() == UseCuneiform)
+    if (settings->getSelectedEngine() == SelectedEngine::UseCuneiform)
     {
         engine = "cuneiform";
     }
-    if (settings->getSelectedEngine() == UseTesseract)
+    if (settings->getSelectedEngine() == SelectedEngine::UseTesseract)
     {
         engine = "tesseract";
     }
@@ -260,11 +260,11 @@ bool ProjectLoader::readSettings()
     QStringRef engine = stream->attributes().value(URI, "engine");
     if (engine == "tesseract")
     {
-        settings->setSelectedEngine(UseTesseract);
+        settings->setSelectedEngine(SelectedEngine::UseTesseract);
     }
     if (engine == "cuneiform")
     {
-        settings->setSelectedEngine(UseCuneiform);
+        settings->setSelectedEngine(SelectedEngine::UseCuneiform);
     }
     emit engineChanged();
     QString language = stream->attributes().value(URI, "defaultlanguage").toString();

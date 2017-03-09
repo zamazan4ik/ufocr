@@ -144,13 +144,13 @@ MainForm::MainForm(QWidget* parent) : QMainWindow(parent)
     initSettings();
     engineLabel = new QLabel();
     statusBar()->addPermanentWidget(engineLabel, 0);
-    if (settings->getSelectedEngine() == UseCuneiform)
+    if (settings->getSelectedEngine() == SelectedEngine::UseCuneiform)
     {
         //fillLanguagesBoxCuneiform();
         engineLabel->setText(trUtf8("Using Cuneiform"));
 
     }
-    if (settings->getSelectedEngine() == UseTesseract)
+    if (settings->getSelectedEngine() == SelectedEngine::UseTesseract)
     {
         //fillLanguagesBoxTesseract();
         engineLabel->setText(trUtf8("Using Tesseract"));
@@ -353,25 +353,25 @@ void MainForm::showConfigDlg()
         //if (settings->getSelectedEngine() != ose) {
         QString oldLang = selectLangsBox->currentText();
         selectLangsBox->clear();
-        if (settings->getSelectedEngine() == UseCuneiform)
+        if (settings->getSelectedEngine() == SelectedEngine::UseCuneiform)
         {
             engineLabel->setText(trUtf8("Using Cuneiform"));
             if (settings->selectedLanguagesAvailableTo("cuneiform").count() == 0)
             {
                 styledWarningMessage(this,
                                      trUtf8("Cuneiform doesn't support any of selected recognition langualges.\nFalling back to tesseract. Please install tesseract."));
-                settings->setSelectedEngine(UseTesseract);
+                settings->setSelectedEngine(SelectedEngine::UseTesseract);
                 engineLabel->setText(trUtf8("Using Tesseract"));
             }
         }
-        if (settings->getSelectedEngine() == UseTesseract)
+        if (settings->getSelectedEngine() == SelectedEngine::UseTesseract)
         {
             engineLabel->setText(trUtf8("Using Tesseract"));
             if (settings->selectedLanguagesAvailableTo("tesseract").count() == 0)
             {
                 styledWarningMessage(this,
                                      trUtf8("Tesseract doesn't support any of selected recognition langualges.\nFalling back to cueniform. Please install cuneiform."));
-                settings->setSelectedEngine(UseCuneiform);
+                settings->setSelectedEngine(SelectedEngine::UseCuneiform);
                 engineLabel->setText(trUtf8("Using Cuneiform"));
             }
         }

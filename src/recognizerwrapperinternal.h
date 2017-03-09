@@ -175,14 +175,14 @@ private: // functions
 
     void recognizeInternal()
     {
-        if (settings->getSelectedEngine() == UseCuneiform)
+        if (settings->getSelectedEngine() == SelectedEngine::UseCuneiform)
         {
             if (useCuneiform(settings->getRecognizeInputFile(), settings->getRecognizeOutputFile()))
             {
                 return;
             }
         }
-        if (settings->getSelectedEngine() == UseTesseract)
+        if (settings->getSelectedEngine() == SelectedEngine::UseTesseract)
         {
             if (useTesseract(settings->getRecognizeInputFile()))
             {
@@ -273,7 +273,7 @@ private: // functions
     static bool findEngine(bool findSelected = false)
     {
         Settings* settings = Settings::instance();
-        if (settings->getSelectedEngine() == UseCuneiform)
+        if (settings->getSelectedEngine() == SelectedEngine::UseCuneiform)
         {
             if (!findProgram("cuneiform"))
             {
@@ -284,7 +284,7 @@ private: // functions
                 if (findProgram("tesseract"))
                 {
                     //emit error(trUtf8("Cuneiform not found, switching to Tesseract OCR"));
-                    settings->setSelectedEngine(UseTesseract);
+                    settings->setSelectedEngine(SelectedEngine::UseTesseract);
                 }
                 else
                 {
@@ -293,7 +293,7 @@ private: // functions
                 }
             }
         }
-        if (settings->getSelectedEngine() == UseTesseract)
+        if (settings->getSelectedEngine() == SelectedEngine::UseTesseract)
         {
             if (!findProgram("tesseract"))
             {
@@ -304,7 +304,7 @@ private: // functions
                 if (findProgram("cuneiform"))
                 {
                     //emit error(trUtf8("Tesseract not found, switching to Cuneiform"));
-                    settings->setSelectedEngine(UseCuneiform);
+                    settings->setSelectedEngine(SelectedEngine::UseCuneiform);
                 }
                 else
                 {

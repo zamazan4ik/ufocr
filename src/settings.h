@@ -29,7 +29,7 @@
 #include <QStringList>
 
 
-enum SelectedEngine
+enum class SelectedEngine
 {
     UseCuneiform,
     UseTesseract

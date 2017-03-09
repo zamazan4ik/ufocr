@@ -47,7 +47,7 @@ QRect ImageProcessor::crop()
     QRect r;
     try
     {
-        QIPBlackAndWhiteImage bwimg1(img.binarize(QIPGrayscaleImage::OtsuMABinarization));
+        QIPBlackAndWhiteImage bwimg1(img.binarize(QIPGrayscaleImage::BinarizationMethod::OtsuMABinarization));
         r = bwimg1.cropGrayScaleImage(img);
         //bwimg1.free();
         //img = img.copy(r.x(), r.x() + r.width(), r.y(), r.y() + r.height());
@@ -65,7 +65,7 @@ QRect ImageProcessor::crop()
 
 void ImageProcessor::loadImage(const QImage& image)
 {
-    img = QIPGrayscaleImage(image, QIPGrayscaleImage::MinValue);
+    img = QIPGrayscaleImage(image, QIPGrayscaleImage::GrayscaleConversion::MinValue);
 }
 
 QImage ImageProcessor::loadFromFile(const QString& fn)
@@ -99,7 +99,7 @@ QImage ImageProcessor::gsImage() const
 void ImageProcessor::binarize()
 {
     img.smoother();
-    QIPBlackAndWhiteImage bwimg = img.binarize(QIPGrayscaleImage::GatosBinarization);
+    QIPBlackAndWhiteImage bwimg = img.binarize(QIPGrayscaleImage::BinarizationMethod::GatosBinarization);
     img.blendImage(bwimg);
     //img->darken(235);
 }
@@ -108,14 +108,14 @@ void ImageProcessor::altBinarize()
 {
     img.smoother();
     //QIPBlackAndWhiteImage bwimg = img.binarize(QIPGrayscaleImage::BradleyBinarization);
-    QIPBlackAndWhiteImage bwimg = img.binarize(QIPGrayscaleImage::BernsenBinarization);
+    QIPBlackAndWhiteImage bwimg = img.binarize(QIPGrayscaleImage::BinarizationMethod::BernsenBinarization);
     img.blendImage(bwimg);
 }
 
 QIPBlackAndWhiteImage ImageProcessor::fastBinarize()
 {
     //img.smoother();
-    return img.binarize(QIPGrayscaleImage::BradleyBinarization);
+    return img.binarize(QIPGrayscaleImage::BinarizationMethod::BradleyBinarization);
 }
 
 void ImageProcessor::saveForPDF(const QImage& image, const QString& fileName, int squish)
@@ -125,15 +125,15 @@ void ImageProcessor::saveForPDF(const QImage& image, const QString& fileName, in
     {
         QImage im = image.scaled(image.width() / squish, image.height() / squish, Qt::KeepAspectRatio,
                                  Qt::SmoothTransformation);
-        img = QIPGrayscaleImage::fromImage(im, QIPGrayscaleImage::FastConversion);
+        img = QIPGrayscaleImage::fromImage(im, QIPGrayscaleImage::GrayscaleConversion::FastConversion);
     }
     else
     {
-        img = QIPGrayscaleImage::fromImage(image, QIPGrayscaleImage::FastConversion);
+        img = QIPGrayscaleImage::fromImage(image, QIPGrayscaleImage::GrayscaleConversion::FastConversion);
     }
 
     //img.smoother();
-    QIPBlackAndWhiteImage bwimg = img.binarize(QIPGrayscaleImage::GatosBinarization);
+    QIPBlackAndWhiteImage bwimg = img.binarize(QIPGrayscaleImage::BinarizationMethod::GatosBinarization);
     QString filename = Settings::instance()->workingDir() + fileName;
     bwimg.toImage().save(filename);
 }

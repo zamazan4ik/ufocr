@@ -54,7 +54,7 @@ public:
       MaxEntropyChannel and MinValue suite best if you canvert to grayscale for the further text extarction.
     */
 
-    enum GrayscaleConversion
+    enum class GrayscaleConversion
     {
         RGBDevideByThree = 0, /*!< gray(i) = (r(i)+g(i)+b(i))/3 */
         MinMaxValue, /*!< gray(i) = (min(r(i), g(i), b(i)) + max(r(i), g(i), b(i)))/2 */
@@ -75,7 +75,7 @@ public:
      */
 
 
-    explicit QIPGrayscaleImage(const QImage& image, GrayscaleConversion conversionMethod = RGBDevideByThree);
+    explicit QIPGrayscaleImage(const QImage& image, GrayscaleConversion conversionMethod = GrayscaleConversion::RGBDevideByThree);
 
     QIPGrayscaleImage(QIPBlackAndWhiteImage& image1, QIPBlackAndWhiteImage& image2);
 
@@ -83,7 +83,7 @@ public:
       Makes QIPGrayscaleImage from QImage.
       \sa toImage
     */
-    static QIPGrayscaleImage fromImage(const QImage& image, GrayscaleConversion conversionMethod = RGBDevideByThree);
+    static QIPGrayscaleImage fromImage(const QImage& image, GrayscaleConversion conversionMethod = GrayscaleConversion::RGBDevideByThree);
 
     /*!
       Returns true if the instance contains no data.
@@ -108,7 +108,7 @@ public:
       These flags specify which type of binariztion to use when calling binarize() method.
       \sa binarize()
     */
-    enum BinarizationMethod
+    enum class BinarizationMethod
     {
         OtsuBinarization, /*!< Otsu global binarization */
         OtsuMABinarization,

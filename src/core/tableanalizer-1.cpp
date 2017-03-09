@@ -21,7 +21,7 @@
 #include "qipblackandwhiteimage.h"
 #include "ccbuilder.h"
 
-enum State
+enum class State
 {
     Start,
     InLine,
