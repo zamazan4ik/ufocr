@@ -99,27 +99,30 @@ bool Page::loadFile(QString fileName, int tiled, bool loadIntoView)
         delete ccbuilder;
         ccbuilder = nullptr;
     }
-    ip.loadImage(img);
+    //ip.loadImage(img);
     settings = Settings::instance();
     if (settings->getCropLoaded())
     {
+        //TODO: Crop already does not work
         if (!cropped)
         {
-            ip.crop();
-            setCropped(true);
+            //ip.crop();
+            //setCropped(true);
         }
     }
-    img = ip.gsImage();
+    //img = ip.gsImage();
     if (settings->getPreprocessed() && (!preprocessed))
     {
-        ip.loadImage(img);
+        //TODO:
+        /*ip.loadImage(img);
         ip.binarize();
         img = ip.gsImage();
-        preprocessed = true;
+        preprocessed = true;*/
     }
     if (Settings::instance()->getAutoDeskew())
     {
-        if (textHorizontal())
+        //TODO: Rewrite all imageprocessing
+        /*if (textHorizontal())
         {
             if (deskew())
             {
@@ -138,10 +141,10 @@ bool Page::loadFile(QString fileName, int tiled, bool loadIntoView)
                 }
                 return true;
             }
-        }
+        }*/
     }
     rotateImageInternal(img, rotation);
-    mFileName = saveTmpPage("YGF");
+    mFileName = saveTmpPage("BMP");
 
     loadedBefore = true;
     return true;
@@ -289,8 +292,8 @@ void Page::unload()
         delete ccbuilder;
         ccbuilder = nullptr;
     }
-    img = QImage(0, 0, QImage::Format_ARGB32);
-    imageLoaded = false;
+    //img = QImage(0, 0, QImage::Format_ARGB32);
+    //imageLoaded = false;
 }
 
 inline bool qrects_equal(QRect& r1, QRect& r2)
@@ -1082,3 +1085,22 @@ void Page::renumberBlocks()
     }
 }
 
+void Page::binarize()
+{
+    img = QIPGrayscaleImage(img, QIPGrayscaleImage::GrayscaleConversion::MinValue).binarize(QIPGrayscaleImage::BinarizationMethod::OtsuBinarization).toImage();
+}
+
+#include <opencv2/xphoto.hpp>
+
+void Page::whiteBalance()
+{
+    //TODO: Check: works or not
+    GeneralImage gen(img);
+    cv::Mat dst;
+    dst = gen.toMat().clone();
+    auto alg = cv::xphoto::createGrayworldWB();
+    alg->setSaturationThreshold(0.9);
+    alg->balanceWhite(gen.toMat(), dst);
+
+    img = GeneralImage(dst).toQImage();
+}

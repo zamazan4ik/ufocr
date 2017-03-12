@@ -101,6 +101,10 @@ public:
 
     bool splitPage(bool preprocess);
 
+    void whiteBalance();
+
+    void binarize();
+
     bool textHorizontal();
 
     QString fileName();

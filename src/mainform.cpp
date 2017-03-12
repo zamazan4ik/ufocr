@@ -119,6 +119,8 @@ MainForm::MainForm(QWidget* parent) : QMainWindow(parent)
     connect(actionSelect_All_Text, SIGNAL(triggered()), textEdit, SLOT(selectAll()));
     connect(graphicsInput, SIGNAL(rightMouseClicked(int, int, bool)), this, SLOT(rightMouseClicked(int, int, bool)));
     connect(actionSelect_HTML_format, SIGNAL(triggered()), this, SLOT(selectHTMLformat()));
+    connect(actionBinarize, SIGNAL(triggered()), this, SLOT(binarization()));
+    connect(actionWhite_balance, SIGNAL(triggered()), this, SLOT(whiteBalance()));
 
     connect(graphicsInput, SIGNAL(increaseMe()), this, SLOT(enlargeButtonClicked()));
     connect(graphicsInput, SIGNAL(decreaseMe()), this, SLOT(decreaseButtonClicked()));
@@ -1428,7 +1430,6 @@ void MainForm::selectHTMLformat()
 
 }
 
-
 void MainForm::SelectRecognitionLanguages()
 {
     LangSelectDialog lsd;
@@ -1437,7 +1438,6 @@ void MainForm::SelectRecognitionLanguages()
         fillLangBox();
     }
 }
-
 
 void MainForm::selectLanguages()
 {
@@ -1465,7 +1465,6 @@ void MainForm::deskewByLine()
         QLineF l = graphicsInput->getDeskData();
         graphicsInput->clearDeskLine();
         pages->deskew(l.x1(), l.y1(), l.x2(), l.y2());
-
     }
 }
 
@@ -1686,4 +1685,34 @@ void MainForm::saveCurrentText()
     saveTextInternal(false);
 }
 
+void MainForm::binarization()
+{
+    if (!pages->hasPage())
+    {
+        styledWarningMessage(this, trUtf8("No image loaded"));
+        return;
+    }
+    QCursor oldCursor = cursor();
+    setCursor(Qt::WaitCursor);
+    pages->binarize();
+    pages->reloadPage();
+    /*if (!pages->binarize())
+    {
+        styledWarningMessage(this, trUtf8("Failed to binarize image."));
+    }*/
+    setCursor(oldCursor);
+}
 
+void MainForm::whiteBalance()
+{
+    if (!pages->hasPage())
+    {
+        styledWarningMessage(this, trUtf8("No image loaded"));
+        return;
+    }
+    QCursor oldCursor = cursor();
+    setCursor(Qt::WaitCursor);
+    pages->whiteBalance();
+    pages->reloadPage();
+    setCursor(oldCursor);
+}

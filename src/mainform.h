@@ -240,6 +240,9 @@ private:
     bool dirty;
     bool forbidAutoSave;
 private slots:
+    void whiteBalance();
+
+    void binarization();
 
     void clickMeAgain();
 

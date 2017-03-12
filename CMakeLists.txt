@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.6.0)
+cmake_minimum_required(VERSION 3.6.0)
 project(ufocr C CXX)
 
 #set(CMAKE_C_COMPILER /media/zamazan4ik/For_Linux/OpenSource/clang_trunk/bin/clang)
@@ -9,6 +9,13 @@ set(CMAKE_CXX_COMPILER /usr/bin/clang++)
 
 #set( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -O2 -g -fsanitize=address -fno-omit-frame-pointer -shared-libasan" )
 set( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -O2" )
+
+include_directories(${ASPELL_INCLUDE_DIR} ${Qt5_INCLUDE_DIR} include/opencv include/opencv/opencv2 include/spdlog)
+
+link_directories(lib/opencv lib/libjpeg lib/libpng lib/libtiff lib/zlib lib/libjasper
+        lib/libwebp lib/libippcv lib/libprotobuf lib/leptonica
+        lib/libgif)
+
 
 #set(QT_QMAKE_EXECUTABLE /usr/bin/qmake)
 #if (NOT DEFINED  ${CMAKE_INSTALL_PREFIX})
@@ -28,6 +35,13 @@ set(TRANSLATIONS
         translations/yagf_fr.ts
         translations/yagf_uk.ts
         )
+
+set(OpenCV_LIBSS libopencv_xphoto.a libopencv_shape.a libopencv_imgcodecs.a libopencv_ts.a
+        libopencv_videostab.a libopencv_photo.a libopencv_calib3d.a
+        libopencv_video.a libopencv_stitching.a
+        libopencv_videoio.a libopencv_superres.a
+        libopencv_ml.a libopencv_objdetect.a  libopencv_features2d.a
+        libopencv_flann.a libopencv_imgproc.a libopencv_highgui.a libopencv_core.a)
 
 #set (LIB_PATH_SUFFIX )
 
@@ -87,9 +101,6 @@ add_definitions(-Wall -g)
 find_package(Qt5LinguistTools)
 find_package(Qt5 REQUIRED Core Gui Widgets Concurrent PrintSupport)
 find_package(ASPELL REQUIRED)
-find_package(OpenCV REQUIRED)
-
-include_directories(${ASPELL_INCLUDE_DIR} ${Qt5_INCLUDE_DIR} include/spdlog)
 
 #include(${QT_USE_FILE})
 #qt5_wrap_ui(UI_HEADERS ${UIS})
@@ -102,7 +113,23 @@ add_library(xspreload SHARED ${INT_SOURCES})
 
 target_link_libraries(xspreload ${CMAKE_DL_LIBS})
 #target_link_libraries(yagf Qt5::Widgets Qt5::Gui Qt5::Concurrent Qt5::Core ${ASPELL_LIBRARIES} -fsanitize=address -shared-libasan -lpthread)
-target_link_libraries(yagf Qt5::Widgets Qt5::Gui Qt5::Concurrent Qt5::Core Qt5::PrintSupport ${ASPELL_LIBRARIES} ${OpenCV_LIBRARIES} -lpthread)
+target_link_libraries(yagf Qt5::Widgets Qt5::Gui Qt5::Concurrent Qt5::Core Qt5::PrintSupport ${ASPELL_LIBRARIES} ${OpenCV_LIBSS}
+        libleptonica.a
+
+        liblibjpeg.a
+        libzlib.a
+        liblibtiff.a
+        libippicv.a
+        liblibwebp.a
+        liblibjasper.a
+
+        libjpeg.a
+        liblibpng.a
+        libgif.a
+
+        -lgomp
+        -fPIC
+        -lpthread)
 
 add_custom_target(translations DEPENDS ${QM_FILES})
 qt5_add_translation(${CMAKE_BINARY_DIR}/yagf_ru.qm ${PROJECT_SOURCE_DIR}/src/mainform.cpp ${PROJECT_SOURCE_DIR}/src/popplerdialog.cpp ${MOC_SRCS} ${UI_HEADERS} ${PROJECT_SOURCE_DIR}/src/translations/yagf_ru.ts)

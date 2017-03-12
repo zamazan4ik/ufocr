@@ -687,20 +687,20 @@ Page* PageCollection::cp()
 {
     if ((index < 0) || (index >= count()))
     {
-        return (Page*) 0;
+        return nullptr;
     }
     return pages.at(index);
 }
 
 int PageCollection::id2Index(int id)
 {
-            foreach (Page* p, pages)
+    for (Page* p : pages)
+    {
+        if (p->pageID() == id)
         {
-            if (p->pageID() == id)
-            {
-                return pages.indexOf(p);
-            }
+            return pages.indexOf(p);
         }
+    }
     return -1;
 }
 
@@ -754,4 +754,22 @@ void PageCollection::setOriginalFileName(const QString& fn)
     {
         cp()->setOriginalFileName(fn);
     }
+}
+
+void PageCollection::binarize()
+{
+    if (!cp())
+    {
+        return;
+    }
+    cp()->binarize();
+}
+
+void PageCollection::whiteBalance()
+{
+    if (!cp())
+    {
+        return;
+    }
+    cp()->whiteBalance();
 }

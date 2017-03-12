@@ -103,6 +103,10 @@ public:
 
     qreal getRotation();
 
+    void whiteBalance();
+
+    void binarize();
+
     void setRotation(const qreal value);
 
     void setDeskewed(const bool value);

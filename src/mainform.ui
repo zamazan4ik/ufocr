@@ -558,6 +558,34 @@
     <property name="title">
      <string>&amp;Edit</string>
     </property>
+    <widget class="QMenu" name="menuImage_processing">
+     <property name="title">
+      <string>Image processing</string>
+     </property>
+     <widget class="QMenu" name="menuFilters">
+      <property name="title">
+       <string>Filters</string>
+      </property>
+      <addaction name="actionBilateral"/>
+      <addaction name="actionBinarize"/>
+      <addaction name="actionBrightness"/>
+      <addaction name="actionColor_balance"/>
+      <addaction name="actionContrast"/>
+      <addaction name="actionGamma"/>
+      <addaction name="actionGrayscale"/>
+      <addaction name="actionInvert"/>
+      <addaction name="actionMonochrome"/>
+      <addaction name="actionSharpen"/>
+      <addaction name="actionSmooth"/>
+      <addaction name="actionThreshold"/>
+      <addaction name="actionWhite_balance"/>
+     </widget>
+     <addaction name="menuFilters"/>
+     <addaction name="actionDeskew"/>
+     <addaction name="actionCrop"/>
+     <addaction name="actionAuto_crop"/>
+    </widget>
+    <addaction name="menuImage_processing"/>
     <addaction name="actionSelect_Text_Area"/>
     <addaction name="separator"/>
     <addaction name="actionSelect_All_Text"/>
@@ -1261,6 +1289,91 @@ QComboBox {
   <action name="actionSave_Text_on_the_Page">
    <property name="text">
     <string>Save Text on the Page...</string>
+   </property>
+  </action>
+  <action name="actionBinarization">
+   <property name="text">
+    <string>Binarization</string>
+   </property>
+  </action>
+  <action name="actionBrightness">
+   <property name="text">
+    <string>Brightness</string>
+   </property>
+  </action>
+  <action name="actionContrast">
+   <property name="text">
+    <string>Contrast</string>
+   </property>
+  </action>
+  <action name="actionGamma">
+   <property name="text">
+    <string>Gamma</string>
+   </property>
+  </action>
+  <action name="actionWhite_balance">
+   <property name="text">
+    <string>White balance</string>
+   </property>
+  </action>
+  <action name="actionThreshold">
+   <property name="text">
+    <string>Threshold</string>
+   </property>
+  </action>
+  <action name="actionGrayscale">
+   <property name="text">
+    <string>Grayscale</string>
+   </property>
+  </action>
+  <action name="actionMonochrome">
+   <property name="text">
+    <string>Monochrome</string>
+   </property>
+  </action>
+  <action name="actionInvert">
+   <property name="text">
+    <string>Invert</string>
+   </property>
+  </action>
+  <action name="actionSharpen">
+   <property name="text">
+    <string>Sharpen</string>
+   </property>
+  </action>
+  <action name="actionSmooth">
+   <property name="text">
+    <string>Smooth</string>
+   </property>
+  </action>
+  <action name="actionBilateral">
+   <property name="text">
+    <string>Bilateral</string>
+   </property>
+  </action>
+  <action name="actionDeskew">
+   <property name="text">
+    <string>Deskew</string>
+   </property>
+  </action>
+  <action name="actionCrop">
+   <property name="text">
+    <string>Crop</string>
+   </property>
+  </action>
+  <action name="actionAuto_crop">
+   <property name="text">
+    <string>Auto crop</string>
+   </property>
+  </action>
+  <action name="actionBinarize">
+   <property name="text">
+    <string>Binarize</string>
+   </property>
+  </action>
+  <action name="actionColor_balance">
+   <property name="text">
+    <string>Color balance</string>
    </property>
   </action>
  </widget>

@@ -312,7 +312,6 @@ bool QIPGrayscaleImage::save(const QString& fileName, bool overwrite)
     return true;
 }
 
-
 bool QIPGrayscaleImage::saveGrayscale(const QImage& image, const QString& fileName, bool overwrite)
 {
     quint16 hx = image.height();
