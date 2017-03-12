@@ -46,7 +46,7 @@ SideBar::SideBar(QWidget* parent) :
     dragging = false;
 }
 
-void SideBar::addItem(QSnippet* item)
+void SideBar::addItem(Snippet* item)
 {
     setAlternatingRowColors(false);
     QSize size = item->sizeHint();
@@ -73,8 +73,8 @@ void SideBar::itemActive(QListWidgetItem* item, QListWidgetItem* item2)
     lock = true;
     if (item)
     {
-        emit pageSelected(((QSnippet*) item)->pageID());
-        current = ((QSnippet*) item);
+        emit pageSelected(((Snippet*) item)->pageID());
+        current = ((Snippet*) item);
     }
     else
     { current = 0; }
@@ -135,32 +135,31 @@ void SideBar::startDrag(Qt::DropActions supportedActions)
     QMimeData* mimeData = new QMimeData();
     QList<QUrl> urlList;
     QStringList sl;
-            foreach(QListWidgetItem* lwi, selectedItems())
-        {
-            QString s = QString::number(((QSnippet*) lwi)->pageID());
-            sl << s;
-        }
+    for (QListWidgetItem* lwi : selectedItems())
+    {
+        sl << QString::number(((Snippet*) lwi)->pageID());
+    }
     mimeData->setUrls(urlList);
     drag->setMimeData(mimeData);
     if (drag->exec(supportedActions, Qt::CopyAction) == Qt::CopyAction)
     {
-                foreach(QListWidgetItem* lwi, selectedItems())
-            {
-                emit fileRemoved(((QSnippet*) lwi)->pageID());
-                model()->removeRow(row(lwi));
-            }
+        for (QListWidgetItem* lwi : selectedItems())
+        {
+            emit fileRemoved(((Snippet*) lwi)->pageID());
+            model()->removeRow(row(lwi));
+        }
     }
-    current = 0;
+    current = nullptr;
     dragging = false;
 }
 
-QSnippet* SideBar::getItemByName(const QString& name)
+Snippet* SideBar::getItemByName(const QString& name)
 {
     for (int i = 0; i < count(); i++)
     {
-        if (((QSnippet*) item(i))->getName() == name)
+        if (((Snippet*) item(i))->getName() == name)
         {
-            return ((QSnippet*) item(i));
+            return ((Snippet*) item(i));
         }
     }
     return nullptr;
@@ -182,7 +181,7 @@ void SideBar::selectFirstFile()
         current = nullptr;
         return;
     }
-    current = (QSnippet*) item(0);
+    current = (Snippet*) item(0);
 }
 
 /*void SideBar::dragLeaveEvent(QDragLeaveEvent *event)

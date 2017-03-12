@@ -22,7 +22,7 @@
 
 #include <QListWidget>
 
-class QSnippet;
+class Snippet;
 
 class SideBar : public QListWidget
 {
@@ -30,7 +30,7 @@ Q_OBJECT
 public:
     explicit SideBar(QWidget* parent = 0);
 
-    void addItem(QSnippet* item);
+    void addItem(Snippet* item);
 
     void clearBlocks();
 
@@ -60,9 +60,9 @@ protected:
     void startDrag(Qt::DropActions supportedActions);
 
 private:
-    QSnippet* getItemByName(const QString& name);
+    Snippet* getItemByName(const QString& name);
 
-    QSnippet* current;
+    Snippet* current;
     bool lock;
     bool dragging;
 };

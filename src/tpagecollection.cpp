@@ -184,13 +184,13 @@ bool PageCollection::textAtNextId(int& cid, QString& text)
     return false;
 }
 
-QSnippet* PageCollection::snippet()
+Snippet* PageCollection::snippet()
 {
     if (!cp())
     {
         return nullptr;
     }
-    QSnippet* s = new QSnippet();
+    Snippet* s = new Snippet();
     s->setPage(cp()->pageID(), cp()->originalFileName(), cp()->thumbnail());
     return s;
 }
@@ -198,14 +198,18 @@ QSnippet* PageCollection::snippet()
 QPixmap PageCollection::pixmap()
 {
     if (!cp())
-    { return QPixmap(); }
+    {
+        return QPixmap();
+    }
     return cp()->displayPixmap();
 }
 
 void PageCollection::savePageForRecognition(const QString& fileName)
 {
     if (!cp())
-    { return; }
+    {
+        return;
+    }
     cp()->savePageForRecognition(fileName);
 }
 
@@ -297,21 +301,27 @@ void PageCollection::saveAsPdf(const QString& fileName, bool allPages /*= true*/
 void PageCollection::saveRawBlockForRecognition(QRect r, const QString& fileName)
 {
     if (!cp())
-    { return; }
+    {
+        return;
+    }
     cp()->saveRawBlockForRecognition(r, fileName);
 }
 
 void PageCollection::saveBlockForRecognition(QRect r, const QString& fileName, const QString& format)
 {
     if (!cp())
-    { return; }
+    {
+        return;
+    }
     cp()->saveBlockForRecognition(r, fileName, format);
 }
 
 void PageCollection::saveBlockForRecognition(int index, const QString& fileName)
 {
     if (!cp())
-    { return; }
+    {
+        return;
+    }
     if (index == 0)
     {
         cp()->sortBlocksInternal();
@@ -330,20 +340,18 @@ int PageCollection::blockCount()
 
 Block PageCollection::getBlock(const QRect& r)
 {
-    Block block(0, 0, 0, 0);
     if (!cp())
     {
-        return block;
+        return Block(0, 0, 0, 0);
     }
     return cp()->getBlock(r);
 }
 
 Block PageCollection::getBlock(int index)
 {
-    Block block(0, 0, 0, 0);
     if (!cp())
     {
-        return block;
+        return Block(0, 0, 0, 0);
     }
     return cp()->getBlock(index);
 }
@@ -359,10 +367,9 @@ void PageCollection::selectBlock(const QRect& r)
 
 Block PageCollection::getSelectedBlock()
 {
-    Block block(0, 0, 0, 0);
     if (!cp())
     {
-        return block;
+        return Block(0, 0, 0, 0);
     }
     return cp()->getSelectedBlock();
 }
@@ -392,7 +399,7 @@ QString PageCollection::originalFileName()
 
 bool PageCollection::hasPage()
 {
-    return (cp() != 0);
+    return cp() != 0;
 }
 
 bool PageCollection::savePageAsImage(const QString& fileName, const QString& format)
@@ -471,7 +478,7 @@ void PageCollection::reloadPage()
 
 void PageCollection::unloadAll()
 {
-    foreach(Page* p, pages)
+    for(Page* p : pages)
     {
         p->unload();
     }
@@ -567,7 +574,9 @@ void PageCollection::restoreCurrentIndex()
 void PageCollection::makeLarger()
 {
     if (!cp())
-    { return; }
+    {
+        return;
+    }
     if (lsGate.tryLock())
     {
         cp()->makeLarger();
@@ -579,7 +588,9 @@ void PageCollection::makeLarger()
 void PageCollection::makeSmaller()
 {
     if (!cp())
-    { return; }
+    {
+        return;
+    }
     if (lsGate.tryLock())
     {
         cp()->makeSmaller();
@@ -591,7 +602,9 @@ void PageCollection::makeSmaller()
 void PageCollection::rotate90CW()
 {
     if (!cp())
-    { return; }
+    {
+        return;
+    }
     cp()->rotate90CW();
     emit loadPage(true);
 }
@@ -599,7 +612,9 @@ void PageCollection::rotate90CW()
 void PageCollection::rotate90CCW()
 {
     if (!cp())
-    { return; }
+    {
+        return;
+    }
     cp()->rotate90CCW();
     emit loadPage(true);
 }
@@ -607,7 +622,9 @@ void PageCollection::rotate90CCW()
 void PageCollection::rotate180()
 {
     if (!cp())
-    { return; }
+    {
+        return;
+    }
     cp()->rotate180();
     emit loadPage(true);
 }
@@ -615,7 +632,9 @@ void PageCollection::rotate180()
 void PageCollection::deskew()
 {
     if (!cp())
-    { return; }
+    {
+        return;
+    }
     if (cp()->textHorizontal())
     {
         cp()->deskew();
@@ -626,7 +645,9 @@ void PageCollection::deskew()
 void PageCollection::blockAllText()
 {
     if (!cp())
-    { return; }
+    {
+        return;
+    }
     cp()->blockAllText();
     emit loadPage(true);
 }
@@ -634,7 +655,9 @@ void PageCollection::blockAllText()
 bool PageCollection::splitPage(bool preprocess)
 {
     if (!cp())
-    { return false; }
+    {
+        return false;
+    }
     bool res = cp()->splitPage(preprocess);
     emit loadPage(true);
     return res;
@@ -643,7 +666,9 @@ bool PageCollection::splitPage(bool preprocess)
 void PageCollection::addBlock(const QRect& rect)
 {
     if (!cp())
-    { return; }
+    {
+        return;
+    }
     Block block(rect.x(), rect.y(), rect.width(), rect.height());
     cp()->addBlock(block);
 }
@@ -651,7 +676,9 @@ void PageCollection::addBlock(const QRect& rect)
 void PageCollection::addBlock(const QRect& rect, int num)
 {
     if (!cp())
-    { return; }
+    {
+        return;
+    }
     Block block(rect.x(), rect.y(), rect.width(), rect.height());
     cp()->addBlock(block, num);
 }
@@ -659,23 +686,27 @@ void PageCollection::addBlock(const QRect& rect, int num)
 void PageCollection::deleteBlock(const QRect& rect)
 {
     if (!cp())
-    { return; }
+    {
+        return;
+    }
     cp()->deleteBlock(rect);
 }
 
 void PageCollection::clearBlocks()
 {
     if (!cp())
-    { return; }
+    {
+        return;
+    }
     cp()->clearBlocks();
 }
 
 void PageCollection::clear()
 {
-            foreach (Page* p, pages)
-        {
-            delete p;
-        }
+    for (Page* p : pages)
+    {
+        delete p;
+    }
     pages.clear();
     emit cleared();
     index = -1;

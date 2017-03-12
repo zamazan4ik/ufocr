@@ -26,10 +26,10 @@
 #include <QRect>
 #include <QPixmap>
 
-class QSnippet : public QListWidgetItem
+class Snippet : public QListWidgetItem
 {
 public:
-    explicit QSnippet(QListWidget* parent = 0);
+    explicit Snippet(QListWidget* parent = 0);
 
     bool setPage(int id, const QString& name, const QImage& image = QImage());
 

@@ -25,7 +25,7 @@
 #include <QPixmap>
 #include <QVector>
 
-class QSnippet;
+class Snippet;
 
 
 class PageCollection : public QObject
@@ -55,7 +55,7 @@ public:
 
     bool textAtNextId(int& cid, QString& text);
 
-    QSnippet* snippet();
+    Snippet* snippet();
 
     QPixmap pixmap();
 

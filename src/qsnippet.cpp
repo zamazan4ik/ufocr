@@ -19,12 +19,12 @@
 
 #include "qsnippet.h"
 
-QSnippet::QSnippet(QListWidget* parent) :
+Snippet::Snippet(QListWidget* parent) :
         QListWidgetItem(parent)
 {
 }
 
-bool QSnippet::setPage(int id, const QString& name, const QImage& image)
+bool Snippet::setPage(int id, const QString& name, const QImage& image)
 {
     if (image.isNull())
     {
@@ -47,22 +47,22 @@ bool QSnippet::setPage(int id, const QString& name, const QImage& image)
     return true;
 }
 
-QString QSnippet::getName()
+QString Snippet::getName()
 {
     return name;
 }
 
-int QSnippet::pageID()
+int Snippet::pageID()
 {
     return pid;
 }
 
-int QSnippet::imageHeight()
+int Snippet::imageHeight()
 {
     return ih;
 }
 
-int QSnippet::imageWidth()
+int Snippet::imageWidth()
 {
     return iw;
 }
