@@ -21,6 +21,7 @@
 #define SIDEBAR_H
 
 #include <QListWidget>
+#include <QSignalMapper>
 
 class Snippet;
 
@@ -31,6 +32,8 @@ public:
     explicit SideBar(QWidget* parent = 0);
 
     void addItem(Snippet* item);
+
+    void deleteItem(Snippet* item);
 
     void clearBlocks();
 
@@ -52,6 +55,7 @@ private slots:
 
     void showContextMenuForWidget(const QPoint &pos);
 
+    void deleteFile(QObject*);
 protected:
     QStringList mimeTypes() const;
 
@@ -62,6 +66,7 @@ protected:
     void startDrag(Qt::DropActions supportedActions);
 
 private:
+    QSignalMapper* signalMapper;
     Snippet* getItemByName(const QString& name);
 
     Snippet* current;

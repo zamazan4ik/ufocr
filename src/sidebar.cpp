@@ -35,6 +35,9 @@ SideBar::SideBar(QWidget* parent) :
         QListWidget(parent)
 {
     //setDragDropOverwriteMode(true);
+    signalMapper = new QSignalMapper(this);
+    connect(signalMapper, SIGNAL(mapped(QObject*)),
+            this, SLOT(deleteFile(QObject*)));
     current = 0;
     setMaximumWidth(120);
     setMinimumWidth(120);
@@ -69,6 +72,12 @@ void SideBar::addItem(Snippet* item)
     setCurrentItem(item);
 }
 
+void SideBar::deleteItem(Snippet* item)
+{
+    /*item->
+    QListWidget::(item);
+    setCurrentItem(item);*/
+}
 
 void SideBar::itemActive(QListWidgetItem* item, QListWidgetItem* item2)
 {
@@ -93,8 +102,15 @@ void SideBar::showContextMenuForWidget(const QPoint &pos)
 {
     QMenu contextMenu(trUtf8("Context menu"), this);
     QListWidgetItem* item = this->itemAt(pos);
-    if(!item)   return;
-    contextMenu.addAction(new QAction(trUtf8("Close"), this));
+    if(!item)
+    {
+        return;
+    }
+    QAction* act = new QAction(QString("Close"), this);
+    //((Snippet*) item)->pageID())
+    connect(act, SIGNAL(triggered()), signalMapper, SLOT(map()));
+    signalMapper->setMapping(act, (QObject*)item);
+    contextMenu.addAction(act);
     contextMenu.exec(mapToGlobal(pos));
 }
 
@@ -152,7 +168,7 @@ void SideBar::startDrag(Qt::DropActions supportedActions)
     QMimeData* mimeData = new QMimeData();
     QList<QUrl> urlList;
     QStringList sl;
-    for (QListWidgetItem* lwi : selectedItems())
+    for (const QListWidgetItem* lwi : selectedItems())
     {
         sl << QString::number(((Snippet*) lwi)->pageID());
     }
@@ -201,6 +217,15 @@ void SideBar::selectFirstFile()
     current = (Snippet*) item(0);
 }
 
+void SideBar::deleteFile(QObject* item)
+{
+    Snippet* ptr = (Snippet*) item;
+    QListWidgetItem* ptr2 = (QListWidgetItem*)item;
+    int id = ptr->pageID();
+    QListWidget::removeItemWidget((QListWidgetItem*)item);
+    ptr2->~QListWidgetItem();
+    emit fileRemoved(id);
+}
 
 /*void SideBar::dragLeaveEvent(QDragLeaveEvent *event)
 {
