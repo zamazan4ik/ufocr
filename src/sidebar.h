@@ -50,6 +50,8 @@ private slots:
 
     void itemActive(QListWidgetItem* item, QListWidgetItem* item2);
 
+    void showContextMenuForWidget(const QPoint &pos);
+
 protected:
     QStringList mimeTypes() const;
 

@@ -28,6 +28,7 @@
 #include <QDrag>
 #include <QSize>
 #include <QMimeData>
+#include <QMenu>
 
 
 SideBar::SideBar(QWidget* parent) :
@@ -37,6 +38,9 @@ SideBar::SideBar(QWidget* parent) :
     current = 0;
     setMaximumWidth(120);
     setMinimumWidth(120);
+    this->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(this, SIGNAL(customContextMenuRequested(const QPoint &)),
+            SLOT(showContextMenuForWidget(const QPoint &)));
     connect(this, SIGNAL(currentItemChanged(QListWidgetItem * , QListWidgetItem * )), this,
             SLOT(itemActive(QListWidgetItem * , QListWidgetItem * )));
     setToolTip(trUtf8("Drop files here"));
@@ -69,7 +73,9 @@ void SideBar::addItem(Snippet* item)
 void SideBar::itemActive(QListWidgetItem* item, QListWidgetItem* item2)
 {
     if (lock)
-    { return; }
+    {
+        return;
+    }
     lock = true;
     if (item)
     {
@@ -77,8 +83,19 @@ void SideBar::itemActive(QListWidgetItem* item, QListWidgetItem* item2)
         current = ((Snippet*) item);
     }
     else
-    { current = 0; }
+    {
+        current = 0;
+    }
     lock = false;
+}
+
+void SideBar::showContextMenuForWidget(const QPoint &pos)
+{
+    QMenu contextMenu(trUtf8("Context menu"), this);
+    QListWidgetItem* item = this->itemAt(pos);
+    if(!item)   return;
+    contextMenu.addAction(new QAction(trUtf8("Close"), this));
+    contextMenu.exec(mapToGlobal(pos));
 }
 
 /*void SideBar::dragEnterEvent(QDragEnterEvent *event)
@@ -183,6 +200,7 @@ void SideBar::selectFirstFile()
     }
     current = (Snippet*) item(0);
 }
+
 
 /*void SideBar::dragLeaveEvent(QDragLeaveEvent *event)
 {

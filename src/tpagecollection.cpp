@@ -71,7 +71,7 @@ bool PageCollection::appendPage(const QString& fileName)
     else
     {
         delete p;
-        pid--;
+        --pid;
         return false;
     }
 

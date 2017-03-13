@@ -49,17 +49,21 @@ QString extractDigits(const QString& fn)
 {
     bool extracting = false;
     QString result = "";
-    for (int i = 0; i < fn.size(); i++)
-        if ((fn.at(i) >= '0') && (fn.at(i) <= '9'))
+    for (const auto& curChar : fn)
+    {
+        if (curChar.isDigit())
         {
             extracting = true;
-            result += fn.at(i);
+            result += curChar;
         }
         else
         {
             if (extracting)
-            { break; }
+            {
+                break;
+            }
         }
+    }
     return result;
 }
 
@@ -67,9 +71,9 @@ bool findProgram(const QString& name)
 {
     QStringList sl = QString(getenv("PATH")).split(":");
     QFileInfo fi;
-    for (int i = 0; i < sl.count(); i++)
+    for (const auto& str : sl)
     {
-        fi.setFile(sl.at(i), name);
+        fi.setFile(str, name);
         if (fi.exists())
         {
             return true;
@@ -83,7 +87,9 @@ static bool mbShown = false;
 void styledWarningMessage(QWidget* parent, const QString& text)
 {
     if (mbShown)
-    { return; }
+    {
+        return;
+    }
     QMessageBox mb(parent);
     mb.setIconPixmap(QPixmap(":warning.png"));
     mb.setWindowTitle(QObject::trUtf8("Warning"));
