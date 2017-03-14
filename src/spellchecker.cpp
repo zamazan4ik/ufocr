@@ -139,7 +139,9 @@ SpellChecker::~SpellChecker()
 void SpellChecker::setLanguage(const QString& lang)
 {
     if (lang.isEmpty())
-    { return; }
+    {
+        return;
+    }
     delete_aspell_speller(spell_checker1);
     delete_aspell_speller(spell_checker2);
     bad_language.clear();

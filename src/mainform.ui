@@ -1100,7 +1100,7 @@ QComboBox {
      <normaloff>:/images/Align.png</normaloff>:/images/Align.png</iconset>
    </property>
    <property name="text">
-    <string>Align Page by Guideline</string>
+    <string>Manual deskew</string>
    </property>
    <property name="toolTip">
     <string>Align Page by Guideline</string>
