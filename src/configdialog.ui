@@ -57,7 +57,7 @@
         <enum>QListView::Snap</enum>
        </property>
        <property name="flow">
-        <enum>QListView::TopToBottom</enum>
+        <enum>QListView::LeftToRight</enum>
        </property>
        <property name="isWrapping" stdset="0">
         <bool>true</bool>
@@ -93,7 +93,7 @@
          </font>
         </property>
         <property name="textAlignment">
-         <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+         <set>AlignCenter</set>
         </property>
         <property name="icon">
          <iconset resource="yagf.qrc">
@@ -108,7 +108,7 @@
          <string>Image Processing</string>
         </property>
         <property name="textAlignment">
-         <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+         <set>AlignCenter</set>
         </property>
         <property name="icon">
          <iconset resource="yagf.qrc">
@@ -123,7 +123,7 @@
          <string>Program Behavoir</string>
         </property>
         <property name="textAlignment">
-         <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+         <set>AlignCenter</set>
         </property>
         <property name="icon">
          <iconset resource="yagf.qrc">
@@ -144,7 +144,7 @@
         </sizepolicy>
        </property>
        <property name="currentIndex">
-        <number>2</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="page">
         <layout class="QVBoxLayout" name="verticalLayout_7">
