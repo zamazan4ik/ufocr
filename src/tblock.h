@@ -33,7 +33,7 @@ public:
 
     Block();
 
-    int blockNumber();
+    int blockNumber() const;
 
     void setBlockNumber(const int value);
 

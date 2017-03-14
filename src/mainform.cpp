@@ -1363,7 +1363,9 @@ void MainForm::saveProjectAs()
     sp.exec();
     QString pp = sp.projectPath();
     if (pp == "")
-    { return; }
+    {
+        return;
+    }
     QDir dir(pp);
     if (!dir.mkpath(pp))
     {

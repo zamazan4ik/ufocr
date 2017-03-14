@@ -637,10 +637,6 @@ void Page::deskew(int x1, int y1, int x2, int y2)
     float dy = y2 - y1;
 
     float angle = -atan(dy / dx) * 360 / 6.283;
-    if (std::abs(angle) >= 45)
-    {
-        return;
-    }
     deskewed = true;
     if (std::abs(angle * 100) < 1)
     {
@@ -649,7 +645,7 @@ void Page::deskew(int x1, int y1, int x2, int y2)
     rotate(angle);
     rotation = angle;
     ImageProcessor::cropAngles(img);
-    QString fn = saveTmpPage("YGF");
+    QString fn = saveTmpPage("BMP");
     deskewed = true;
     loadFile(fn, 1);
 }
@@ -762,11 +758,7 @@ QString Page::fileName()
 
 QString Page::originalFileName() const
 {
-    if (originalFN.isEmpty())
-    {
-        return mFileName;
-    }
-    return originalFN;
+    return originalFN.isEmpty() ? mFileName : originalFN;
 }
 
 void Page::setOriginalFileName(const QString& fn)
@@ -782,15 +774,18 @@ int Page::pageID()
 void Page::sortBlocksInternal()
 {
     bool allBlocksNumbered = true;
-            foreach(Block b, blocks)if (b.blockNumber() == 0)
-            {
-                allBlocksNumbered = false;
-            }
-    if (allBlocksNumbered)
+    for (const Block b : blocks)
     {
-        return;
+        if (b.blockNumber() == 0)
+        {
+            allBlocksNumbered = false;
+            break;
+        }
     }
-    sortBlocks(blocks);
+    if (!allBlocksNumbered)
+    {
+        sortBlocks(blocks);
+    }
 }
 
 bool Page::isDeskewed()

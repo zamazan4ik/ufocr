@@ -43,7 +43,7 @@ Block::Block()
 {
 }
 
-int Block::blockNumber()
+int Block::blockNumber() const
 {
     return number;
 }
