@@ -559,6 +559,13 @@ void MainForm::closeEvent(QCloseEvent* event)
     settings->setPosition(pos());
     settings->setFullScreen(isFullScreen());
     settings->writeSettings();
+
+    //If pages are empty, we haven't any useful info to save
+    if(pages->empty())
+    {
+        dirty = false;
+    }
+
     if (dirty)
     {
         QPixmap icon;
@@ -1644,7 +1651,6 @@ void MainForm::textChanged()
 
 void MainForm::afterConstructor()
 {
-
     QString autosaveDir = settings->workingDir() + "autosave/";
     QDir dir(autosaveDir);
     if (!dir.exists())
@@ -1666,7 +1672,6 @@ void MainForm::afterConstructor()
             loadAutoSaved();
         }
         delAutoSaveFiles();
-
     }
 }
 

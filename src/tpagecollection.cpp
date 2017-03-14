@@ -804,3 +804,8 @@ void PageCollection::whiteBalance()
     }
     cp()->whiteBalance();
 }
+
+bool PageCollection::empty() const
+{
+    return pages.empty();
+}

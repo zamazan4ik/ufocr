@@ -135,6 +135,7 @@ public:
 
     void restoreCurrentIndex();
 
+    bool empty() const;
 public slots:
 
     void makeLarger();

@@ -107,7 +107,6 @@ void SideBar::showContextMenuForWidget(const QPoint &pos)
         return;
     }
     QAction* act = new QAction(QString("Close"), this);
-    //((Snippet*) item)->pageID())
     connect(act, SIGNAL(triggered()), signalMapper, SLOT(map()));
     signalMapper->setMapping(act, (QObject*)item);
     contextMenu.addAction(act);
@@ -219,11 +218,10 @@ void SideBar::selectFirstFile()
 
 void SideBar::deleteFile(QObject* item)
 {
-    Snippet* ptr = (Snippet*) item;
-    QListWidgetItem* ptr2 = (QListWidgetItem*)item;
-    int id = ptr->pageID();
+    //TODO: What can i do with these ugly casts?
+    int id = ((Snippet*) item)->pageID();
     QListWidget::removeItemWidget((QListWidgetItem*)item);
-    ptr2->~QListWidgetItem();
+    ((QListWidgetItem*)item)->~QListWidgetItem();
     emit fileRemoved(id);
 }
 
