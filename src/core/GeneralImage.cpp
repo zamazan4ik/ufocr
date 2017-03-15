@@ -18,21 +18,20 @@
 */
 
 #include "GeneralImage.hpp"
+#include "cvmatandqimage.h"
 
 GeneralImage::GeneralImage(const cv::Mat& val) : img_(val.clone())
 {
 }
 
-GeneralImage::GeneralImage(const QImage& val) :
-        img_(cv::Mat(val.height(), val.width(), CV_8UC3,
-                     const_cast<uchar*>(val.bits()), val.bytesPerLine()).clone())
+GeneralImage::GeneralImage(const QImage& val)
 {
+    img_ = QtOcv::image2Mat(val);
 }
 
 QImage GeneralImage::toQImage(QImage::Format format /*= QImage::Format_ARGB32*/) const
 {
-    return QImage(img_.data, img_.cols, img_.rows,
-                  img_.step, format).copy();
+    return QtOcv::mat2Image(img_);
 }
 
 cv::Mat& GeneralImage::Ref()

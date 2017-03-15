@@ -69,7 +69,7 @@ set(SOURCES src/main.cpp src/mainform.cpp src/qgraphicsinput.cpp src/utils.cpp s
     src/core/binarize.cpp src/core/qipblackandwhiteimage.cpp src/core/qipgrayscaleimage.cpp src/core/subimagepp.cpp
     src/core/tableanalizer.cpp src/core/pageanalysis.cpp src/core/pixelwindow.cpp src/extprocessdialog.cpp src/djvu2pdf.cpp
     src/projectfiles.cpp src/saveprojectdialog.cpp src/fileobjectitem.cpp src/loadprojectdialog.cpp src/autosaver.cpp src/waitwindow.cpp src/globallock.cpp
-    src/core/GeneralImage.cpp src/core/GeneralImage.hpp)
+    src/core/GeneralImage.cpp src/core/GeneralImage.hpp src/core/cvmatandqimage.cpp src/core/cvmatandqimage.h)
 
 set(HEADERS src/settings.h)
 
@@ -116,7 +116,7 @@ target_link_libraries(xspreload ${CMAKE_DL_LIBS})
 target_link_libraries(yagf Qt5::Widgets Qt5::Gui Qt5::Concurrent Qt5::Core Qt5::PrintSupport ${ASPELL_LIBRARIES} ${OpenCV_LIBSS}
         libleptonica.a
 
-        liblibjpeg.a
+        #liblibjpeg.a
         libzlib.a
         liblibtiff.a
         libippicv.a
