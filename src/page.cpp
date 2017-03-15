@@ -1085,10 +1085,10 @@ void Page::renumberBlocks()
 
 void Page::binarize()
 {
+    //TODO: Add new binarization algorithms
     //img = QIPGrayscaleImage(img, QIPGrayscaleImage::GrayscaleConversion::MinValue).binarize(QIPGrayscaleImage::BinarizationMethod::OtsuBinarization).toImage();
     GeneralImage gen(img);
     cv::cvtColor(gen.Ref(), gen.Ref(), CV_RGB2GRAY);
-    cv::imwrite("/media/zamazan4ik/For_Linux/Trash/img_bw3.jpg", gen.Ref());
     cv::threshold(gen.Ref(), gen.Ref(), 0, 255, CV_THRESH_BINARY | CV_THRESH_OTSU);
     img = gen.toQImage();
 }
@@ -1098,12 +1098,9 @@ void Page::binarize()
 
 void Page::whiteBalance()
 {
-    //TODO: Check: works or not
+    //TODO: Add choosing balance white algorithm
     GeneralImage gen(img);
-    auto alg = cv::xphoto::createGrayworldWB();
-    alg->setSaturationThreshold(0.9);
-    cv::Mat dst = gen.Ref().clone();
-    alg->balanceWhite(gen.Ref(), dst);
-
-    img = ;
+    auto alg = cv::xphoto::createSimpleWB();
+    alg->balanceWhite(gen.Ref(), gen.Ref());
+    img = gen.toQImage();
 }
