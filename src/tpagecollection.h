@@ -103,6 +103,8 @@ public:
 
     qreal getRotation();
 
+    void bilateral();
+
     void whiteBalance();
 
     void binarize();

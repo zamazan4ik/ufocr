@@ -805,6 +805,15 @@ void PageCollection::whiteBalance()
     cp()->whiteBalance();
 }
 
+void PageCollection::bilateral()
+{
+    if (!cp())
+    {
+        return;
+    }
+    cp()->bilateral();
+}
+
 bool PageCollection::empty() const
 {
     return pages.empty();

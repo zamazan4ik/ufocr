@@ -20,13 +20,15 @@
 #include "GeneralImage.hpp"
 #include "cvmatandqimage.h"
 
+//TODO: Be careful with internal cv::Mat type
+
 GeneralImage::GeneralImage(const cv::Mat& val) : img_(val.clone())
 {
 }
 
 GeneralImage::GeneralImage(const QImage& val)
 {
-    img_ = QtOcv::image2Mat(val);
+    img_ = QtOcv::image2Mat(val, CV_8UC3);
 }
 
 QImage GeneralImage::toQImage(QImage::Format format /*= QImage::Format_ARGB32*/) const

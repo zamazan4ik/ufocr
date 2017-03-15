@@ -1098,9 +1098,18 @@ void Page::binarize()
 
 void Page::whiteBalance()
 {
-    //TODO: Add choosing balance white algorithm
+    //TODO: Add choosing balance white algorithm.
+    //Problem: Grayworld algorithm crashes
     GeneralImage gen(img);
     auto alg = cv::xphoto::createSimpleWB();
     alg->balanceWhite(gen.Ref(), gen.Ref());
     img = gen.toQImage();
+}
+
+void Page::bilateral()
+{
+    //TODO: Add other smooth algorithms support
+    GeneralImage gen(img), out(img);
+    cv::bilateralFilter(gen.Ref(), out.Ref(), 9, 80, 80);
+    img = out.toQImage();
 }

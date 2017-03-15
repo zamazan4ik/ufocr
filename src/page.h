@@ -101,6 +101,8 @@ public:
 
     bool splitPage(bool preprocess);
 
+    void bilateral();
+
     void whiteBalance();
 
     void binarize();
