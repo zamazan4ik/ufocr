@@ -52,7 +52,6 @@ Settings* Settings::instance()
 
 void Settings::readSettings(const QString& path)
 {
-    logger->info("Read settings");
     mPath = path;
     mPath = mPath.append("yagf.ini");
     settings = new QSettings(mPath, QSettings::IniFormat);
@@ -137,8 +136,6 @@ bool Settings::firstRun()
 
 void Settings::writeSettings()
 {
-    logger->info("Write settings");
-
     settings->setValue("program/version", QString::fromUtf8("0.9.5"));
     settings->setValue("mainwindow/size", size);
     settings->setValue("mainwindow/iconSize", iconSize);
