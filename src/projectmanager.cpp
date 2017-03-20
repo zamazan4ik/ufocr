@@ -410,7 +410,9 @@ bool ProjectLoader::loadInternal(const QString& dir, const QString& fn)
 {
     directory = dir;
     if (!directory.endsWith("/"))
-    { directory = directory + "/"; }
+    {
+        directory = directory + "/";
+    }
     QString fileName = directory + fn;
     QFile f(fileName);
     if (!f.open(QIODevice::ReadOnly))

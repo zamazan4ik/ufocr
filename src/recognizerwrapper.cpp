@@ -52,7 +52,6 @@ void RecognizerWrapper::startSingleBlock()
     rwi->recognizeInternal();
 }
 
-
 void RecognizerWrapper::cancel()
 {
     rwi->supressErros = true;

@@ -31,28 +31,29 @@
 
 void parseCmdLine(const QStringList& args)
 {
-            for(const QString& arg : args)
+    for (const QString& arg : args)
+    {
+        if (arg == "-h" || arg == "--help")
         {
-            if (arg == "-h" || arg == "--help")
-            {
-                printf("Using:\n"
-                               "  ufocr\n"
-                               "  ufocr <Key>\n"
-                               "  ufocr <file name> [file name [file name]...]\n"
-                               "UFOCR is a program for OCR.\n"
-                               "\n"
-                               "Keys:\n"
-                               "  -h, --help\t Show this message and exit\n"
-                               "  -V, --version\t Show version string and exit\n");
-                exit(0);
-            }
-            else if (arg == "-V" || arg == "--version")
-            {
-                printf("UFOCR version: %s\n", version.toUtf8().constData());
-                exit(0);
-            }
+            printf("Using:\n"
+                           "  ufocr\n"
+                           "  ufocr <Key>\n"
+                           "  ufocr <file name> [file name [file name]...]\n"
+                           "UFOCR is a program for OCR.\n"
+                           "\n"
+                           "Keys:\n"
+                           "  -h, --help\t Show this message and exit\n"
+                           "  -v, --version\t Show version string and exit\n");
+            exit(0);
         }
+        else if (arg == "-v" || arg == "--version")
+        {
+            printf("UFOCR version: %s\n", version.toUtf8().constData());
+            exit(0);
+        }
+    }
 }
+
 
 int main(int argc, char* argv[])
 {
@@ -63,8 +64,9 @@ int main(int argc, char* argv[])
     settings->writeSettings();
     //Init logger
     QDir(settings->workingDir()).mkdir("logs");
-    logger = spdlog::basic_logger_mt("MainLog", settings->workingDir().toStdString() + "logs/log.txt");
+    logger = spdlog::basic_logger_mt("MainLog", createLogFilename(settings->workingDir().toStdString() + "logs/"));
     logger->info("Start program");
+
     QTranslator translator;
     QString qmName = "yagf_" + QLocale::system().name();
     if (!settings->useNoLocale())

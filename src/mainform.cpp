@@ -427,7 +427,7 @@ void MainForm::showConfigDlg()
 
 void MainForm::importPDF(const QString& fileName)
 {
-    logger->info("Import PDF");
+    logger->info("Import PDF: " + fileName.toStdString());
     if (!pdfx)
     {
         logger->info("No compatible PDF converter software could be found.");
@@ -457,7 +457,7 @@ void MainForm::importPDF(const QString& fileName)
 
 void MainForm::importDjVu(const QString& fileName)
 {
-    logger->info("Import Djvu");
+    logger->info("Import Djvu: " + fileName.toStdString());
     dj2pf->convert(fileName);
 }
 
@@ -681,7 +681,9 @@ void MainForm::initSettings()
 void MainForm::newLanguageSelected(int index)
 {
     if (index < 0)
-    { return; }
+    {
+        return;
+    }
     settings->setLanguage(selectLangsBox->itemData(index).toString());
     actionCheck_spelling->setEnabled(textEdit->hasDict(settings->getLanguage()));
     if (settings->getCheckSpelling())
@@ -706,6 +708,7 @@ void MainForm::scanImage()
         scanner = sf->createScannerFE("xsane");
         if (scanner == nullptr)
         {
+            logger->warn("No scanning front-end is found");
             styledWarningMessage(this,
                                  trUtf8("Scanning is impossible. No scanning front-end is found.\nPlease install XSane in order to perform scanning."));
             return;
@@ -720,7 +723,7 @@ void MainForm::scanImage()
 void MainForm::loadFile(const QString& fn, bool loadIntoView)
 {
     // dirty = true;
-    logger->info("Load file");
+    logger->info("Load file: " + fn.toStdString());
     QCursor oldCursor = cursor();
     setCursor(Qt::WaitCursor);
     if (pages->appendPage(fn))
@@ -742,7 +745,7 @@ void MainForm::loadFile(const QString& fn, bool loadIntoView)
 
 void MainForm::loadTIFF(const QString& fn, bool loadIntoView)
 {
-    logger->info("Import TIFF");
+    logger->info("Import TIFF: " + fn.toStdString());
     TiffImporter ti(fn);
     ti.exec();
     QStringList files = ti.extractedFiles();

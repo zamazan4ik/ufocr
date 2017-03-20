@@ -46,13 +46,13 @@ LangSelectDialog::~LangSelectDialog()
 QStringList LangSelectDialog::getRecognitionLanguages() const
 {
     QStringList res;
-            for(const QListWidgetItem* item : items)
+    for (const QListWidgetItem* item : items)
+    {
+        if (item->checkState() == Qt::Checked)
         {
-            if (item->checkState() == Qt::Checked)
-            {
-                res.append(item->text());
-            }
+            res.append(item->text());
         }
+    }
     res.removeDuplicates();
     return res;
 }
@@ -71,13 +71,13 @@ void LangSelectDialog::accept()
 
 void LangSelectDialog::onItemClicked(QListWidgetItem* item)
 {
-            for(QListWidgetItem* it : items)
+    for (QListWidgetItem* it : items)
+    {
+        if (it->text() == item->text())
         {
-            if (it->text() == item->text())
-            {
-                it->setCheckState(item->checkState());
-            }
+            it->setCheckState(item->checkState());
         }
+    }
 }
 
 void LangSelectDialog::fillLangs()
@@ -129,9 +129,7 @@ void LangSelectDialog::fillLangs()
             item->setCheckState(Qt::Checked);
             item->setIcon(QIcon(QPixmap(":/images/box.png")));
             item->setToolTip(trUtf8("Installed"));
-
         }
-
     }
 }
 

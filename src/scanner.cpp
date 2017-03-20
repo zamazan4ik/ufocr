@@ -19,6 +19,7 @@
 
 #include "scanner.h"
 #include "utils.h"
+#include "logger.hpp"
 #include <QFileInfo>
 
 
@@ -37,6 +38,7 @@ public:
 
     void exec()
     {
+        logger->info("Start xsane");
         waitFor();
         execInternal("xsane");
     }

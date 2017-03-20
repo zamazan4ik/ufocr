@@ -68,7 +68,6 @@ bool TextEditor::hasDict(const QString& shname)
     return spellChecker.hasDict(shname);
 }
 
-
 void TextEditor::keyPressEvent(QKeyEvent* e)
 {
     if (e->modifiers() & Qt::ControlModifier)
@@ -244,7 +243,9 @@ void TextEditor::decreaseFont()
     Settings* settings = Settings::instance();
     int fontSize = font().pointSize();
     if (fontSize > 1)
-    { fontSize--; }
+    {
+        fontSize--;
+    }
     QFont f(font());
     f.setPointSize(fontSize);
     setFont(f);

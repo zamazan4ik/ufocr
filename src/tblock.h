@@ -43,7 +43,7 @@ public:
 
     bool isTableCell();
 
-    void setRowEnd(bool value);
+    void setRowEnd(const bool value);
 
     bool isRowEnd();
 

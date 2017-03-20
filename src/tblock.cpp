@@ -68,7 +68,7 @@ bool Block::isTableCell()
     return tableCell;
 }
 
-void Block::setRowEnd(bool value)
+void Block::setRowEnd(const bool value)
 {
     rowEnd = value;
 }
