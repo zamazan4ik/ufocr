@@ -92,13 +92,13 @@ Bars CCAnalysis::getBars() const
 
 int listContains(QList<Rect>& list, int label)
 {
-            foreach (Rect r, list)
+    for (const Rect r : list)
+    {
+        if (r.label == label)
         {
-            if (r.label == label)
-            {
-                return list.indexOf(r);
-            }
+            return list.indexOf(r);
         }
+    }
     return -1;
 }
 
@@ -304,21 +304,25 @@ void CCAnalysis::addBarsHorizontal(int hoffset, int height, int woffset, int wid
     {
         width = builder->width();
     }
-    for (int i = hoffset; i < height; i++)
+    for (int i = hoffset; i < height; ++i)
+    {
         li[i] = false;
-            foreach (TextLine tl, lines)
+    }
+    for (const TextLine& tl : lines)
+    {
+        if (tl.count() == 1)
         {
-            if (tl.count() == 1)
-            {
-                continue;
-            }
-                    foreach(GlyphInfo gi, tl)  // OPTIMIZE
-                    if (_contains(woffset, width, gi.x))
-                    {
-                        for (int i = gi.y - gi.h / 2; i < gi.y + gi.h / 2; i++)
-                            li[i] = true;
-                    }
+            continue;
         }
+        for (const GlyphInfo& gi : tl)
+        {// OPTIMIZE
+            if (_contains(woffset, width, gi.x))
+            {
+                for (int i = gi.y - gi.h / 2; i < gi.y + gi.h / 2; i++)
+                    li[i] = true;
+            }
+        }
+    }
     int him = 0;
     int hlm = 0;
     int lcount = 0;
@@ -453,11 +457,13 @@ void CCAnalysis::addBarsVertical()
     int* li = new int[builder->width()];
     for (int i = 0; i < builder->width(); i++)
         li[i] = 0;
-            foreach(Rect c, components.values())
+    for (const Rect& c : components.values())
+    {
+        for (int j = c.x1; j <= c.x2; j++)
         {
-            for (int j = c.x1; j <= c.x2; j++)
-                li[j]++;
+            li[j]++;
         }
+    }
     int liprev = 1000;
     for (int i = 0; i < builder->width(); i++)
     {
@@ -560,12 +566,12 @@ bool CCAnalysis::getComponentParams()
     int wacc = 0;
     int hacc = 0;
     int count = 0;
-            foreach(Rect r, components.values())
-        {
-            wacc += (r.x2 - r.x1);
-            hacc += (r.y2 - r.y1);
-            count++;
-        }
+    for (const Rect& r : components.values())
+    {
+        wacc += (r.x2 - r.x1);
+        hacc += (r.y2 - r.y1);
+        count++;
+    }
     if (count == 0)
     {
         return false;

@@ -219,11 +219,11 @@ void TextEditor::contextMenuRequested(const QPoint& point)
     {
         menu->addSeparator();
     }
-            foreach(QString str, sl)
-        {
-            QAction* action = menu->addAction(str);
-            connect(action, SIGNAL(triggered()), this, SLOT(replaceWord()));
-        }
+    for (const QString& str : sl)
+    {
+        QAction* action = menu->addAction(str);
+        connect(action, SIGNAL(triggered()), this, SLOT(replaceWord()));
+    }
     menu->exec(mapToGlobal(point));
     delete menu;
 }

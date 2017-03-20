@@ -69,7 +69,7 @@ set(SOURCES src/main.cpp src/mainform.cpp src/qgraphicsinput.cpp src/utils.cpp s
     src/core/binarize.cpp src/core/qipblackandwhiteimage.cpp src/core/qipgrayscaleimage.cpp src/core/subimagepp.cpp
     src/core/tableanalizer.cpp src/core/pageanalysis.cpp src/core/pixelwindow.cpp src/extprocessdialog.cpp src/djvu2pdf.cpp
     src/projectfiles.cpp src/saveprojectdialog.cpp src/fileobjectitem.cpp src/loadprojectdialog.cpp src/autosaver.cpp src/waitwindow.cpp src/globallock.cpp
-    src/core/GeneralImage.cpp src/core/GeneralImage.hpp src/core/cvmatandqimage.cpp src/core/cvmatandqimage.h)
+    src/core/GeneralImage.cpp src/core/GeneralImage.hpp src/core/cvmatandqimage.cpp src/core/cvmatandqimage.h src/logger.hpp src/logger.cpp)
 
 set(HEADERS src/settings.h)
 

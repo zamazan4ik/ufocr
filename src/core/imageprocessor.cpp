@@ -23,6 +23,7 @@
 #include "subimagepp.h"
 #include "settings.h"
 #include "tableanalizer.h"
+#include "logger.hpp"
 #include <QImage>
 #include <QMap>
 #include <QVector>
@@ -44,6 +45,7 @@ ImageProcessor::~ImageProcessor()
 
 QRect ImageProcessor::crop()
 {
+    logger->info("Start crop");
     QRect r;
     try
     {
@@ -186,7 +188,7 @@ void ImageProcessor::polishImage(QImage& image)
 
 void ImageProcessor::polishImage2(QImage& image)
 {
-
+    //TODO: Check this method.
     /*for (int y = 0; y < image.height(); y++) {
         quint8 * line = image.scanLine(y);
         uint strokLen = 24;
@@ -247,6 +249,7 @@ void ImageProcessor::polishImage2(QImage& image)
 
 bool ImageProcessor::isTextHorizontal(QImage& image)
 {
+    //TODO: Should be implemented.
     return true;
     if (image.width() > image.height())
     {

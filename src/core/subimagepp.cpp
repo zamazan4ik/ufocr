@@ -77,10 +77,10 @@ void SubimagePP::fillComponents()
 void SubimagePP::removeBars()
 {
     QSet<quint32> barLabels;
-            foreach (Rect r, bars)
-        {
-            barLabels.insert(r.label);
-        }
+    for (const Rect& r : bars)
+    {
+        barLabels.insert(r.label);
+    }
     labelsToBackground(barLabels);
 }
 
@@ -89,39 +89,39 @@ void SubimagePP::removeNoise()
     int sf = Settings::instance()->getSkipWidth();
     sf *= sf;
     QSet<quint32> noiseLabels;
-            foreach (Rect r, components)
+    for (const Rect& r : components)
+    {
+        if (r.dotCount < 3)
         {
-            if (r.dotCount < 3)
+            noiseLabels.insert(r.label);
+        }
+        if ((r.x1 == r.x2) || (r.y1 == r.y2))
+        {
+            noiseLabels.insert(r.label);
+        }
+        if (abs((r.x2 - r.x1) * (r.y2 - r.y1)) >= mgw * mgw * sf)
+        {
+            noiseLabels.insert(r.label);
+        }
+        if ((r.y1 == 0) || (r.y2 == img.height() - 1))
+        {
+            if (r.y2 - r.y1 < mgh / 2)
             {
                 noiseLabels.insert(r.label);
-            }
-            if ((r.x1 == r.x2) || (r.y1 == r.y2))
-            {
-                noiseLabels.insert(r.label);
-            }
-            if (abs((r.x2 - r.x1) * (r.y2 - r.y1)) >= mgw * mgw * sf)
-            {
-                noiseLabels.insert(r.label);
-            }
-            if ((r.y1 == 0) || (r.y2 == img.height() - 1))
-            {
-                if (r.y2 - r.y1 < mgh / 2)
-                {
-                    noiseLabels.insert(r.label);
-                }
-            }
-            if ((r.x1 == 0) || (r.x2 == img.width() - 1))
-            {
-                if (r.y2 - r.y1 < mgh / 2)
-                {
-                    noiseLabels.insert(r.label);
-                }
-                if (r.y2 - r.y1 > 2 * mgh)
-                {
-                    noiseLabels.insert(r.label);
-                }
             }
         }
+        if ((r.x1 == 0) || (r.x2 == img.width() - 1))
+        {
+            if (r.y2 - r.y1 < mgh / 2)
+            {
+                noiseLabels.insert(r.label);
+            }
+            if (r.y2 - r.y1 > 2 * mgh)
+            {
+                noiseLabels.insert(r.label);
+            }
+        }
+    }
     labelsToBackground(noiseLabels);
 }
 

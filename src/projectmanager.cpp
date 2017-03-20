@@ -438,15 +438,15 @@ void ProjectLoader::deleteGarbageFiles()
     QDir dir;
     dir.setPath(directory);
     QFileInfoList fil = dir.entryInfoList();
-            foreach (QFileInfo fi, fil)
+    for (const QFileInfo& fi : fil)
+    {
+        if (!filesLoaded.contains(fi.fileName()))
         {
-            if (!filesLoaded.contains(fi.fileName()))
+            QString bm = fi.fileName();
+            if (!bm.endsWith(".xml"))
             {
-                QString bm = fi.fileName();
-                if (!bm.endsWith(".xml"))
-                {
-                    dir.remove(fi.filePath());
-                }
+                dir.remove(fi.filePath());
             }
         }
+    }
 }

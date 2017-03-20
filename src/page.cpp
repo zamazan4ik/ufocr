@@ -19,6 +19,7 @@
 
 #include "page.h"
 #include "settings.h"
+#include "logger.hpp"
 #include "core/ccbuilder.h"
 #include "core/rotationcropper.h"
 #include "core/pageanalysis.h"
@@ -33,6 +34,11 @@
 #include <cmath>
 #include <iostream>
 #include <vector>
+
+#include <opencv2/imgproc.hpp>
+#include <opencv2/highgui.hpp>
+#include <opencv2/xphoto.hpp>
+
 
 Page::Page(const int pid, QObject* parent) :
         QObject(parent), selectedBlock(0, 0, 0, 0)
@@ -266,16 +272,16 @@ bool Page::makeSmaller()
 
 void Page::clearIntersected()
 {
-            foreach (Block b, blocks)
+    for (const Block& b : blocks)
+    {
+        QRect r = b;
+        Block ir = includes(r);
+        if (ir.width() != 0)
         {
-            QRect r = b;
-            Block ir = includes(r);
-            if (ir.width() != 0)
-            {
-                deleteBlock((b.blockNumber() < ir.blockNumber() ? b : ir));
-                break;
-            }
+            deleteBlock((b.blockNumber() < ir.blockNumber() ? b : ir));
+            break;
         }
+    }
 }
 
 void Page::rotate(qreal angle)
@@ -1080,11 +1086,9 @@ void Page::renumberBlocks()
     }
 }
 
-#include <opencv2/imgproc.hpp>
-#include <opencv2/highgui.hpp>
-
 void Page::binarize()
 {
+    logger->info("Run binarization");
     //TODO: Add new binarization algorithms
     //img = QIPGrayscaleImage(img, QIPGrayscaleImage::GrayscaleConversion::MinValue).binarize(QIPGrayscaleImage::BinarizationMethod::OtsuBinarization).toImage();
     GeneralImage gen(img);
@@ -1093,11 +1097,9 @@ void Page::binarize()
     img = gen.toQImage();
 }
 
-#include <opencv2/xphoto.hpp>
-
-
 void Page::whiteBalance()
 {
+    logger->info("Run white balance");
     //TODO: Add choosing balance white algorithm.
     //Problem: Grayworld algorithm crashes
     GeneralImage gen(img);
@@ -1108,6 +1110,7 @@ void Page::whiteBalance()
 
 void Page::bilateral()
 {
+    logger->info("Run bilateral filter");
     //TODO: Add other smooth algorithms support
     GeneralImage gen(img), out(img);
     cv::bilateralFilter(gen.Ref(), out.Ref(), 9, 80, 80);

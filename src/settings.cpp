@@ -19,6 +19,7 @@
 
 #include "settings.h"
 #include "utils.h"
+#include "logger.hpp"
 #include <QProcessEnvironment>
 #include <QDir>
 #include <QLocale>
@@ -51,6 +52,7 @@ Settings* Settings::instance()
 
 void Settings::readSettings(const QString& path)
 {
+    logger->info("Read settings");
     mPath = path;
     mPath = mPath.append("yagf.ini");
     settings = new QSettings(mPath, QSettings::IniFormat);
@@ -135,6 +137,8 @@ bool Settings::firstRun()
 
 void Settings::writeSettings()
 {
+    logger->info("Write settings");
+
     settings->setValue("program/version", QString::fromUtf8("0.9.5"));
     settings->setValue("mainwindow/size", size);
     settings->setValue("mainwindow/iconSize", iconSize);
@@ -147,11 +151,13 @@ void Settings::writeSettings()
     settings->setValue("mainwindow/nolocale", noLocale);
     settings->setValue("mainwindow/rulocale", RussianLocale);
     settings->setValue("ocr/language", language);
-    for (int i = languages.count() - 1; i >= 0; i--)
+    for (int i = languages.count() - 1; i >= 0; --i)
+    {
         if (languages.at(i).contains("+"))
         {
             languages.removeAt(i);
         }
+    }
     if (!languages.contains("digits"))
     {
         languages << "digits";
@@ -522,19 +528,19 @@ QStringList Settings::fullLanguageNames()
 QStringList Settings::getSelectedLanguages()
 {
     QStringList res;
-            foreach (QString s, languages)
+    for (const QString& s : languages)
+    {
+        QString l = getFullLanguageName(s, "tesseract");
+        if (l != "")
         {
-            QString l = getFullLanguageName(s, "tesseract");
-            if (l != "")
-            {
-                res.append(l);
-            }
-            l = getFullLanguageName(s, "cuneiform");
-            if (l != "")
-            {
-                res.append(l);
-            }
+            res.append(l);
         }
+        l = getFullLanguageName(s, "cuneiform");
+        if (l != "")
+        {
+            res.append(l);
+        }
+    }
     res.removeDuplicates();
     return res;
 }
@@ -544,23 +550,23 @@ QStringList Settings::selectedLanguagesAvailableTo(const QString& engine)
     QStringList res;
     if (engine == "cuneiform")
     {
-                foreach(QString s, languages)
+        for (const QString& s : languages)
+        {
+            if (cuMap.values().contains(s))
             {
-                if (cuMap.values().contains(s))
-                {
-                    res.append(cuMap.key(s, ""));
-                }
+                res.append(cuMap.key(s, ""));
             }
+        }
     }
     if (engine == "tesseract")
     {
-                foreach(QString s, languages)
+        for (const QString& s : languages)
+        {
+            if (tesMap.values().contains(s))
             {
-                if (tesMap.values().contains(s))
-                {
-                    res.append(tesMap.key(s, ""));
-                }
+                res.append(tesMap.key(s, ""));
             }
+        }
     }
     return res;
 }
@@ -584,16 +590,16 @@ QStringList Settings::installedTesseractLanguages()
     QDir d(tessPath);
     QStringList res;
     QStringList sl = d.entryList(QStringList("*.traineddata"));
-            foreach (QString s, tesMap.values())
+    for (const QString& s : tesMap.values())
+    {
+        for (const QString& s1 : sl)
         {
-                    foreach(QString s1, sl)
-                {
-                    if (s1.startsWith(s))
-                    {
-                        res.append(tesMap.key(s, ""));
-                    }
-                }
+            if (s1.startsWith(s))
+            {
+                res.append(tesMap.key(s, ""));
+            }
         }
+    }
     res.removeDuplicates();
     return res;
 }
@@ -622,15 +628,19 @@ bool Settings::getRowFromBNewLine()
 void Settings::setSelectedLanguages(const QStringList& value)
 {
     languages.clear();
-            foreach (QString s, value)
+    for (const QString& s : value)
+    {
+        QString l = getShortLanguageName(s, "tesseract");
+        if (l != "")
         {
-            QString l = getShortLanguageName(s, "tesseract");
-            if (l != "")
-            { languages.append(l); }
-            l = getShortLanguageName(s, "cuneiform");
-            if (l != "")
-            { languages.append(l); }
+            languages.append(l);
         }
+        l = getShortLanguageName(s, "cuneiform");
+        if (l != "")
+        {
+            languages.append(l);
+        }
+    }
     languages.removeDuplicates();
 }
 

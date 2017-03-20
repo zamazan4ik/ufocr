@@ -22,6 +22,7 @@
 #include <QProcess>
 #include <QDir>
 #include <QImageReader>
+#include "logger.hpp"
 
 TiffImporter::TiffImporter(const QString& fileName, QObject* parent) :
         QObject(parent), tiffName(fileName)
@@ -44,10 +45,12 @@ void TiffImporter::exec()
     QString cmd = QString(
             "convert %1  -units PixelsPerInch -resize %2x%3 -units PixelsPerInch -density %4  t%5_out.jpg").arg(
             tiffName).arg(size).arg(size).arg(density).arg(Settings::instance()->uniqueSeed());
+    logger->info("Run ImageMagick convert for TIFF converting");
     proc.start(cmd);
     proc.waitForFinished();
     if (proc.exitStatus() != QProcess::NormalExit)
     {
+        logger->info("ImageMagick convert failed");
         emit error();
         return;
     }
@@ -61,7 +64,9 @@ void TiffImporter::exec()
         }
     }
     if (files.count())
-            emit { finished(files); }
+    {
+        emit { finished(files); }
+    }
     else
     {
         QImageReader ir(tiffName);

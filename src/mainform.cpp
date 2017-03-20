@@ -72,6 +72,7 @@
 #include <QToolTip>
 #include <QPoint>
 #include <QAction>
+#include "logger.hpp"
 
 
 MainForm::MainForm(QWidget* parent) : QMainWindow(parent)
@@ -426,8 +427,10 @@ void MainForm::showConfigDlg()
 
 void MainForm::importPDF(const QString& fileName)
 {
+    logger->info("Import PDF");
     if (!pdfx)
     {
+        logger->info("No compatible PDF converter software could be found.");
         styledCriticalMessage(this,
                               trUtf8("No compatible PDF converter software could be found. Please install either the pdftoppm utility or the GhostScript package (from this the gs command will be required)."));
         return;
@@ -454,6 +457,7 @@ void MainForm::importPDF(const QString& fileName)
 
 void MainForm::importDjVu(const QString& fileName)
 {
+    logger->info("Import Djvu");
     dj2pf->convert(fileName);
 }
 
@@ -522,13 +526,13 @@ void MainForm::loadImage()
         QStringList fileNames;
         fileNames = dialog.selectedFiles();
         settings->setLastDir(dialog.directory().path());
-                foreach(QString fn, fileNames)
+        for (const QString& fn : fileNames)
+        {
+            if (fn.endsWith(".pdf", Qt::CaseInsensitive))
             {
-                if (fn.endsWith(".pdf", Qt::CaseInsensitive))
-                {
-                    importPDF(fn);
-                }
+                importPDF(fn);
             }
+        }
         for (int i = fileNames.count() - 1; i >= 0; i--)
         {
             if (fileNames.at(i).endsWith(".pdf", Qt::CaseInsensitive))
@@ -562,7 +566,7 @@ void MainForm::closeEvent(QCloseEvent* event)
     settings->writeSettings();
 
     //If pages are empty, we haven't any useful info to save
-    if(pages->empty())
+    if (pages->empty())
     {
         dirty = false;
     }
@@ -716,6 +720,7 @@ void MainForm::scanImage()
 void MainForm::loadFile(const QString& fn, bool loadIntoView)
 {
     // dirty = true;
+    logger->info("Load file");
     QCursor oldCursor = cursor();
     setCursor(Qt::WaitCursor);
     if (pages->appendPage(fn))
@@ -737,6 +742,7 @@ void MainForm::loadFile(const QString& fn, bool loadIntoView)
 
 void MainForm::loadTIFF(const QString& fn, bool loadIntoView)
 {
+    logger->info("Import TIFF");
     TiffImporter ti(fn);
     ti.exec();
     QStringList files = ti.extractedFiles();
@@ -777,10 +783,10 @@ void MainForm::delAutoSaveFiles()
 {
     QString autosaveDir = settings->workingDir() + "autosave/";
     QDir dir1(autosaveDir);
-            foreach(QString s, dir1.entryList())
-        {
-            QFile::remove(autosaveDir + s);
-        }
+    for (const QString s : dir1.entryList())
+    {
+        QFile::remove(autosaveDir + s);
+    }
 }
 
 void MainForm::loadNextPage()
@@ -911,12 +917,12 @@ void MainForm::createRecentMenu()
 {
     QMenu* project = new QMenu();
     QStringList sl = settings->getRecentProjects();
-            foreach (QString s, sl)
-        {
-            MenuAction* ma = new MenuAction(s);
-            connect(ma, SIGNAL(triggered(QString)), this, SLOT(menuTriggered(QString)));
-            project->addAction(ma);
-        }
+    for (const QString& s : sl)
+    {
+        MenuAction* ma = new MenuAction(s);
+        connect(ma, SIGNAL(triggered(QString)), this, SLOT(menuTriggered(QString)));
+        project->addAction(ma);
+    }
     actionRecent_Projects->setMenu(project);
 }
 
@@ -989,17 +995,25 @@ void MainForm::saveTextInternal(bool allText)
         //TODO: rewrite this terrible code
         if (allText)
         {
-            if(fileNames.at(0).endsWith(".txt"))
+            if (fileNames.at(0).endsWith(".txt"))
+            {
                 PageCollection::instance()->saveAllText(fileNames.at(0), true);
-            else if(fileNames.at(0).endsWith(".pdf"))
+            }
+            else if (fileNames.at(0).endsWith(".pdf"))
+            {
                 PageCollection::instance()->saveAsPdf(fileNames.at(0), true);
+            }
         }
         else
         {
-            if(fileNames.at(0).endsWith(".txt"))
+            if (fileNames.at(0).endsWith(".txt"))
+            {
                 PageCollection::instance()->SaveCurrentPageText(fileNames.at(0), true);
-            else if(fileNames.at(0).endsWith(".pdf"))
+            }
+            else if (fileNames.at(0).endsWith(".pdf"))
+            {
                 PageCollection::instance()->saveAsPdf(fileNames.at(0), false);
+            }
         }
         //}
         // else

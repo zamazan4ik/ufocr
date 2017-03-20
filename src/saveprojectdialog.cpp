@@ -248,18 +248,18 @@ void SaveProjectDialog::fillList()
     directories.sort();
     projects.sort();
     ui->listWidget->clear();
-            foreach (QString s, directories)
-        {
-            FileObjectItem* item = new FileObjectItem(
-                    pf->isDirEmpty(s) ? FileObjectItem::FileObjectItemType::EmptyDirectory :
-                    FileObjectItem::FileObjectItemType::Directory, s, ui->listWidget);
-            ui->listWidget->addItem(item);
-        }
-            foreach (QString s, projects)
-        {
-            FileObjectItem* item = new FileObjectItem(FileObjectItem::FileObjectItemType::Project, s);
-            ui->listWidget->addItem(item);
-        }
+    for (const QString& s : directories)
+    {
+        FileObjectItem* item = new FileObjectItem(
+                pf->isDirEmpty(s) ? FileObjectItem::FileObjectItemType::EmptyDirectory :
+                FileObjectItem::FileObjectItemType::Directory, s, ui->listWidget);
+        ui->listWidget->addItem(item);
+    }
+    for (const QString& s : projects)
+    {
+        FileObjectItem* item = new FileObjectItem(FileObjectItem::FileObjectItemType::Project, s);
+        ui->listWidget->addItem(item);
+    }
 }
 
 void SaveProjectDialog::goUp()

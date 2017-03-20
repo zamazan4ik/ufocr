@@ -29,6 +29,7 @@
 #include <QStringList>
 #include <QFileInfo>
 #include <QFileInfoList>
+#include "logger.hpp"
 
 
 PDFExtractor::PDFExtractor(QObject* parent) :
@@ -69,7 +70,7 @@ void PDFExtractor::setOutputDir()
     {
         dir.setFilter(QDir::Files);
         QStringList sl = dir.entryList();
-        for(const QString& s : sl)
+        for (const QString& s : sl)
         {
             dir.remove(pdfout + s);
         }
@@ -208,10 +209,10 @@ void PDFExtractor::clearFiles()
     dir.setPath(outputDir);
     QFileInfoList fil;
     fil = dir.entryInfoList(filters, QDir::Files, QDir::Name);
-            foreach (QFileInfo fi, fil)
-        {
-            dir.remove(fi.absoluteFilePath());
-        }
+    for (const QFileInfo& fi : fil)
+    {
+        dir.remove(fi.absoluteFilePath());
+    }
 }
 
 void PDFExtractor::removeRemaining()

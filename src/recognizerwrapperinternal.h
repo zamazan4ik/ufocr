@@ -30,6 +30,8 @@
 #include "globallock.h"
 #include <QTextCodec>
 
+#include "logger.hpp"
+
 #include <QDebug>
 
 class RWHelper
@@ -193,8 +195,10 @@ private: // functions
 
     bool useTesseract(const QString& inputFile)
     {
+        logger->info("Choosing Tesseract as OCR engine");
         if (!findProgram("tesseract"))
         {
+            logger->warn("Tesseract not found");
             return false;
         }
         proc.setWorkingDirectory(settings->workingDir());
@@ -224,6 +228,7 @@ private: // functions
             }
         }
         proc.setProcessEnvironment(env);
+        logger->info("Run Tesseract");
         proc.start("tesseract", sl);
 
         /*if (proc.exitCode()) {
@@ -238,8 +243,10 @@ private: // functions
 
     bool useCuneiform(const QString& inputFile, const QString& outputFile)
     {
+        logger->info("Choosing Cuneiform as OCR engine");
         if (!findProgram("cuneiform"))
         {
+            logger->warn("Cuneiform not found");
             return false;
         }
         proc.setWorkingDirectory(settings->workingDir());
@@ -258,6 +265,7 @@ private: // functions
         sl.append("-o");
         sl.append(settings->workingDir() + outputFile);
         sl.append(settings->workingDir() + inputFile);
+        logger->info("Run Cuneiform");
         proc.start("cuneiform", sl);
 
         /*if (proc.exitCode()) {

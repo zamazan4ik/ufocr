@@ -28,6 +28,7 @@
 #include <QFile>
 #include <QPrinter>
 #include <QTextDocument>
+#include "logger.hpp"
 
 static QMutex lsGate;
 
@@ -256,6 +257,7 @@ void PageCollection::saveAllText(const QString& fileName, bool truncate)
     }
     int _pid = -1;
     QString txt;
+    logger->info("Save plain text");
     while (textAtNextId(_pid, txt))
     {
         textFile.write(txt.toUtf8());
@@ -271,6 +273,7 @@ void PageCollection::saveAsPdf(const QString& fileName, bool allPages /*= true*/
     {
         return;
     }
+    logger->info("Save as PDF");
     int cid = currentId;
     QPrinter printer(QPrinter::PrinterResolution);
     printer.setOutputFormat(QPrinter::PdfFormat);
@@ -280,7 +283,7 @@ void PageCollection::saveAsPdf(const QString& fileName, bool allPages /*= true*/
     QTextDocument doc;
     int _pid = -1;
     QString txt, outTxt;
-    if(allPages)
+    if (allPages)
     {
         while (textAtNextId(_pid, txt))
         {
@@ -478,7 +481,7 @@ void PageCollection::reloadPage()
 
 void PageCollection::unloadAll()
 {
-    for(Page* p : pages)
+    for (Page* p : pages)
     {
         p->unload();
     }

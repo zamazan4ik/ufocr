@@ -77,11 +77,11 @@ QRect BlockSplitter::blockAllText()
         CCAnalysis* an = new CCAnalysis(cb);
         an->analize();
         lines = an->getLines();
-                foreach(TextLine l, lines)
-                if (l.count() < 3)
-                {
-                    lines.removeOne(l);
-                }
+        for (const TextLine& l : lines)
+            if (l.count() < 3)
+            {
+                lines.removeOne(l);
+            }
         int minX = 100000;
         int minY = 100000;
         int maxX = 0;
@@ -137,26 +137,26 @@ void BlockSplitter::splitVertical()
         for (int i = blocks.count() - 1; i >= 0; i--)
         {
             Rect block = blocks.at(i);
-                    foreach(Rect bar, bars)
+            for (const Rect& bar : bars)
+            {
+                if (abs(bar.x2 - bar.x1) > (bar.y2 - bar.y1))
                 {
-                    if (abs(bar.x2 - bar.x1) > (bar.y2 - bar.y1))
-                    {
-                        continue;
-                    }
-                    int xmid = (bar.x1 + bar.x2) / 2;
-                    if ((block.x1 < (xmid - 5)) && (block.x2 > (xmid + 5)))
-                    {
-                        Rect block1 = block;
-                        block1.x2 = xmid - 2;
-                        Rect block2 = block;
-                        block2.x1 = xmid + 2;
-                        blocks.removeAll(block);
-                        blocks.append(block1);
-                        blocks.append(block2);
-                        didSplit = true;
-                        break;
-                    }
+                    continue;
                 }
+                int xmid = (bar.x1 + bar.x2) / 2;
+                if ((block.x1 < (xmid - 5)) && (block.x2 > (xmid + 5)))
+                {
+                    Rect block1 = block;
+                    block1.x2 = xmid - 2;
+                    Rect block2 = block;
+                    block2.x1 = xmid + 2;
+                    blocks.removeAll(block);
+                    blocks.append(block1);
+                    blocks.append(block2);
+                    didSplit = true;
+                    break;
+                }
+            }
         }
     }
 }
@@ -224,30 +224,30 @@ void BlockSplitter::splitHorisontal()
         for (int i = blocks.count() - 1; i >= 0; i--)
         {
             Rect block = blocks.at(i);
-                    foreach(Rect bar, bars)
+            for (const Rect& bar : bars)
+            {
+                if (abs(bar.y2 - bar.y1) > (bar.x2 - bar.x1))
                 {
-                    if (abs(bar.y2 - bar.y1) > (bar.x2 - bar.x1))
+                    continue;
+                }
+                int ymid = (bar.y1 + bar.y2) / 2;
+                if ((block.y1 < (ymid - 5)) && (block.y2 > (ymid + 5)))
+                {
+                    if (_contains(bar.x1, bar.x2, block.x1) || _contains(bar.x1, bar.x2, block.x2) ||
+                        _contains(block.x1, block.x2, bar.x1) || _contains(block.x1, block.x2, bar.x2))
                     {
-                        continue;
-                    }
-                    int ymid = (bar.y1 + bar.y2) / 2;
-                    if ((block.y1 < (ymid - 5)) && (block.y2 > (ymid + 5)))
-                    {
-                        if (_contains(bar.x1, bar.x2, block.x1) || _contains(bar.x1, bar.x2, block.x2) ||
-                            _contains(block.x1, block.x2, bar.x1) || _contains(block.x1, block.x2, bar.x2))
-                        {
-                            Rect block1 = block;
-                            block1.y2 = ymid - 2;
-                            Rect block2 = block;
-                            block2.y1 = ymid + 2;
-                            blocks.removeAll(block);
-                            blocks.append(block1);
-                            blocks.append(block2);
-                            didSplit = true;
-                            break;
-                        }
+                        Rect block1 = block;
+                        block1.y2 = ymid - 2;
+                        Rect block2 = block;
+                        block2.y1 = ymid + 2;
+                        blocks.removeAll(block);
+                        blocks.append(block1);
+                        blocks.append(block2);
+                        didSplit = true;
+                        break;
                     }
                 }
+            }
         }
     }
 }
@@ -262,29 +262,31 @@ bool BlockSplitter::isBlockRecogniseable(const Rect& block)
 {
     int contains = 0;
     int maxl = 0;
-            foreach(TextLine l, lines)
+    for (const TextLine& l : lines)
+    {
+        if (!between(block.x1, block.x2, l.first().x))
         {
-            if (!between(block.x1, block.x2, l.first().x))
-            {
-                continue;
-            }
-            if (!between(block.x1, block.x2, l.last().x))
-            {
-                continue;
-            }
-            if (!between(block.y1, block.y2, l.first().y))
-            {
-                continue;
-            }
-            if (!between(block.y1, block.y2, l.last().y))
-            {
-                continue;
-            }
-            contains++;
-            if (l.count() > maxl)
-            { maxl = l.count(); }
+            continue;
         }
-    if ((maxl > 3))
+        if (!between(block.x1, block.x2, l.last().x))
+        {
+            continue;
+        }
+        if (!between(block.y1, block.y2, l.first().y))
+        {
+            continue;
+        }
+        if (!between(block.y1, block.y2, l.last().y))
+        {
+            continue;
+        }
+        contains++;
+        if (l.count() > maxl)
+        {
+            maxl = l.count();
+        }
+    }
+    if (maxl > 3)
     {
         return true;
     }

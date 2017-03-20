@@ -23,13 +23,15 @@
 #include <stdio.h>
 #include <QLibraryInfo>
 #include <QProcessEnvironment>
+#include <QDir>
 #include "mainform.h"
 #include "settings.h"
 #include "langselectdialog.h"
+#include "logger.hpp"
 
 void parseCmdLine(const QStringList& args)
 {
-            foreach (const QString& arg, args)
+            for(const QString& arg : args)
         {
             if (arg == "-h" || arg == "--help")
             {
@@ -59,6 +61,10 @@ int main(int argc, char* argv[])
     Settings* settings = Settings::instance();
     settings->readSettings(settings->workingDir());
     settings->writeSettings();
+    //Init logger
+    QDir(settings->workingDir()).mkdir("logs");
+    logger = spdlog::basic_logger_mt("MainLog", settings->workingDir().toStdString() + "logs/log.txt");
+    logger->info("Start program");
     QTranslator translator;
     QString qmName = "yagf_" + QLocale::system().name();
     if (!settings->useNoLocale())
@@ -76,5 +82,6 @@ int main(int argc, char* argv[])
     MainForm window;
     window.show();
     int res = app.exec();
+    logger->info("End program");
     return res;
 }

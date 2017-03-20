@@ -36,14 +36,16 @@ SideBar::SideBar(QWidget* parent) :
 {
     //setDragDropOverwriteMode(true);
     signalMapper = new QSignalMapper(this);
-    connect(signalMapper, SIGNAL(mapped(QObject*)),
-            this, SLOT(deleteFile(QObject*)));
+    connect(signalMapper, SIGNAL(mapped(QObject * )),
+            this, SLOT(deleteFile(QObject * )));
     current = 0;
     setMaximumWidth(120);
     setMinimumWidth(120);
     this->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(this, SIGNAL(customContextMenuRequested(const QPoint &)),
-            SLOT(showContextMenuForWidget(const QPoint &)));
+    connect(this, SIGNAL(customContextMenuRequested(
+                                 const QPoint &)),
+            SLOT(showContextMenuForWidget(
+                         const QPoint &)));
     connect(this, SIGNAL(currentItemChanged(QListWidgetItem * , QListWidgetItem * )), this,
             SLOT(itemActive(QListWidgetItem * , QListWidgetItem * )));
     setToolTip(trUtf8("Drop files here"));
@@ -98,17 +100,17 @@ void SideBar::itemActive(QListWidgetItem* item, QListWidgetItem* item2)
     lock = false;
 }
 
-void SideBar::showContextMenuForWidget(const QPoint &pos)
+void SideBar::showContextMenuForWidget(const QPoint& pos)
 {
     QMenu contextMenu(trUtf8("Context menu"), this);
     QListWidgetItem* item = this->itemAt(pos);
-    if(!item)
+    if (!item)
     {
         return;
     }
     QAction* act = new QAction(QString("Close"), this);
     connect(act, SIGNAL(triggered()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(act, (QObject*)item);
+    signalMapper->setMapping(act, (QObject*) item);
     contextMenu.addAction(act);
     contextMenu.exec(mapToGlobal(pos));
 }
@@ -150,11 +152,11 @@ bool SideBar::dropMimeData(int index, const QMimeData* data, Qt::DropAction acti
     QList<QUrl> urlList;
     urlList = data->urls(); // retrieve list of urls
     QStringList files;
-            foreach(QUrl url, urlList)
-        { // iterate over list
-            files.append(url.toLocalFile());
-            ++index; // increment index to preserve drop order
-        }
+    for (const QUrl& url : urlList)
+    { // iterate over list
+        files.append(url.toLocalFile());
+        ++index; // increment index to preserve drop order
+    }
     emit filesDropped(files);
     return true;
 }
@@ -220,8 +222,8 @@ void SideBar::deleteFile(QObject* item)
 {
     //TODO: What can i do with these ugly casts?
     int id = ((Snippet*) item)->pageID();
-    QListWidget::removeItemWidget((QListWidgetItem*)item);
-    ((QListWidgetItem*)item)->~QListWidgetItem();
+    QListWidget::removeItemWidget((QListWidgetItem*) item);
+    ((QListWidgetItem*) item)->~QListWidgetItem();
     emit fileRemoved(id);
 }
 

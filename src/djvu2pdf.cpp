@@ -24,6 +24,7 @@
 #include <QFileInfo>
 #include <QFileInfoList>
 #include <QStringList>
+#include "logger.hpp"
 
 Djvu2PDF::Djvu2PDF(QObject* parent) :
         QObject(parent)
@@ -48,6 +49,7 @@ void Djvu2PDF::convert(const QString& fileName)
 {
     if (!findProgram("ddjvu"))
     {
+        logger->info("Djvu2PDF not found");
         emit error(
                 trUtf8("The ddjvu utility from the DjVuLibre package has not been found.\nPlease make sure the package is installed."));
         return;
@@ -55,6 +57,7 @@ void Djvu2PDF::convert(const QString& fileName)
     QString output = pdfout + "out.pdf";
     QStringList sl;
     sl << "--format=pdf" << fileName << output;
+    logger->info("Run Djvu2PDF");
     process.start("ddjvu", sl);
 }
 
@@ -82,7 +85,9 @@ void Djvu2PDF::onFinished()
         onError();
     }
     else
+    {
         emit { finished(); }
+    }
 }
 
 void Djvu2PDF::clearFiles()
@@ -91,8 +96,8 @@ void Djvu2PDF::clearFiles()
     dir.setPath(pdfout);
     QFileInfoList fil;
     fil = dir.entryInfoList();
-            foreach (QFileInfo fi, fil)
-        {
-            dir.remove(fi.absoluteFilePath());
-        }
+    for (const QFileInfo fi : fil)
+    {
+        dir.remove(fi.absoluteFilePath());
+    }
 }

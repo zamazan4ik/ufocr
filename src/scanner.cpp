@@ -27,14 +27,12 @@ class XSaneScannerFE : public ScannerBase
 public:
     XSaneScannerFE(const QString& PLL, QObject* parent = 0) : ScannerBase(parent)
     {
-
         addParameter("-s");
         addParameter("-n");
         addParameter("-N");
         setProgramName("XSane");
         setPreloadLibrary(PLL);
         addEnvironmentVar("LD_PRELOAD=" + PLL);
-
     }
 
     void exec()

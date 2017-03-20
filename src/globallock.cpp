@@ -64,5 +64,7 @@ Unlocker::Unlocker(bool locked) : unlock(locked)
 Unlocker::~Unlocker()
 {
     if (unlock)
-    { GlobalLock::instance()->unlock(); }
+    {
+        GlobalLock::instance()->unlock();
+    }
 }

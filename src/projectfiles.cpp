@@ -61,19 +61,19 @@ void ProjectFiles::cd(const QString& newRoot)
     isPD = false;
     QFileInfoList fil = dir.entryInfoList();
     QStringList tmp;
-            foreach(QFileInfo fi, fil)
+    for (const QFileInfo& fi : fil)
+    {
+        if (fi.fileName() == "yagf_project.xml")
         {
-            if (fi.fileName() == "yagf_project.xml")
-            {
-                isPD = true;
-                tmp.clear();
-                break;
-            }
-            if (fi.isDir())
-            {
-                tmp.append(fi.absoluteFilePath());
-            }
+            isPD = true;
+            tmp.clear();
+            break;
         }
+        if (fi.isDir())
+        {
+            tmp.append(fi.absoluteFilePath());
+        }
+    }
             foreach (QString d, tmp)
         {
             if (!d.endsWith("/"))
@@ -232,11 +232,13 @@ bool ProjectFiles::isDirEmpty(const QString& dirName)
     QFileInfoList fil = dir.entryInfoList();
     fil.removeAt(0);
     fil.removeAt(0);
-            foreach(QFileInfo fi, fil)
-            if (fi.isDir())
-            {
-                return false;
-            }
+    for (const QFileInfo& fi : fil)
+    {
+        if (fi.isDir())
+        {
+            return false;
+        }
+    }
     return true;
 }
 
