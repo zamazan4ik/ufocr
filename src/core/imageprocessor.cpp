@@ -142,12 +142,14 @@ void ImageProcessor::saveForPDF(const QImage& image, const QString& fileName, in
 
 void ImageProcessor::saveYGF(const QImage& image, const QString& fileName)
 {
+    logger->info("Save YGF project: " + fileName.toStdString());
     //QIPGrayscaleImage gsi(image, QIPGrayscaleImage::MinValue);
     QIPGrayscaleImage::saveGrayscale(image, fileName);
 }
 
 QImage ImageProcessor::loadYGF(const QString& fileName)
 {
+    logger->info("Load YGF project: " + fileName.toStdString());
     QIPGrayscaleImage gsi(fileName);
     return gsi.toImage();
 }
