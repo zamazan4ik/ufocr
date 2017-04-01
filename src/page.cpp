@@ -1108,11 +1108,34 @@ void Page::whiteBalance()
     img = gen.toQImage();
 }
 
+#include <QDebug>
+#include "core/ImageProcessing.hpp"
+
 void Page::bilateral()
 {
+    GeneralImage gen(img), out(img);
+    qDebug() << "-----------------------------";
+    IPL::isBlurred(gen.Ref(), IPL::BlurDetectionAlgo::LAPM);
+    qDebug() << "-----------------------------";
     logger->info("Run bilateral filter");
     //TODO: Add other smooth algorithms support
-    GeneralImage gen(img), out(img);
+
     cv::bilateralFilter(gen.Ref(), out.Ref(), 9, 80, 80);
-    img = out.toQImage();
+    //img = out.toQImage();
 }
+
+bool Page::isBlurred()
+{
+    logger->info("Run 'is Blurred' check");
+    //TODO: Is there better algorithm for blurriness check?
+    GeneralImage gen(img), out(img);
+    cv::cvtColor(gen.Ref(), gen.Ref(), CV_RGB2GRAY);
+    cv::Laplacian(gen.Ref(), out.Ref(), CV_64F);
+    cv::Scalar mu, sigma;
+    cv::meanStdDev(out.Ref(), mu, sigma);
+    double focusMeasure = sigma.val[0]*sigma.val[0];
+    qDebug() << focusMeasure;
+    return focusMeasure < 100.0;
+}
+
+

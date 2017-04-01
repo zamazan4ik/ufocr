@@ -4,8 +4,8 @@ project(ufocr C CXX)
 #set(CMAKE_C_COMPILER /media/zamazan4ik/For_Linux/OpenSource/clang_trunk/bin/clang)
 #set(CMAKE_CXX_COMPILER /media/zamazan4ik/For_Linux/OpenSource/clang_trunk/bin/clang++)
 
-set(CMAKE_C_COMPILER /usr/bin/clang)
-set(CMAKE_CXX_COMPILER /usr/bin/clang++)
+#set(CMAKE_C_COMPILER /usr/bin/clang)
+#set(CMAKE_CXX_COMPILER /usr/bin/clang++)
 
 #set( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -O2 -g -fsanitize=address -fno-omit-frame-pointer -shared-libasan" )
 set( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -O2" )
@@ -69,9 +69,10 @@ set(SOURCES src/main.cpp src/mainform.cpp src/qgraphicsinput.cpp src/utils.cpp s
     src/core/binarize.cpp src/core/qipblackandwhiteimage.cpp src/core/qipgrayscaleimage.cpp src/core/subimagepp.cpp
     src/core/tableanalizer.cpp src/core/pageanalysis.cpp src/core/pixelwindow.cpp src/extprocessdialog.cpp src/djvu2pdf.cpp
     src/projectfiles.cpp src/saveprojectdialog.cpp src/fileobjectitem.cpp src/loadprojectdialog.cpp src/autosaver.cpp src/waitwindow.cpp src/globallock.cpp
-    src/core/GeneralImage.cpp src/core/GeneralImage.hpp src/core/cvmatandqimage.cpp src/core/cvmatandqimage.h src/logger.hpp src/logger.cpp)
+    src/core/GeneralImage.cpp src/core/GeneralImage.hpp src/core/cvmatandqimage.cpp src/core/cvmatandqimage.h src/logger.hpp src/logger.cpp src/core/BlurDetection.hpp
+    src/core/BlurDetection.cpp src/core/Thinning.cpp src/core/Thinning.hpp src/core/Smoothing.cpp src/core/Smoothing.hpp src/core/ColorBalance.cpp src/core/ColorBalance.hpp src/core/Warp.cpp src/core/Warp.hpp src/core/Deskew.cpp src/core/Deskew.hpp)
 
-set(HEADERS src/settings.h)
+set(HEADERS src/settings.h )
 
 set(INT_SOURCES src/preload.c)
 

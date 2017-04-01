@@ -101,6 +101,8 @@ public:
 
     bool splitPage(bool preprocess);
 
+    bool isBlurred();
+
     void bilateral();
 
     void whiteBalance();
