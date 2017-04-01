@@ -25,39 +25,76 @@ bool isQuadrangle(const std::vector<cv::Point>& contour)
     return contour.size() == 4;
 }
 
-std::vector<cv::Point> IPL::getContour(const cv::Mat& src, size_t longSide)
+std::vector<cv::Point> orderPoints(const std::vector<cv::Point>& contour)
+{
+    //http://www.pyimagesearch.com/2014/08/25/4-point-opencv-getperspective-transform-example/
+    //TODO: rewrite it!!!
+    std::vector<cv::Point> result(contour.size());
+    std::vector<std::pair<int, size_t>> sum(result.size());
+    for (size_t i = 0; i < contour.size(); ++i)
+    {
+        sum[i] = {contour[i].x + contour[i].y, i};
+    }
+    std::sort(sum.begin(), sum.end());
+
+    result[0] = contour[sum[0].second];
+    result[2] = contour[sum[3].second];
+
+
+    for (size_t i = 0; i < contour.size(); ++i)
+    {
+        sum[i] = {contour[i].x - contour[i].y, i};
+    }
+    std::sort(sum.begin(), sum.end());
+
+    result[3] = contour[sum[0].second];
+    result[1] = contour[sum[3].second];
+
+    return result;
+}
+
+std::vector<cv::Point> IPL::getContour(const cv::Mat& src, size_t longSide /*= 1024*/)
 {
     //TODO: Add more algorithms for border detecting
     //TODO: Research good constants for Canny edge detector
-    int thresh = 50;
+    int thresh = 30;
 
     //TODO: Add longside support
     cv::Mat src_gray;
-    cv::cvtColor( src, src_gray, CV_BGR2GRAY );
-    cv::blur( src_gray, src_gray, cv::Size(3,3) );
+    cv::cvtColor(src, src_gray, CV_BGR2GRAY);
+    cv::GaussianBlur(src_gray, src_gray, cv::Size(9, 9), 0);
 
     cv::Mat canny_output;
-    std::vector<std::vector<cv::Point> > contours;
-    std::vector<cv::Vec4i> hierarchy;
 
     /// Detect edges using canny
-    Canny( src_gray, canny_output, thresh, thresh * 2, 3 );
+    cv::Canny(src_gray, canny_output, 25, 50);
+    cv::dilate(canny_output, src_gray, cv::getStructuringElement(cv::MORPH_RECT, cv::Size(2, 2)),
+               cv::Point(-1, -1), 2);
     /// Find contours
-    findContours( canny_output, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, cv::Point(0, 0) );
+    std::vector<std::vector<cv::Point> > contours;
+    std::vector<cv::Vec4i> hierarchy;
+    findContours(canny_output, contours, hierarchy, CV_RETR_CCOMP,
+                 CV_CHAIN_APPROX_SIMPLE, cv::Point(0, 0));
 
+    std::vector<std::vector<cv::Point>> contoursApproxed(contours.size());
     std::vector<cv::Point> result;
     double maxArea = 0.0;
-    for(auto contour : contours)
+    for (size_t i = 0; i < contours.size(); ++i)
     {
-        if(isQuadrangle(contour))
+        cv::approxPolyDP(cv::Mat(contours[i]), contoursApproxed[i], contours[i].size() * 0.2, true);
+
+        if (!isQuadrangle(contoursApproxed[i]))
         {
-            double area = cv::contourArea(contour);
-            if(area > maxArea)
-            {
-                maxArea = area;
-                result = contour;
-            }
+            continue;
+        }
+
+        double area = cv::contourArea(contoursApproxed[i]);
+        if (area > maxArea)
+        {
+            maxArea = area;
+            result = contoursApproxed[i];
         }
     }
+    result = orderPoints(result);
     return result;
 }

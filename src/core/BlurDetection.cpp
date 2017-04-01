@@ -14,7 +14,6 @@
 
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 */
 
 #include "BlurDetection.hpp"
@@ -97,9 +96,6 @@ bool IPL::isBlurred(const cv::Mat& src, IPL::BlurDetectionAlgo algo)
             return TENG_Algo(src, 5);
         case BlurDetectionAlgo::GLVN:
             return GLVN_Algo(src);
-        default:
-            //Something wrong, possible we forget add new algorithm here
-            return false;
     }
 }
 

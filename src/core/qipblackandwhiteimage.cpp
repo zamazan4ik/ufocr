@@ -367,19 +367,6 @@ QIPBlackAndWhiteImage QIPBlackAndWhiteImage::crop() const
     return copy(r1.x1, r2.x2, r1.y1, r2.y2);
 }
 
-QRect QIPBlackAndWhiteImage::cropGrayScaleImage(const QIPGrayscaleImage& image)
-{
-    IntRect r1, r2;
-    r1 = cropInternal(true);
-    r2 = cropInternal(false);
-    if ((r2.x2 - r1.x1 < 32) && (r2.y2 - r1.y1 < 32))
-    {
-        return QRect(0, 0, 0, 0);
-    }
-    return QRect(r1.x1, r1.y1, r2.x2 - r1.x1, r2.y2 - r2.y1);
-}
-
-
 bool QIPBlackAndWhiteImage::isNull() const
 {
     return w * h == 0;

@@ -37,8 +37,6 @@ public:
 
     ~ImageProcessor();
 
-    QRect crop();
-
     void loadImage(const QImage& image);
 
     QImage loadFromFile(const QString& fn);

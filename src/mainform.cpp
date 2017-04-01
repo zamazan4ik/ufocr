@@ -123,6 +123,7 @@ MainForm::MainForm(QWidget* parent) : QMainWindow(parent)
     connect(actionBinarize, SIGNAL(triggered()), this, SLOT(binarization()));
     connect(actionWhite_balance, SIGNAL(triggered()), this, SLOT(whiteBalance()));
     connect(actionBilateral, SIGNAL(triggered()), this, SLOT(bilateral()));
+    connect(actionAuto_crop, SIGNAL(triggered()), this, SLOT(autoCrop()));
 
     connect(graphicsInput, SIGNAL(increaseMe()), this, SLOT(enlargeButtonClicked()));
     connect(graphicsInput, SIGNAL(decreaseMe()), this, SLOT(decreaseButtonClicked()));
@@ -1752,6 +1753,20 @@ void MainForm::bilateral()
     QCursor oldCursor = cursor();
     setCursor(Qt::WaitCursor);
     pages->bilateral();
+    pages->reloadPage();
+    setCursor(oldCursor);
+}
+
+void MainForm::autoCrop()
+{
+    if (!pages->hasPage())
+    {
+        styledWarningMessage(this, trUtf8("No image loaded"));
+        return;
+    }
+    QCursor oldCursor = cursor();
+    setCursor(Qt::WaitCursor);
+    pages->autoCrop();
     pages->reloadPage();
     setCursor(oldCursor);
 }

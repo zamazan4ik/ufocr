@@ -817,6 +817,15 @@ void PageCollection::bilateral()
     cp()->bilateral();
 }
 
+void PageCollection::autoCrop()
+{
+    if (!cp())
+    {
+        return;
+    }
+    cp()->autoCrop();
+}
+
 bool PageCollection::empty() const
 {
     return pages.empty();

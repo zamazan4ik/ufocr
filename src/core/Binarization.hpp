@@ -16,19 +16,29 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef UFOCR_THINNING_HPP
-#define UFOCR_THINNING_HPP
+#ifndef UFOCR_BINARIZATION_HPP
+#define UFOCR_BINARIZATION_HPP
 
 #include "opencv2/core.hpp"
 
 namespace IPL
 {
-enum class Thinning
+enum class BinarizationMethod
 {
-    ZhangSuen, GuoHall
+    Otsu, /*!< Otsu global binarization */
+    Adaptive,
+    OtsuMA,
+    Niblack, /*!< Niblack adaptive binarization */
+    Sauvola, /*!< Sauvola adaptive binarization */
+    MaxEntropy, /*!< Maximum entropy global binarization */
+    Bradley, /*!< Bradley adaptive binarization */
+    Iterative, /*!< Global iterative binarization */
+    Bernsen, /*!< Bernsen adaptive binarization */
+    Gatos /*!< Ga'tos adaptive binarization */
 };
 
-void thinning(const cv::Mat& src, cv::Mat& dst, Thinning method = Thinning::ZhangSuen);
+//TODO: Rewrite all binarization algorithms. By default should use OtsuThreshold.
+void binarize(const cv::Mat& src, cv::Mat& dst, BinarizationMethod method = BinarizationMethod::Otsu);
 }
 
-#endif //UFOCR_THINNING_HPP
+#endif //UFOCR_BINARIZATION_HPP

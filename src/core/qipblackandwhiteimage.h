@@ -131,8 +131,6 @@ public:
       */
     QIPBlackAndWhiteImage crop() const;
 
-    QRect cropGrayScaleImage(const QIPGrayscaleImage& image);
-
     bool isNull() const;
 
     void free();

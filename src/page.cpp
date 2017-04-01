@@ -443,7 +443,7 @@ void Page::savePageForRecognition(const QString& fileName)
     {
         ImageProcessor ip;
         ip.loadImage(img);
-        ip.crop();
+        //ip.crop();
         ip.gsImage().save(fileName, "BMP");
     }
     else
@@ -1052,6 +1052,7 @@ QImage Page::currentImage()
 }
 
 #include <QTemporaryFile>
+#include <src/core/Binarization.hpp>
 
 QString Page::saveTmpPage(const QString& format)
 {
@@ -1090,10 +1091,11 @@ void Page::binarize()
 {
     logger->info("Run binarization");
     //TODO: Add new binarization algorithms
-    //img = QIPGrayscaleImage(img, QIPGrayscaleImage::GrayscaleConversion::MinValue).binarize(QIPGrayscaleImage::BinarizationMethod::OtsuBinarization).toImage();
     GeneralImage gen(img);
     cv::cvtColor(gen.Ref(), gen.Ref(), CV_RGB2GRAY);
-    cv::threshold(gen.Ref(), gen.Ref(), 0, 255, CV_THRESH_BINARY | CV_THRESH_OTSU);
+    //cv::threshold(gen.Ref(), gen.Ref(), 0, 255, CV_THRESH_BINARY | CV_THRESH_OTSU);
+    //TODO: Maybe not all binarization algorithms can work in-place
+    IPL::binarize(gen.Ref(), gen.Ref(), IPL::BinarizationMethod::Otsu);
     img = gen.toQImage();
 }
 
@@ -1101,7 +1103,6 @@ void Page::whiteBalance()
 {
     logger->info("Run white balance");
     //TODO: Add choosing balance white algorithm.
-    //Problem: Grayworld algorithm crashes
     GeneralImage gen(img);
     auto alg = cv::xphoto::createSimpleWB();
     alg->balanceWhite(gen.Ref(), gen.Ref());
@@ -1114,17 +1115,37 @@ void Page::whiteBalance()
 void Page::bilateral()
 {
     GeneralImage gen(img), out(img);
-    qDebug() << "-----------------------------";
+/*    qDebug() << "-----------------------------";
     IPL::isBlurred(gen.Ref(), IPL::BlurDetectionAlgo::LAPM);
     qDebug() << "-----------------------------";
-    logger->info("Run bilateral filter");
+    logger->info("Run bilateral filter");*/
     //TODO: Add other smooth algorithms support
 
     cv::bilateralFilter(gen.Ref(), out.Ref(), 9, 80, 80);
     //img = out.toQImage();
 }
 
-bool Page::isBlurred()
+void Page::autoCrop()
+{
+    logger->info("Run auto crop");
+    GeneralImage gen(img);
+    auto contour = IPL::getContour(gen.Ref());
+    if(contour.size() != 4)
+    {
+        logger->warn("Auto crop failed");
+        return;
+    }
+    cv::Mat dst;
+    IPL::warpCrop(gen.Ref(), dst,
+                  contour[0].x, contour[0].y,
+                  contour[1].x, contour[1].y,
+                  contour[2].x, contour[2].y,
+                  contour[3].x, contour[3].y);
+
+    img = GeneralImage(dst).toQImage();
+}
+
+/*bool Page::isBlurred()
 {
     logger->info("Run 'is Blurred' check");
     //TODO: Is there better algorithm for blurriness check?
@@ -1133,9 +1154,9 @@ bool Page::isBlurred()
     cv::Laplacian(gen.Ref(), out.Ref(), CV_64F);
     cv::Scalar mu, sigma;
     cv::meanStdDev(out.Ref(), mu, sigma);
-    double focusMeasure = sigma.val[0]*sigma.val[0];
+    double focusMeasure = sigma.val[0] * sigma.val[0];
     qDebug() << focusMeasure;
     return focusMeasure < 100.0;
-}
+}*/
 
 

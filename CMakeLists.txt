@@ -36,7 +36,7 @@ set(TRANSLATIONS
         translations/yagf_uk.ts
         )
 
-set(OpenCV_LIBSS libopencv_xphoto.a libopencv_shape.a libopencv_imgcodecs.a libopencv_ts.a
+set(OpenCV_LIBSS libopencv_ximgproc.a libopencv_xphoto.a libopencv_shape.a libopencv_imgcodecs.a libopencv_ts.a
         libopencv_videostab.a libopencv_photo.a libopencv_calib3d.a
         libopencv_video.a libopencv_stitching.a
         libopencv_videoio.a libopencv_superres.a
@@ -70,7 +70,7 @@ set(SOURCES src/main.cpp src/mainform.cpp src/qgraphicsinput.cpp src/utils.cpp s
     src/core/tableanalizer.cpp src/core/pageanalysis.cpp src/extprocessdialog.cpp src/djvu2pdf.cpp
     src/projectfiles.cpp src/saveprojectdialog.cpp src/fileobjectitem.cpp src/loadprojectdialog.cpp src/autosaver.cpp src/waitwindow.cpp src/globallock.cpp
     src/core/GeneralImage.cpp src/core/GeneralImage.hpp src/core/cvmatandqimage.cpp src/core/cvmatandqimage.h src/logger.hpp src/logger.cpp src/core/BlurDetection.hpp
-    src/core/BlurDetection.cpp src/core/Thinning.cpp src/core/Thinning.hpp src/core/Smoothing.cpp src/core/Smoothing.hpp src/core/ColorBalance.cpp src/core/ColorBalance.hpp src/core/Warp.cpp src/core/Warp.hpp src/core/Deskew.cpp src/core/Deskew.hpp src/core/Cropping.cpp src/core/Cropping.hpp)
+    src/core/BlurDetection.cpp src/core/Thinning.cpp src/core/Thinning.hpp src/core/Smoothing.cpp src/core/Smoothing.hpp src/core/ColorBalance.cpp src/core/ColorBalance.hpp src/core/Warp.cpp src/core/Warp.hpp src/core/Deskew.cpp src/core/Deskew.hpp src/core/Cropping.cpp src/core/Cropping.hpp src/core/Binarization.cpp src/core/Binarization.hpp)
 
 set(HEADERS src/settings.h )
 

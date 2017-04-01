@@ -23,7 +23,8 @@
 
 namespace IPL
 {
-    std::vector<cv::Point> getContour(const cv::Mat& src, size_t longSide);
+    //TODO: Research question about value for longSide
+    std::vector<cv::Point> getContour(const cv::Mat& src, size_t longSide = 1024);
 }
 
 #endif //UFOCR_CROPPING_HPP

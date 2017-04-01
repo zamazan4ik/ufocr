@@ -23,12 +23,6 @@
 
 #include <QtGlobal>
 
-template<typename T_>
-void deallocator(T_ buf[])
-{
-    delete[] buf;
-}
-
 typedef struct IntRect
 {
     int x1, y1, x2, y2;
