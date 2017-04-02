@@ -19,6 +19,8 @@
 #ifndef UFOCR_COLORBALANCE_HPP
 #define UFOCR_COLORBALANCE_HPP
 
-//TODO: Add white balance, gamma-correction. Manual and automatic
-
+namespace IPL
+{
+    //TODO: Add white balance, gamma-correction. Manual and automatic
+}
 #endif //UFOCR_COLORBALANCE_HPP

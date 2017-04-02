@@ -21,7 +21,8 @@
 
 #include "opencv2/core.hpp"
 
-
+namespace IPL
+{
 void warpCrop(const cv::Mat& sourceImg,
               cv::Mat& destImg,
               const int x0, const int y0,
@@ -30,6 +31,6 @@ void warpCrop(const cv::Mat& sourceImg,
               const int x3, const int y3,
               const int borderMode = cv::BORDER_CONSTANT,
               const cv::Scalar& borderValue = cv::Scalar());
-
+}
 
 #endif //UFOCR_WARP_HPP
