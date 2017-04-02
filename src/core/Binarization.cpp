@@ -38,6 +38,6 @@ void IPL::binarize(const cv::Mat& src, cv::Mat& dst,
             break;
         default:
             //TODO: Maybe later we should add more binarization algorithms
-            throw std::runtime_error("Binarization algorithm not implemntyed yet!");
+            throw std::runtime_error("Binarization algorithm not implemented yet!");
     }
 }

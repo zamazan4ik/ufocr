@@ -28,29 +28,21 @@ bool isQuadrangle(const std::vector<cv::Point>& contour)
 std::vector<cv::Point> orderPoints(const std::vector<cv::Point>& contour)
 {
     //http://www.pyimagesearch.com/2014/08/25/4-point-opencv-getperspective-transform-example/
-    //TODO: rewrite it!!!
-    std::vector<cv::Point> result(contour.size());
-    std::vector<std::pair<int, size_t>> sum(result.size());
+    std::vector<std::pair<int, size_t>> sum(contour.size()), diff(contour.size());
     for (size_t i = 0; i < contour.size(); ++i)
     {
         sum[i] = {contour[i].x + contour[i].y, i};
+        diff[i] = {contour[i].x - contour[i].y, i};
     }
     std::sort(sum.begin(), sum.end());
+    std::sort(diff.begin(), diff.end());
 
-    result[0] = contour[sum[0].second];
-    result[2] = contour[sum[3].second];
+    cv::Point topLeft       = contour[sum[0].second],
+              topRight      = contour[diff[3].second],
+              bottomRight   = contour[sum[3].second],
+              bottomLeft    = contour[diff[0].second];
 
-
-    for (size_t i = 0; i < contour.size(); ++i)
-    {
-        sum[i] = {contour[i].x - contour[i].y, i};
-    }
-    std::sort(sum.begin(), sum.end());
-
-    result[3] = contour[sum[0].second];
-    result[1] = contour[sum[3].second];
-
-    return result;
+    return {topLeft, topRight, bottomRight, bottomLeft};
 }
 
 std::vector<cv::Point> IPL::getContour(const cv::Mat& src, size_t longSide /*= 1024*/)
