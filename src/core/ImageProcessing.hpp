@@ -25,5 +25,6 @@
 #include "ColorBalance.hpp"
 #include "Smoothing.hpp"
 #include "Deskew.hpp"
+#include "Cropping.hpp"
 
 #endif //UFOCR_IMAGEPROCESSING_HPP

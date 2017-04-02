@@ -14,38 +14,16 @@
 
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 */
 
-#ifndef PIXELWINDOW_H
-#define PIXELWINDOW_H
+#ifndef UFOCR_CROPPING_HPP
+#define UFOCR_CROPPING_HPP
 
-#include "qipblackandwhiteimage.h"
-#include "qipgrayscaleimage.h"
+#include "opencv2/core.hpp"
 
-class PixelWindow
+namespace IPL
 {
-public:
-    PixelWindow(QIPBlackAndWhiteImage* image, int x, int y, int width, int height);
+    std::vector<cv::Point> getContour(const cv::Mat& src, size_t longSide);
+}
 
-    PixelWindow(QIPGrayscaleImage* image, int x, int y, int width, int height);
-
-    ~PixelWindow();
-
-    void move(int newX, int newY);
-
-    quint8 pixel(int x, int y);
-
-private:
-    QIPBlackAndWhiteImage* img;
-    QIPGrayscaleImage* gsimg;
-    int xStart;
-    int yStart;
-    int w;
-    int h;
-    int iw;
-    quint8** lines;
-    quint8* blankLine;
-};
-
-#endif // PIXELWINDOW_H
+#endif //UFOCR_CROPPING_HPP

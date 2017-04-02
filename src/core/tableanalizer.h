@@ -61,8 +61,6 @@ private:
     void addBars(const QRect& bounds);
 
     QList<Rect> sortBlocks(const QList<Rect>& blocks);
-
-    Rect getSkew2(const QRect& bounds);
 };
 
 #endif // TABLEANALIZER_H

@@ -22,7 +22,6 @@
 #include "ccbuilder.h"
 #include "settings.h"
 #include "utils.h"
-#include "pixelwindow.h"
 #include <math.h>
 
 enum class State
@@ -632,68 +631,4 @@ QList<Rect> TableAnalizer::sortBlocks(const QList<Rect>& blocks)
         }
     }
     return out;
-}
-
-Rect TableAnalizer::getSkew2(const QRect& bounds)
-{
-    int xb = -1;
-    int yb;
-    Rect er = {0, 0, 0, 0};
-    quint8* line = img->scanLine(maxRect.y1);
-    for (int x = maxRect.x1; x <= maxRect.x2; x++)
-    {
-        if (line[x] == clBWBlack)
-        {
-            xb = x;
-            yb = maxRect.y1;
-            break;
-        }
-    }
-    if (xb == -1)
-    {
-        return er;
-    }
-    PixelWindow* pw = new PixelWindow(img, xb, yb + 5, 160, 11);
-    int yt = 0;
-    while ((pw->pixel(xb, yb - yt) && (yt <= 5)) == clBWBlack)
-    {
-        yt++;
-    }
-    yt--;
-    if (pw->pixel(xb, yb + yt) != clBWBlack)
-    {
-        return er;
-    }
-    pw->move(xb, yb - yt + 5);
-    int vcounter = 0;
-    int xe = xb + 1;
-    while ((abs(vcounter) < 5) && (xe - xb < 200))
-    {
-        if (pw->pixel(xe, yt) == clBWBlack)
-        {
-            if (pw->pixel(xe, yt - 1) == clBWBlack)
-            {
-                yt--;
-                vcounter--;
-            }
-        }
-        else
-        {
-            if (pw->pixel(xe, yt) == clBWWhite)
-            {
-                yt++;
-                vcounter++;
-            }
-            else
-            { break; }
-        }
-        xe++;
-    }
-    delete pw;
-    Rect result;
-    result.x1 = xb;
-    result.x2 = xe;
-    result.y1 = 0;
-    result.y2 = vcounter;
-    return result;
 }
