@@ -17,6 +17,7 @@
 
 */
 
+#include "SystemTray.hpp"
 #include "settings.h"
 #include <QMainWindow>
 #include <QString>
@@ -209,6 +210,7 @@ private:
     void saveTextInternal(bool allText);
 
 private:
+    SystemTray* st;
     QComboBox* selectLangsBox;
     QGraphicsInput* graphicsInput;
     QString fileName;

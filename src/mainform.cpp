@@ -140,6 +140,8 @@ MainForm::MainForm(QWidget* parent) : QMainWindow(parent)
     connect(graphicsInput, SIGNAL(clickMeAgain()), this, SLOT(clickMeAgain()), Qt::QueuedConnection);
     //connect(pdfx, SIGNAL(processStarted()), this, SLOT(extProcStarted()));
 
+    st = new SystemTray(this);
+
     selectLangsBox = new QComboBox();
 
     selectLangsBox->setToolTip(trUtf8("Recognition language"));
