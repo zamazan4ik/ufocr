@@ -43,8 +43,7 @@ SystemTray::SystemTray(QWidget* pwgt /*=0*/) : QWidget(pwgt)
     m_ptrayIcon->setContextMenu(m_ptrayIconMenu);
     m_ptrayIcon->setToolTip(QCoreApplication::applicationName());
 
-
-    //m_ptrayIcon->setIcon(QPixmap("://images/IconForTray.png"));
+    m_ptrayIcon->setIcon(QPixmap(":/yagf.png"));
 
     m_ptrayIcon->show();
 }

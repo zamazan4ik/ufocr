@@ -28,7 +28,7 @@ link_directories(lib/opencv lib/libjpeg lib/libpng lib/libtiff lib/zlib lib/libj
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 
 set(TRANSLATIONS
         translations/yagf_ru.ts
