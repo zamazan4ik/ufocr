@@ -1149,6 +1149,8 @@ void Page::denoise()
     logger->info("Run denoising");
     GeneralImage gen(img);
     IPL::denoise(gen.Ref(), gen.Ref());
+    //IPL::denoise(gen.Ref(), gen.Ref());
+    //IPL::denoise(gen.Ref(), gen.Ref());
     img = gen.toQImage();
 }
 
