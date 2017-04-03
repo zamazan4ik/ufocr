@@ -26,6 +26,7 @@
 #include "core/analysis.h"
 #include "core/imageprocessor.h"
 #include "core/subimagepp.h"
+#include "core/ImageProcessing.hpp"
 #include "globallock.h"
 #include <QSize>
 #include <QRect>
@@ -37,7 +38,7 @@
 
 #include <opencv2/imgproc.hpp>
 #include <opencv2/highgui.hpp>
-#include <opencv2/xphoto.hpp>
+
 
 
 Page::Page(const int pid, QObject* parent) :
@@ -1102,15 +1103,13 @@ void Page::binarize()
 void Page::whiteBalance()
 {
     logger->info("Run white balance");
-    //TODO: Add choosing balance white algorithm.
+    //TODO: Add choosing white balance algorithm.
     GeneralImage gen(img);
-    auto alg = cv::xphoto::createSimpleWB();
-    alg->balanceWhite(gen.Ref(), gen.Ref());
+    IPL::whiteBalance(gen.Ref(), gen.Ref(), IPL::ColorBalance::Grayworld);
     img = gen.toQImage();
 }
 
 #include <QDebug>
-#include "core/ImageProcessing.hpp"
 
 void Page::bilateral()
 {
@@ -1143,6 +1142,14 @@ void Page::autoCrop()
                   contour[3].x, contour[3].y);
 
     img = GeneralImage(dst).toQImage();
+}
+
+void Page::denoise()
+{
+    logger->info("Run denoising");
+    GeneralImage gen(img);
+    IPL::denoise(gen.Ref(), gen.Ref());
+    img = gen.toQImage();
 }
 
 /*bool Page::isBlurred()

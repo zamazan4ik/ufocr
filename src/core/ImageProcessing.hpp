@@ -26,6 +26,6 @@
 #include "Smoothing.hpp"
 #include "Deskew.hpp"
 #include "Cropping.hpp"
-#include "ImageProcessing.hpp"
+#include "Denoising.hpp"
 
 #endif //UFOCR_IMAGEPROCESSING_HPP

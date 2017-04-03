@@ -16,23 +16,15 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "ColorBalance.hpp"
+#ifndef UFOCR_DENOISING_HPP
+#define UFOCR_DENOISING_HPP
 
-#include "opencv2/xphoto.hpp"
+#include "opencv2/core.hpp"
 
-void IPL::whiteBalance(const cv::Mat& src, cv::Mat& dst, ColorBalance method/* = ColorBalance::Simple*/)
+namespace IPL
 {
-    switch (method)
-    {
-        case ColorBalance::Simple:
-            cv::xphoto::createSimpleWB()->balanceWhite(src, dst);
-            break;
-        case ColorBalance::Grayworld:
-            cv::xphoto::createGrayworldWB()->balanceWhite(src, dst);
-            break;
-        default:
-            //TODO: Add more algortihms later
-            throw std::runtime_error("Balance algorithm is not implemented yet!");
-    }
-
+    void denoise(const cv::Mat& src, cv::Mat& dst);
 }
+
+
+#endif //UFOCR_DENOISING_HPP

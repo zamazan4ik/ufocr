@@ -826,6 +826,15 @@ void PageCollection::autoCrop()
     cp()->autoCrop();
 }
 
+void PageCollection::denoise()
+{
+    if (!cp())
+    {
+        return;
+    }
+    cp()->denoise();
+}
+
 bool PageCollection::empty() const
 {
     return pages.empty();

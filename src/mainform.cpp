@@ -77,6 +77,7 @@
 
 MainForm::MainForm(QWidget* parent) : QMainWindow(parent)
 {
+    st = new SystemTray(this);
     setupUi(this);
 
     pages = PageCollection::instance();
@@ -124,6 +125,7 @@ MainForm::MainForm(QWidget* parent) : QMainWindow(parent)
     connect(actionWhite_balance, SIGNAL(triggered()), this, SLOT(whiteBalance()));
     connect(actionBilateral, SIGNAL(triggered()), this, SLOT(bilateral()));
     connect(actionAuto_crop, SIGNAL(triggered()), this, SLOT(autoCrop()));
+    connect(actionDenoise, SIGNAL(triggered()), this, SLOT(denoise()));
 
     connect(graphicsInput, SIGNAL(increaseMe()), this, SLOT(enlargeButtonClicked()));
     connect(graphicsInput, SIGNAL(decreaseMe()), this, SLOT(decreaseButtonClicked()));
@@ -140,7 +142,7 @@ MainForm::MainForm(QWidget* parent) : QMainWindow(parent)
     connect(graphicsInput, SIGNAL(clickMeAgain()), this, SLOT(clickMeAgain()), Qt::QueuedConnection);
     //connect(pdfx, SIGNAL(processStarted()), this, SLOT(extProcStarted()));
 
-    st = new SystemTray(this);
+
 
     selectLangsBox = new QComboBox();
 
@@ -1769,6 +1771,20 @@ void MainForm::autoCrop()
     QCursor oldCursor = cursor();
     setCursor(Qt::WaitCursor);
     pages->autoCrop();
+    pages->reloadPage();
+    setCursor(oldCursor);
+}
+
+void MainForm::denoise()
+{
+    if (!pages->hasPage())
+    {
+        styledWarningMessage(this, trUtf8("No image loaded"));
+        return;
+    }
+    QCursor oldCursor = cursor();
+    setCursor(Qt::WaitCursor);
+    pages->denoise();
     pages->reloadPage();
     setCursor(oldCursor);
 }

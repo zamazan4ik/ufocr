@@ -242,6 +242,8 @@ private:
     bool dirty;
     bool forbidAutoSave;
 private slots:
+    void denoise();
+
     void autoCrop();
 
     void bilateral();

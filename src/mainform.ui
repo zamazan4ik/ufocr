@@ -571,6 +571,7 @@
       <addaction name="actionBrightness"/>
       <addaction name="actionColor_balance"/>
       <addaction name="actionContrast"/>
+      <addaction name="actionDenoise"/>
       <addaction name="actionGamma"/>
       <addaction name="actionGrayscale"/>
       <addaction name="actionInvert"/>
@@ -1374,6 +1375,11 @@ QComboBox {
   <action name="actionColor_balance">
    <property name="text">
     <string>Color balance</string>
+   </property>
+  </action>
+  <action name="actionDenoise">
+   <property name="text">
+    <string>Denoise</string>
    </property>
   </action>
  </widget>
