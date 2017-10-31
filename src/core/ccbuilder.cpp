@@ -422,7 +422,6 @@ void CCBuilder::relabelLineLR(int y)
                     if (nc < oc)
                     {
                         setLabel(x, y, nc);
-                        oc = nc;
                     }
                 }
             }
@@ -481,7 +480,6 @@ void CCBuilder::relabelLineRL(int y)
                     if (nc < oc)
                     {
                         setLabel(x, y, nc);
-                        oc = nc;
                     }
                 }
             }

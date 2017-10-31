@@ -324,7 +324,6 @@ void CCAnalysis::addBarsHorizontal(int hoffset, int height, int woffset, int wid
         }
     }
     int him = 0;
-    int hlm = 0;
     int lcount = 0;
     int icount = 0;
     int chl = 0;
@@ -335,7 +334,6 @@ void CCAnalysis::addBarsHorizontal(int hoffset, int height, int woffset, int wid
         { // empty space
             if (chl > 0)
             {
-                hlm += chl;
                 lcount++;
                 chl = 0;
             }
@@ -362,7 +360,6 @@ void CCAnalysis::addBarsHorizontal(int hoffset, int height, int woffset, int wid
     }
     him -= chi;
     him = him / (icount - 2);
-    hlm /= lcount;
     int ilcount = 0;
     int llcount = 0;
     for (int i = hoffset; i < height; i++)
